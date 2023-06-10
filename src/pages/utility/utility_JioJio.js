@@ -113,14 +113,14 @@ export const PeopleItem = (props) => {
 export const PlaceItem = (props) => {
   if (props.sport=="棒球") return (
     <View style={styles.currentJioContainer}>
-    <Image style={styles.sportIcon} source={require("../assets/baseball.png")}></Image>
+    <Image style={styles.sportIcon} source={require("../../images/baseball.png")}></Image>
     <View style={[styles.currentJioContainer2,{justifyContent:'center'}]}>
     <Text style={styles.subtitle2}>{props.title}</Text>
     </View>
     </View>);
   else if (props.sport=="羽球") return (
     <View style={styles.currentJioContainer}>
-    <Image style={styles.sportIcon} source={require("../assets/badminton.png")}></Image>
+    <Image style={styles.sportIcon} source={require("../../images/badminton.png")}></Image>
     <View style={[styles.currentJioContainer2,{justifyContent:'center'}]}>
     <Text style={styles.subtitle2}>{props.title}</Text>
     </View>
@@ -128,7 +128,7 @@ export const PlaceItem = (props) => {
   );
   else if (props.sport=="籃球") return (
     <View style={styles.currentJioContainer}>
-    <Image style={styles.sportIcon} source={require("../assets/basketball.png")}></Image>
+    <Image style={styles.sportIcon} source={require("../../images/basketball.png")}></Image>
     <View style={[styles.currentJioContainer2,{justifyContent:'center'}]}>
     <Text style={styles.subtitle2}>{props.title}</Text>
     </View>
@@ -136,7 +136,7 @@ export const PlaceItem = (props) => {
   );
   else if (props.sport=="足球") return (
     <View style={styles.currentJioContainer}>
-    <Image style={styles.sportIcon} source={require("../assets/soccer.png")}></Image>
+    <Image style={styles.sportIcon} source={require("../../images/soccer.png")}></Image>
     <View style={[styles.currentJioContainer2,{justifyContent:'center'}]}>
     <Text style={styles.subtitle2}>{props.title}</Text>
     </View>
@@ -148,7 +148,7 @@ export const PlaceItem = (props) => {
 export const PastJioItem = ({title,sub}) => {
   if (title=="羽球") return(
     <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../assets/badminton.png")}></Image>
+      <Image style={styles.sportIcon} source={require("../../images/badminton.png")}></Image>
       <View style={styles.currentJioContainer2}>
         <Text style={styles.subtitle2}>{title}</Text>
         <Text style={styles.subtitle3}>{sub}</Text>
@@ -161,7 +161,7 @@ export const PastJioItem = ({title,sub}) => {
   );
   else if  (title=="籃球") return(
     <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../assets/basketball.png")}></Image>
+      <Image style={styles.sportIcon} source={require("../../images/basketball.png")}></Image>
       <View style={styles.currentJioContainer2}>
         <Text style={styles.subtitle2}>{title}</Text>
         <Text style={styles.subtitle3}>{sub}</Text>
@@ -174,7 +174,7 @@ export const PastJioItem = ({title,sub}) => {
   );
   else if (title=="足球") return(
     <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../assets/soccer.png")}></Image>
+      <Image style={styles.sportIcon} source={require("../../images/soccer.png")}></Image>
       <View style={styles.currentJioContainer2}>
         <Text style={styles.subtitle2}>{title}</Text>
         <Text style={styles.subtitle3}>{sub}</Text>
@@ -187,7 +187,7 @@ export const PastJioItem = ({title,sub}) => {
   );
     else if (title=="棒球") return(
       <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../assets/baseball.png")}></Image>
+      <Image style={styles.sportIcon} source={require("../../images/baseball.png")}></Image>
       <View style={styles.currentJioContainer2}>
         <Text style={styles.subtitle2}>{title}</Text>
         <Text style={styles.subtitle3}>{sub}</Text>
@@ -204,7 +204,7 @@ export const PastJioItem = ({title,sub}) => {
   export const CurrentJioItem = ({sport,time,people}) => {
     if (sport=="羽球") return(
     <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../assets/badminton.png")}></Image>
+      <Image style={styles.sportIcon} source={require("../../images/badminton.png")}></Image>
       <View style={styles.currentJioContainer2}>
         <Text style={styles.subtitle2}>{sport}</Text>
         <Text style={styles.subtitle3}>{time} {people}</Text>
@@ -212,7 +212,7 @@ export const PastJioItem = ({title,sub}) => {
     </View>);
     else if (sport=="籃球") return(
       <View style={styles.currentJioContainer}>
-        <Image style={styles.sportIcon} source={require("../assets/basketball.png")}></Image>
+        <Image style={styles.sportIcon} source={require("../../images/basketball.png")}></Image>
         <View style={styles.currentJioContainer2}>
           <Text style={styles.subtitle2}>{sport}</Text>
           <Text style={styles.subtitle3}>{time} {people}</Text>
@@ -221,7 +221,7 @@ export const PastJioItem = ({title,sub}) => {
     );
     else if (sport=="棒球") return(
       <View style={styles.currentJioContainer}>
-        <Image style={styles.sportIcon} source={require("../assets/baseball.png")}></Image>
+        <Image style={styles.sportIcon} source={require("../../images/baseball.png")}></Image>
         <View style={styles.currentJioContainer2}>
           <Text style={styles.subtitle2}>{sport}</Text>
           <Text style={styles.subtitle3}>{time} {people}</Text>
@@ -230,7 +230,7 @@ export const PastJioItem = ({title,sub}) => {
     );
     else if (sport=="足球") return(
       <View style={styles.currentJioContainer}>
-        <Image style={styles.sportIcon} source={require("../assets/soccer.png")}></Image>
+        <Image style={styles.sportIcon} source={require("../../images/soccer.png")}></Image>
         <View style={styles.currentJioContainer2}>
           <Text style={styles.subtitle2}>{sport}</Text>
           <Text style={styles.subtitle3}>{time} {people}</Text>
