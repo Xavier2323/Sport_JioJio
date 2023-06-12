@@ -2,9 +2,11 @@ import React from 'react';
 import { NativeBaseProvider } from "native-base";
 import Navigation from './src/navigation';
 
-// import { withAuthenticator } from 'aws-amplify-react-native';
-// import { Amplify } from 'aws-amplify';
-// import config from './src/aws-exports';
+//import { withAuthenticator } from 'aws-amplify-react-native';
+import { Amplify, Auth } from 'aws-amplify';
+import config from './src/aws-exports';
+
+Auth.configure(config);
 
 const App = () => {
   return (

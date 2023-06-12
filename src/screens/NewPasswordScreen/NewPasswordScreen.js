@@ -10,9 +10,13 @@ const NewPasswordScreen = () => {
 
   const navigation = useNavigation();
 
-  const onSubmitPressed = data => {
-    console.warn(data);
-    navigation.navigate('Home');
+  const onSubmitPressed = async data => {
+    try {
+      await Auth.forgotPasswordSubmit(data.username, data.code, data.password);
+      navigation.navigate('SignIn');
+    } catch (e) {
+      Alert.alert('Oops', e.message);
+    }
   };
 
   const onSignInPress = () => {
@@ -25,22 +29,22 @@ const NewPasswordScreen = () => {
         <Text style={styles.title}>重設密碼</Text>
 
         <CustomInput
-          placeholder="代碼"
+          placeholder="驗證碼"
           name="code"
           control={control}
-          rules={{required: 'Code is required'}}
+          rules={{required: '請輸入驗證碼'}}
         />
 
         <CustomInput
-          placeholder="請輸入新密碼"
+          placeholder="新密碼"
           name="name"
           control={control}
           secureTextEntry
           rules={{
-            required: 'Password is required',
+            required: '請輸入新密碼',
             minLength: {
               value: 8,
-              message: 'Password should be at least 8 characters long',
+              message: '密碼長度應大於8',
             },
           }}
         />
