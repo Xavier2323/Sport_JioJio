@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 
 import { Tag } from '../utility/utility_JioJio.js';

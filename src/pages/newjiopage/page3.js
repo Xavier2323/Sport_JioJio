@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
 
 export default class Page3 extends React.Component {

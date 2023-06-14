@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -8,9 +8,12 @@ import ConfirmEmailScreen from '../screens/ConfirmEmailScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import NewPasswordScreen from '../screens/NewPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
-
+import NotificationScreen from '../pages/Notification/Notification';
+import PersonalScreen from '../pages/Personal/Personal';
 import InitialScreen from '../screens/InitialScreen/InitialScreen';
-
+import NotifyScreen from '../pages/Notification/Notify';
+import ApprovalScreen from '../pages/Notification/Approval';
+import ReminderScreen from '../pages/Notification/Reminder';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -24,6 +27,11 @@ const Navigation = () => {
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Notification" component={NotificationScreen} />
+        <Stack.Screen name="Personal" component={PersonalScreen} />
+        <Stack.Screen name="Notify" component={NotifyScreen} />
+        <Stack.Screen name="Approval" component={ApprovalScreen} />
+        <Stack.Screen name="Reminder" component={ReminderScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

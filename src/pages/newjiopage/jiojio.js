@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, {useState, Component } from 'react';
 
-import Overview from './newjiopage/overview.js';
-import Page1 from './newjiopage/page1.js';
-import Page2 from './newjiopage/page2.js';
-import Page3 from './newjiopage/page3.js';
-import Page4 from './newjiopage/page4.js';
-import Page5 from './newjiopage/page5.js';
-import Page6 from './newjiopage/page6.js';
-import Verify from './newjiopage/verify.js';
-import { CurrentJioList, PastJioList } from './utility/utility_JioJio.js';
+import Overview from './overview.js';
+import Page1 from './page1.js';
+import Page2 from './page2.js';
+import Page3 from './page3.js';
+import Page4 from './page4.js';
+import Page5 from './page5.js';
+import Page6 from './page6.js';
+import Verify from './verify.js';
+import { CurrentJioList, PastJioList } from '../utility/utility_JioJio.js';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
