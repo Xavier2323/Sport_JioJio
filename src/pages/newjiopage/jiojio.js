@@ -18,6 +18,7 @@ export default class JioJioScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            userid: 1,
             sport: "",
             place: "",
             date: "",
