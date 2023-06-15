@@ -1,7 +1,7 @@
 import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
 
-import { peopleData, PeopleItem } from '../utility/utility_JioJio.js';
+import { peopleData, PeopleItem, Progresss } from '../utility/utility_JioJio.js';
 
 export default class Page5 extends React.Component {
     constructor(props) {
@@ -13,40 +13,44 @@ export default class Page5 extends React.Component {
 
     render() {
         return (
-            <SafeAreaView>
-                <ScrollView nestedScrollEnabled={true} style={styles.ScrollView}>
-                    <View style={{ flexDirection: 'column' }}>
-                        <View style={{ height: 35 }}></View>
-
-                        <View style={[styles.containerRow, { marginHorizontal: 30 }]}>
-                            <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
-                                <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} />
-                            </TouchableOpacity>
-                            <View style={[styles.containerColumn, { marginLeft: 66 }]}>
-                                <Text style={styles.title}>新的揪揪</Text>
-                                <View style={styles.underOrangeLine}></View>
-                            </View>
-                        </View>
-
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={styles.subtitle}>請選擇運動人數</Text>
-                        </View>
-
-                        <View style={{ height: 500, marginHorizontal: 30 }}>
-                            <FlatList data={peopleData} nestedScrollEnabled={true}
-                                renderItem={({ item }) => {
-                                    return (<TouchableOpacity style={this.state.people == item.title ? styles.selected : styles.unselected} onPress={() => { this.handlePeopleSelect(item.title) }}><PeopleItem title={item.title} /></TouchableOpacity>)
-                                }} />
-                        </View>
-                        <View style={{ marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
-                            <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
-                                <Text style={styles.subtitle2}>下一步</Text>
-                            </TouchableOpacity>
-                        </View>
+            <View style={styles.container}>
+                <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
+                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
+                        <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
+                        <Text style={styles.title}>新的揪揪</Text>
+                        <View style={styles.underOrangeLine}></View>
                     </View>
-                </ScrollView>
-            </SafeAreaView>
+                    <View style={{height:40,width:40}}></View>
+                </View>
+
+                <View style={{flex:50,justifyContent:'center'}}>
+                    <Progresss now={5} 
+                               pressnumber={this.handlePressNumber.bind(this)} />
+                </View>
+
+                <View style={{flex:50, justifyContent:'center', alignItems:'center'}}>
+                    <Text style={styles.subtitle}>請選擇運動人數</Text>
+                </View>
+
+                <View style={{flex:400}}>
+
+                </View>
+
+                <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
+                    <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
+                        <Text style={styles.subtitle2}>下一步</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{flex:5}}></View>
+            </View>
         );
+    }
+
+    handlePressNumber =  (now,page) => {
+        if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
 
     handlePeopleSelect = (people) => {
@@ -64,6 +68,12 @@ export default class Page5 extends React.Component {
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 50,
+        flexDirection: 'column',
+        marginHorizontal:30
+      },
     containerColumn: {
         flexDirection: 'column',
         marginHorizontal: 0
