@@ -1,5 +1,6 @@
 import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { Progresss } from '../utility/utility_JioJio';
 
@@ -7,8 +8,9 @@ export default class Page3 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: this.props.stat.date
+            visibility: false
         }
+        this.props.finishSelectDate(this.props.stat.from);
     }
 
     render() {
@@ -34,8 +36,16 @@ export default class Page3 extends React.Component {
                     <Text style={styles.subtitle}>請選擇運動日期</Text>
                 </View>
 
-                <View style={{flex:400}}>
-
+                <View style={{flex:400,justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                    <TouchableOpacity onPress={() => {this.setState({...this.state,visibility:true})}}>
+                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.from ? this.props.stat.from.toLocaleDateString() : "No date selected"}</Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal isVisible={this.state.visibility}
+                                         mode='date'
+                                         date={this.props.stat.from}
+                                         onConfirm={(date) => {this.setState({visibility:false}); this.props.finishSelectDate(date);}}
+                                         onCancel={() => {this.setState({visibility:false})}}
+                                         minimumDate={new Date()} />
                 </View>
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
@@ -54,7 +64,6 @@ export default class Page3 extends React.Component {
         if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
     handleNextPage = async () => {
-        await this.props.finishSelectDate(this.state.date);
         this.props.navigation.navigate('page4');
     }
 

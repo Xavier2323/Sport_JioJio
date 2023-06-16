@@ -1,14 +1,11 @@
 import React, {useState, Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, TextInput } from 'react-native';
 
 import { peopleData, PeopleItem, Progresss } from '../utility/utility_JioJio.js';
 
 export default class Page5 extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            people: this.props.stat.people
-        }
     }
 
     render() {
@@ -34,8 +31,26 @@ export default class Page5 extends React.Component {
                     <Text style={styles.subtitle}>請選擇運動人數</Text>
                 </View>
 
-                <View style={{flex:400}}>
-
+                <View style={{flex:400, justifyContent:'center', alignItems:'center'}}>
+                    <View style={styles.containerColumn}>
+                        <TextInput onChangeText={(newText) => {this.props.finishSelectPeople(newText)}}
+                                   value={this.props.stat.people}
+                                   keyboardType="numeric" 
+                                   textAlign='center'
+                                   style={{borderColor:'black',borderWidth:1,width:150,fontSize:30}}/>
+                        <View style={[styles.containerRow,{justifyContent:'center', alignItems:'center'}]}>
+                            <TouchableOpacity onPress={() => {const newNum = parseInt(this.props.stat.people) <= 1 ? 1 : parseInt(this.props.stat.people)-1; this.props.finishSelectPeople(newNum.toString());}}>
+                                <View style={{width:50,height:50,margin:10,justifyContent:'center',alignItems:'center'}}>
+                                    <Image style={{height:50,width:50}} source={require('../../images/minus.png')}/>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => {const newNum = parseInt(this.props.stat.people) + 1; this.props.finishSelectPeople(newNum.toString());}}>
+                                <View style={{width:50,height:50,margin:10,justifyContent:'center',alignItems:'center'}}>
+                                    <Image style={{height:50,width:50}} source={require('../../images/plus.png')}/>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
@@ -53,13 +68,7 @@ export default class Page5 extends React.Component {
         if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
 
-    handlePeopleSelect = (people) => {
-        if (this.state.people == people) this.setState({ ...this.state, people: "0" });
-        else this.setState({ ...this.state, people: people });
-    }
-
     handleNextPage = async () => {
-        await this.props.finishSelectPeople(this.state.people);
         this.props.navigation.navigate('page6');
     }
 
@@ -76,7 +85,7 @@ const styles = StyleSheet.create({
       },
     containerColumn: {
         flexDirection: 'column',
-        marginHorizontal: 0
+        justifyContent:'center'
     },
     containerRow: {
         flexDirection: 'row',

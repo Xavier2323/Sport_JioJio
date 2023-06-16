@@ -8,7 +8,6 @@ export default class Page2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            place: this.props.stat.place,
             placeList: []
         }
 
@@ -49,7 +48,7 @@ export default class Page2 extends React.Component {
                 <View style={{flex:400}}>
                     <FlatList data={this.state.placeList} 
                               renderItem={({ item }) => {
-                                    return (<TouchableOpacity style={this.state.place == item.name ? styles.selected : styles.unselected} onPress={() => this.handlePlaceSelect(item.name)}><PlaceItem name={item.name} sport={item.sport} /></TouchableOpacity>)
+                                    return (<TouchableOpacity style={this.props.stat.place == item.name ? styles.selected : styles.unselected} onPress={() => this.handlePlaceSelect(item.name)}><PlaceItem name={item.name} sport={item.sport} /></TouchableOpacity>)
                                 }}
                     />
                 </View>
@@ -70,11 +69,10 @@ export default class Page2 extends React.Component {
         if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
     handlePlaceSelect = async (place) => {
-        if (this.state.place == place) this.setState({ ...this.state, place: "" });
-        else this.setState({ ...this.state, place: place });
+        if (this.props.stat.place == place) this.props.finishSelectPlace("");
+        else this.props.finishSelectPlace(place);
     }
     handleNextPage = async () => {
-        await this.props.finishSelectPlace(this.state.place);
         this.props.navigation.navigate('page3');
     }
 

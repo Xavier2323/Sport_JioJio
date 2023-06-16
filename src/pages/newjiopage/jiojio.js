@@ -8,9 +8,11 @@ import Page4 from './page4.js';
 import Page5 from './page5.js';
 import Page6 from './page6.js';
 import Verify from './verify.js';
+import TagPage from './tagpage.js';
 import { CurrentJioList, PastJioList } from '../utility/utility_JioJio.js';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import { Tag } from 'native-base';
 
 const Stack = createStackNavigator();
 
@@ -21,11 +23,10 @@ export default class JioJioScreen extends React.Component {
             userid: 1,
             sport: "",
             place: "",
-            date: "",
-            from: "",
-            to: "",
-            people: "",
-            tag: ["新手", "休閒"],
+            from: new Date(),
+            to: new Date(),
+            people: "1",
+            tag: ["新手", "休閒","好玩就好","初學者可","歡迎新人"],
             memo: "",
             curJioList: CurrentJioList,
             pastJioList: PastJioList
@@ -60,11 +61,14 @@ export default class JioJioScreen extends React.Component {
                 <Stack.Screen name="verify">
                     {(props) => <Verify {...props} stat={this.state} reset={this.reset.bind(this)} updateTag={this.updateTag.bind(this)} updateMemo={this.updateMemo.bind(this)} />}
                 </Stack.Screen>
+                <Stack.Screen name="tagpage">
+                    {(props) => <TagPage {...props} stat={this.state} reset={this.reset.bind(this)} finishEditTag={this.finishEditTag.bind(this)}/>}
+                </Stack.Screen>
             </Stack.Navigator>
         );
     }
     reset = () => {
-        this.setState({ ...this.state, sport: "", place: "", date: "", from: "", to: "", people: "", tag: [], memo: "" });
+        this.setState({ ...this.state, sport: "", place: "",  from: new Date(), to: new Date(), people: "1", tag: ["新手", "休閒","好玩就好","初學者可","歡迎新人"], memo: "" });
     }
 
     finishSelectSport = (id) => {
@@ -76,7 +80,7 @@ export default class JioJioScreen extends React.Component {
     }
 
     finishSelectDate = (date) => {
-        this.setState({ ...this.state, date: date });
+        this.setState({ ...this.state, from: new Date(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}T12:00:00`), to: new Date(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}T18:00:00`)});
     }
 
     finishSelectTime = (from, to) => {
@@ -89,6 +93,10 @@ export default class JioJioScreen extends React.Component {
 
     finishSelectTagMemo = (tag, memo) => {
         this.setState({ ...this.state, tag: tag, memo: memo });
+    }
+
+    finishEditTag = (tag) => {
+        this.setState({ ...this.state, tag: tag});
     }
 
     updateTag = (list) => {
