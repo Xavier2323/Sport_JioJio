@@ -6,12 +6,10 @@ import {Card, Progresss} from '../utility/utility_JioJio.js';
 export default class Page1 extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            sport: this.props.stat.sport
-        }
     }
 
     render() {
+        const f = this.props.finishSelectSport;
         return (
             <View style={styles.container}>
                 <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
@@ -38,42 +36,42 @@ export default class Page1 extends React.Component {
                     <ScrollView style={{flex:1}}>
                         <View style={styles.containerColumn}>
                             <View style={styles.containerRow}>
-                                <TouchableOpacity style={this.state.sport == "羽球" ? styles.selected : styles.unselected}
-                                                  onPress={() => { if (this.state.sport == "羽球") this.setState({ sport: "" }); else this.setState({ sport: "羽球" }); }}>
+                                <TouchableOpacity style={this.props.stat.sport == "羽球" ? styles.selected : styles.unselected}
+                                                  onPress={() => { if (this.props.stat.sport == "羽球") f("") ; else f("羽球"); }}>
                                     <Card sport="羽球" />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={this.state.sport == "籃球" ? styles.selected : styles.unselected}
-                                                  onPress={() => { if (this.state.sport == "籃球") this.setState({ sport: "" }); else this.setState({ sport: "籃球" }); }}>
+                                <TouchableOpacity style={this.props.stat.sport == "籃球" ? styles.selected : styles.unselected}
+                                                  onPress={() => { if (this.props.stat.sport == "籃球") f(""); else f("籃球"); }}>
                                     <Card sport="籃球" />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.containerRow}>
-                                <TouchableOpacity style={this.state.sport == "足球" ? styles.selected : styles.unselected}
-                                                  onPress={() => { if (this.state.sport == "足球") this.setState({ sport: "" }); else this.setState({ sport: "足球" }); }}>
+                                <TouchableOpacity style={this.props.stat.sport == "足球" ? styles.selected : styles.unselected}
+                                                  onPress={() => { if (this.props.stat.sport == "足球") f(""); else f("足球"); }}>
                                     <Card sport="足球" />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={this.state.sport == "棒球" ? styles.selected : styles.unselected}
-                                                  onPress={() => { if (this.state.sport == "棒球") this.setState({ sport: "" }); else this.setState({ sport: "棒球" }); }}>
+                                <TouchableOpacity style={this.props.stat.sport == "棒球" ? styles.selected : styles.unselected}
+                                                  onPress={() => { if (this.props.stat.sport == "棒球") f(""); else f("棒球"); }}>
                                     <Card sport="棒球" />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.containerRow}>
-                                <TouchableOpacity style={this.state.sport == "桌球" ? styles.selected : styles.unselected}
-                                                  onPress={() => { if (this.state.sport == "桌球") this.setState({ sport: "" }); else this.setState({ sport: "桌球" }); }}>
+                                <TouchableOpacity style={this.props.stat.sport == "桌球" ? styles.selected : styles.unselected}
+                                                  onPress={() => { if (this.props.stat.sport == "桌球") f(""); else f("桌球"); }}>
                                     <Card sport="桌球" />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={this.state.sport == "網球" ? styles.selected : styles.unselected}
-                                                  onPress={() => { if (this.state.sport == "網球") this.setState({ sport: "" }); else this.setState({ sport: "網球" }); }}>
+                                <TouchableOpacity style={this.props.stat.sport == "網球" ? styles.selected : styles.unselected}
+                                                  onPress={() => { if (this.props.stat.sport == "網球") f(""); else f("網球"); }}>
                                     <Card sport="網球" />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.containerRow}>
-                                <TouchableOpacity style={this.state.sport == "排球" ? styles.selected : styles.unselected}
-                                                  onPress={() => { if (this.state.sport == "排球") this.setState({ sport: "" }); else this.setState({ sport: "排球" }); }}>
+                                <TouchableOpacity style={this.props.stat.sport == "排球" ? styles.selected : styles.unselected}
+                                                  onPress={() => { if (this.props.stat.sport == "排球") f(""); else f("排球"); }}>
                                     <Card sport="排球" />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={this.state.sport == "游泳" ? styles.selected : styles.unselected}
-                                                  onPress={() => { if (this.state.sport == "游泳") this.setState({ sport: "" }); else this.setState({ sport: "游泳" }); }}>
+                                <TouchableOpacity style={this.props.stat.sport == "游泳" ? styles.selected : styles.unselected}
+                                                  onPress={() => { if (this.props.stat.sport == "游泳") f(""); else f("游泳"); }}>
                                     <Card sport="游泳" />
                                 </TouchableOpacity>
                             </View>
@@ -96,8 +94,8 @@ export default class Page1 extends React.Component {
     handlePressNumber =  (now,page) => {
         if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
+
     handleNextPage = async () => {
-        await this.props.finishSelectSport(this.state.sport);
         this.props.navigation.navigate("page2");
     }
 

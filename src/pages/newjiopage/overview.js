@@ -16,7 +16,8 @@ export default class Overview extends React.Component {
     axios.get(`${url}/posts`,{
       params:{
         participant: this.props.stat.userid,
-        finish: 0
+        finish: 0,
+        order:'starttimeasc'
       }
     }).then(res => {
       this.setState({
@@ -56,7 +57,7 @@ export default class Overview extends React.Component {
             <View style={{ flex:40 }}>
               <FlatList 
                 data={this.state.curJioList}
-                renderItem={({ item }) => { return <CurrentJioItem {...item} />; }}
+                renderItem={({ item }) => { return <CurrentJioItem {...item} userid={this.props.stat.userid}/>; }}
               />
             </View>
         </View>
