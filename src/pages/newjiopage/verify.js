@@ -12,66 +12,67 @@ export default class Verify extends React.Component {
         const tagList = this.props.stat.tag.map((item) => { return (<Tag title={item} f={this.deleteTag.bind(this)}></Tag>) })
 
         return (
-            <SafeAreaView>
-                <ScrollView style={styles.ScrollView} nestedScrollEnabled={true}>
-                    <View style={{ flexDirection: 'column' }}>
-                        <View style={{ height: 35 }}></View>
+            <View></View>
+            // <SafeAreaView>
+            //     <ScrollView style={styles.ScrollView} nestedScrollEnabled={true}>
+            //         <View style={{ flexDirection: 'column' }}>
+            //             <View style={{ height: 35 }}></View>
 
-                        <View style={[styles.containerRow, { marginHorizontal: 30 }]}>
-                            <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
-                                <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} />
-                            </TouchableOpacity>
-                            <View style={[styles.containerColumn, { marginLeft: 66 }]}>
-                                <Text style={styles.title}>新的揪揪</Text>
-                                <View style={styles.underOrangeLine}></View>
-                            </View>
-                        </View>
+            //             <View style={[styles.containerRow, { marginHorizontal: 30 }]}>
+            //                 <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
+            //                     <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} />
+            //                 </TouchableOpacity>
+            //                 <View style={[styles.containerColumn, { marginLeft: 66 }]}>
+            //                     <Text style={styles.title}>新的揪揪</Text>
+            //                     <View style={styles.underOrangeLine}></View>
+            //                 </View>
+            //             </View>
 
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={styles.subtitle}>確認揪揪資訊</Text>
-                        </View>
+            //             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            //                 <Text style={styles.subtitle}>確認揪揪資訊</Text>
+            //             </View>
 
-                        <ScrollView style={{ height: 500, marginHorizontal: 30 }} nestedScrollEnabled={true}>
-                            <View style={[styles.containerColumn, { alignItems: 'center' }]}>
-                                <View style={styles.containerRow}>
-                                    <Text style={styles.subtitle1}>運動項目:</Text>
-                                    <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.sport}</Text>
-                                </View>
-                                <View style={styles.containerRow}>
-                                    <Text style={styles.subtitle1}>運動地點:</Text>
-                                    <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.place}</Text>
-                                </View>
-                                <View style={styles.containerRow}>
-                                    <Text style={styles.subtitle1}>運動日期:</Text>
-                                    <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.date}</Text>
-                                </View>
-                                <View style={styles.containerRow}>
-                                    <Text style={styles.subtitle1}>運動時間:</Text>
-                                    <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.from}~{this.props.stat.to}</Text>
-                                </View>
-                                <View style={styles.containerRow}>
-                                    <Text style={styles.subtitle1}>運動人數:</Text>
-                                    <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.people}</Text>
-                                </View>
-                                <View style={styles.containerRow}>
-                                    <Text style={styles.subtitle1}>Tags:</Text>
-                                    {tagList}
-                                    <TouchableOpacity><Text style={[styles.subtitle1, { marginLeft: 20, color: 'grey' }]}>+</Text></TouchableOpacity>
-                                </View>
-                                <View style={[styles.containerRow, { marginHorizontal: 30 }]}>
-                                    <Text style={styles.subtitle1}>備註:</Text>
-                                    <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.memo}</Text>
-                                </View>
-                            </View>
-                        </ScrollView>
-                        <View style={{ marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
-                            <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
-                                <Text style={styles.subtitle2}>發起揪揪</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
+            //             <ScrollView style={{ height: 500, marginHorizontal: 30 }} nestedScrollEnabled={true}>
+            //                 <View style={[styles.containerColumn, { alignItems: 'center' }]}>
+            //                     <View style={styles.containerRow}>
+            //                         <Text style={styles.subtitle1}>運動項目:</Text>
+            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.sport}</Text>
+            //                     </View>
+            //                     <View style={styles.containerRow}>
+            //                         <Text style={styles.subtitle1}>運動地點:</Text>
+            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.place}</Text>
+            //                     </View>
+            //                     <View style={styles.containerRow}>
+            //                         <Text style={styles.subtitle1}>運動日期:</Text>
+            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.date}</Text>
+            //                     </View>
+            //                     <View style={styles.containerRow}>
+            //                         <Text style={styles.subtitle1}>運動時間:</Text>
+            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.from}~{this.props.stat.to}</Text>
+            //                     </View>
+            //                     <View style={styles.containerRow}>
+            //                         <Text style={styles.subtitle1}>運動人數:</Text>
+            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.people}</Text>
+            //                     </View>
+            //                     <View style={styles.containerRow}>
+            //                         <Text style={styles.subtitle1}>Tags:</Text>
+            //                         {tagList}
+            //                         <TouchableOpacity><Text style={[styles.subtitle1, { marginLeft: 20, color: 'grey' }]}>+</Text></TouchableOpacity>
+            //                     </View>
+            //                     <View style={[styles.containerRow, { marginHorizontal: 30 }]}>
+            //                         <Text style={styles.subtitle1}>備註:</Text>
+            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.memo}</Text>
+            //                     </View>
+            //                 </View>
+            //             </ScrollView>
+            //             <View style={{ marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
+            //                 <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
+            //                     <Text style={styles.subtitle2}>發起揪揪</Text>
+            //                 </TouchableOpacity>
+            //             </View>
+            //         </View>
+            //     </ScrollView>
+            // </SafeAreaView>
         );
     }
 

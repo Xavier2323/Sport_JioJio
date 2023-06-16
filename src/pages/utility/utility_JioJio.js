@@ -77,12 +77,6 @@ export const Progresss = (props) => {
   )
 }
 
-export const peopleData = [
-  {title:"1"},{title:"2"},{title:"3"},{title:"4"},{title:"5"},{title:"6"},{title:"7"},{title:"8"},{title:"9"},{title:"10"},
-  {title:"11"},{title:"12"},{title:"13"},{title:"14"},{title:"15"},{title:"16"},{title:"17"},{title:"18"},{title:"19"},{title:"20"},
-  {title:"無上限"},
-];
-
 export const Tag = (props) => {
   if (props.title=="") return(<View></View>);
   else return (
@@ -93,13 +87,27 @@ export const Tag = (props) => {
   );
 };
 
-export const PeopleItem = (props) => {
-  return (
-    <View style={[styles.currentJioContainer,{justifyContent:'center',height:60,alignItems:'center'}]}>
-    <Text style={styles.subtitle2}>{props.title}</Text>
-    </View>
+export const TagList = (props) => {
+  if (props.name != "" && props.times != -1) return (
+    <TouchableOpacity onPress={() => {props.f(props.name)}}>
+      <View style={[styles.currentJioContainer,{justifyContent:'space-between',alignItems:'center',paddingHorizontal:25}]}>
+        <Text style={styles.subtitle2}>{props.name}</Text>
+        <View style={{width:100}}></View>
+        <Text style={styles.subtitle3}>在貼文中找到{props.times}次</Text>
+      </View>
+    </TouchableOpacity>
   );
-};
+  else if (props.name != "" && props.times == -1) return (
+    <TouchableOpacity onPress={() => {props.f(props.name)}}>
+      <View style={[styles.currentJioContainer,{justifyContent:'space-between',alignItems:'center',paddingHorizontal:25}]}>
+        <View style={{width:30}}></View>
+        <Text style={styles.subtitle2}>創建一個"{props.name}"的Tag</Text>
+        <View style={{width:30}}></View>
+      </View>
+    </TouchableOpacity>
+  )
+  else return (<View></View>)
+}
 
 export const PlaceItem = (props) => {
   return (
@@ -130,9 +138,22 @@ export const PastJioItem = ({sport,start_time,end_time,people}) => {
   );
 }
   
-export const CurrentJioItem = ({sport,start_time,end_time,people}) => {
+export const CurrentJioItem = ({sport,start_time,end_time,people,posterid,userid}) => {
   const endhour = end_time.split(' ');
-  return(
+  if (userid == posterid) return(
+    <View style={styles.currentJioContainer}>
+      <Image style={styles.sportIcon} source={getPic(sport)}></Image>
+      <View style={styles.currentJioContainer2}>
+        <Text style={styles.subtitle2}>{sport}</Text>
+        <Text style={styles.subtitle3}>{start_time} ~ {endhour[1]} {people}人</Text>
+      </View>
+      <TouchableOpacity style={styles.launchAgain}
+                        onPress={() => {}}>
+        <Text style={styles.ButtonWord}>編輯</Text>
+      </TouchableOpacity>
+    </View>
+  );
+  else return (
     <View style={styles.currentJioContainer}>
       <Image style={styles.sportIcon} source={getPic(sport)}></Image>
       <View style={styles.currentJioContainer2}>
@@ -172,7 +193,7 @@ export const CurrentJioItem = ({sport,start_time,end_time,people}) => {
     subtitle4:{
       fontSize:15,
       marginLeft:8,
-      paddingTop:4
+      paddingTop:3
     },
     underOrangeLine:{
       height:6,
@@ -209,7 +230,8 @@ export const CurrentJioItem = ({sport,start_time,end_time,people}) => {
     tagContainer:{
       borderRadius:5,
       backgroundColor:'#AEAEAE',
-      marginHorizontal:5,
+      marginHorizontal:10,
+      marginBottom:12,
       flexDirection:'row',
     }, 
     xmarkcontainer:{

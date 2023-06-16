@@ -1,5 +1,6 @@
 import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 
 import { Progresss } from '../utility/utility_JioJio';
@@ -8,8 +9,8 @@ export default class Page4 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            from: this.props.stat.from,
-            to: this.props.stat.from
+            visibilityFrom: false,
+            visibilityTo: false
         }
     }
 
@@ -36,8 +37,27 @@ export default class Page4 extends React.Component {
                     <Text style={styles.subtitle}>請選擇運動時段</Text>
                 </View>
 
-                <View style={{flex:400}}>
-
+                <View style={{flex:400, justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                    <Text style={{fontSize:30}}>開始時間</Text>
+                    <TouchableOpacity onPress={() => {this.setState({visibilityFrom:true})}}>
+                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.from ? this.props.stat.from.toLocaleTimeString() : "No time selected"}</Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal isVisible={this.state.visibilityFrom}
+                                                mode='time'
+                                                date={this.props.stat.from}
+                                                onConfirm={(from) => {this.setState({visibilityFrom:false}); this.props.finishSelectTime(from,this.props.stat.to)}}
+                                                onCancel={() => {this.setState({visibilityFrom:false})}}
+                                                />
+                    <Text style={{fontSize:30,marginTop:40}}>結束時間</Text>
+                    <TouchableOpacity onPress={() => {this.setState({visibilityTo:true})}}>
+                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.to ? this.props.stat.to.toLocaleTimeString() : "No time selected"}</Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal isVisible={this.state.visibilityTo}
+                                                mode='time'
+                                                date={this.props.stat.to}
+                                                onConfirm={(to) => {this.setState({visibilityTo:false}); this.props.finishSelectTime(this.props.stat.from,to)}}
+                                                onCancel={() => {this.setState({visibilityTo:false})}}
+                                                />
                 </View>
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
@@ -55,7 +75,6 @@ export default class Page4 extends React.Component {
         if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
     handleNextPage = async () => {
-        await this.props.finishSelectTime(this.state.from, this.state.to);
         this.props.navigation.navigate('page5');
     }
 
