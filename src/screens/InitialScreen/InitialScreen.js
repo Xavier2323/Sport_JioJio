@@ -30,6 +30,19 @@ const InitialScreen = () => {
     navigation.navigate('SignUp');
   };
 
+  /// !!! Test !!! ///
+  const onNicknamePress = () => {
+    navigation.navigate('NicknameSetting');
+  };
+  const onHeadshotPress = () => {
+    navigation.navigate('HeadshotSetting');
+  };
+  const onIntroductionPress = () => {
+    navigation.navigate('IntroductionSetting');
+  }
+  /// !!! //// !!! ///
+
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
@@ -50,6 +63,26 @@ const InitialScreen = () => {
           onPress={onSignUpPress}
           type="THEME"
         />
+
+
+        {/* <Text>Testing</Text>
+        <CustomButton
+          text="取暱稱"
+          onPress={onNicknamePress}
+          type="THEME"
+        />
+        <CustomButton
+          text="設定大頭貼"
+          onPress={onHeadshotPress}
+          type="THEME"
+        />
+        <CustomButton
+          text="自我介紹"
+          onPress={onIntroductionPress}
+          type="THEME"
+        /> */}
+
+
       </View>
     </ScrollView>
   );

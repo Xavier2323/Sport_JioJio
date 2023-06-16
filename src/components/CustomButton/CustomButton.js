@@ -90,6 +90,18 @@ const styles = StyleSheet.create({
   text_SIGNUP: {
     color: '#EB7943',
   },
+  container_SETTING: {
+    backgroundColor: '#FBF1D6',
+    width: '70%',
+    marginTop: '1%',
+    marginBottom: 0,
+    paddingVertical: '4%',
+    borderWidth: 1,
+    borderColor: '#f7eed2',
+  },
+  text_SETTING: {
+    color: '#EB7943',
+  },
 });
 
 export default CustomButton;
