@@ -55,7 +55,7 @@ export default class Page5 extends React.Component {
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
                     <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
-                        <Text style={styles.subtitle2}>下一步</Text>
+                        <Text style={styles.subtitle2}>{this.props.stat.tagpageBack == 0 ? "下一步" : "確認"}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -65,11 +65,17 @@ export default class Page5 extends React.Component {
     }
 
     handlePressNumber =  (now,page) => {
+        if (parseInt(this.props.stat.people) <= 0) this.props.finishSelectPeople("1");
         if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
 
     handleNextPage = async () => {
-        this.props.navigation.navigate('page6');
+        if (parseInt(this.props.stat.people) <= 0) await this.props.finishSelectPeople("1");
+        if (this.props.stat.tagpageBack == 0) this.props.navigation.navigate('page6');
+        else {
+            this.props.setTagpageBack(1);
+            this.props.navigation.navigate('verify');
+        }
     }
 
 }

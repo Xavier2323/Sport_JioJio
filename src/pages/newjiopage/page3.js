@@ -10,7 +10,6 @@ export default class Page3 extends React.Component {
         this.state = {
             visibility: false
         }
-        this.props.finishSelectDate(this.props.stat.from);
     }
 
     render() {
@@ -38,12 +37,12 @@ export default class Page3 extends React.Component {
 
                 <View style={{flex:400,justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
                     <TouchableOpacity onPress={() => {this.setState({...this.state,visibility:true})}}>
-                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.from ? this.props.stat.from.toLocaleDateString() : "No date selected"}</Text>
+                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.date ? this.props.stat.date.toLocaleDateString() : "No date selected"}</Text>
                     </TouchableOpacity>
                     <DateTimePickerModal isVisible={this.state.visibility}
                                          mode='date'
-                                         date={this.props.stat.from}
-                                         onConfirm={(date) => {this.setState({visibility:false}); this.props.finishSelectDate(date);}}
+                                         date={this.props.stat.date}
+                                         onConfirm={async (date) => {this.setState({visibility:false}); await this.props.finishSelectDate(date);}}
                                          onCancel={() => {this.setState({visibility:false})}}
                                          minimumDate={new Date()} />
                 </View>

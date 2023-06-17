@@ -11,39 +11,15 @@ export default class Overview extends React.Component {
       curJioList: [],
       pastJioList: []
     }
-    const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
-    
-    axios.get(`${url}/posts`,{
-      params:{
-        participant: this.props.stat.userid,
-        finish: 0,
-        order:'starttimeasc'
-      }
-    }).then(res => {
-      this.setState({
-        ...this.state,
-        curJioList: res.data.post
-      })
-    })
-    .catch(err => {
-      console.log(err);
-    })
-
-    axios.get(`${url}/posts`,{
-      params:{
-        posterid: this.props.stat.userid,
-        finish: 1,
-        order:'createtimeasc'
-      }
-    }).then(res => {
-      this.setState({
-        ...this.state,
-        pastJioList: res.data.post
-      })
-    })
+    this.updateList();
   }
 
   render() {
+    if (this.props.stat.update == 1) {
+      this.updateList();
+      this.props.setUpdate(0);
+    }
+
     return (
 
       <View style={styles.container}>
@@ -82,6 +58,39 @@ export default class Overview extends React.Component {
       </View>
 
     );
+  }
+
+  updateList() {
+    const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+
+    axios.get(`${url}/posts`,{
+      params:{
+        participant: this.props.stat.userid,
+        finish: 0,
+        order:'starttimeasc'
+      }
+    }).then(res => {
+      this.setState({
+        ...this.state,
+        curJioList: res.data.post
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+    axios.get(`${url}/posts`,{
+      params:{
+        posterid: this.props.stat.userid,
+        finish: 1,
+        order:'createtimeasc'
+      }
+    }).then(res => {
+      this.setState({
+        ...this.state,
+        pastJioList: res.data.post
+      })
+    })
   }
 
   handleLaunchNewJio() {
