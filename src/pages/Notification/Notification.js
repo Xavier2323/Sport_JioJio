@@ -12,7 +12,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const NotificationScreen = () => {
     const navigation = useNavigation();
-    console.log('Outside');
+
     const goBacktoDiscover = () => {
         navigation.navigate('發現');
     }
