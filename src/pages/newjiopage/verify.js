@@ -1,88 +1,167 @@
 import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, TextInput, SafeAreaView} from 'react-native';
+import axios from 'axios';
 
 import { Tag } from '../utility/utility_JioJio.js';
 
 export default class Verify extends React.Component {
     constructor(props) {
         super(props);
+        console.log(this.props.stat);
     }
 
     render() {
         const tagList = this.props.stat.tag.map((item) => { return (<Tag title={item} f={this.deleteTag.bind(this)}></Tag>) })
-
+        const starttime = `${this.props.stat.date.getFullYear()}-${this.props.stat.date.getMonth()+1}-${this.props.stat.date.getDate()} ${this.props.stat.from.getHours()}:${this.props.stat.from.getMinutes() < 10 ? "0" : ""}${this.props.stat.from.getMinutes()}`;
+        const endtime = `${this.props.stat.date.getFullYear()}-${this.props.stat.date.getMonth()+1}-${this.props.stat.date.getDate()} ${this.props.stat.to.getHours()}:${this.props.stat.to.getMinutes() < 10 ? "0" : ""}${this.props.stat.to.getMinutes()}`;
         return (
-            <View></View>
-            // <SafeAreaView>
-            //     <ScrollView style={styles.ScrollView} nestedScrollEnabled={true}>
-            //         <View style={{ flexDirection: 'column' }}>
-            //             <View style={{ height: 35 }}></View>
+            <View style={styles.container}>
+                <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
+                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
+                        <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
+                        <Text style={styles.title}>新的揪揪</Text>
+                        <View style={styles.underOrangeLine}></View>
+                    </View>
+                    <View style={{height:40,width:40}}></View>
+                </View>
 
-            //             <View style={[styles.containerRow, { marginHorizontal: 30 }]}>
-            //                 <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
-            //                     <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} />
-            //                 </TouchableOpacity>
-            //                 <View style={[styles.containerColumn, { marginLeft: 66 }]}>
-            //                     <Text style={styles.title}>新的揪揪</Text>
-            //                     <View style={styles.underOrangeLine}></View>
-            //                 </View>
-            //             </View>
+                <View style={{flex:100, justifyContent:'center', alignItems:'center'}}>
+                    <Text style={styles.subtitle}>請確認以下資訊是否正確</Text>
+                </View>
 
-            //             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            //                 <Text style={styles.subtitle}>確認揪揪資訊</Text>
-            //             </View>
+                <View style={{flex:400,flexDirection:'column',justifyContent:'space-between',alignItems:'center'}}>
+                    <ScrollView>
+                        <View style={{flexDirection:'row',marginVertical:20}}>
+                            <Text style={styles.subtitle1}>運動項目：</Text>
+                            <Text style={styles.subtitle1}>{this.props.stat.sport}</Text>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(1)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection:'row',marginVertical:20}}>
+                            <Text style={styles.subtitle1}>運動場地：</Text>
+                            <Text style={styles.subtitle1}>{this.props.stat.place}</Text>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(2)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection:'row',marginVertical:20}}>
+                            <Text style={styles.subtitle1}>開始時間：</Text>
+                            <Text style={styles.subtitle1}>{starttime}</Text>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(3)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection:'row',marginVertical:20}}>
+                            <Text style={styles.subtitle1}>結束時間：</Text>
+                            <Text style={styles.subtitle1}>{endtime}</Text>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(3)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection:'row',marginVertical:20}}>
+                            <Text style={styles.subtitle1}>運動人數：</Text>
+                            <Text style={styles.subtitle1}>{this.props.stat.people}</Text>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(5)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection:'row',marginVertical:20}}>
+                            <Text style={styles.subtitle1}>Tags:</Text>
+                            <View style={{flexDirection:'column',alignItems:'flex-start'}}>
+                                {tagList}
+                                <TouchableOpacity onPress={this.handlePressAdd.bind(this)}><Text style={[styles.subtitle1, { marginLeft: 20, color: 'grey' }]}>+</Text></TouchableOpacity>
+                            </View>
+                        </View>
+                        <View style={{flexDirection:'column',marginVertical:20}}>
+                            <Text style={styles.subtitle1}>備註:</Text>
+                            <View style={{ backgroundColor: '#FFF9E9', width: 300, borderRadius: 5, borderColor: '#000000', borderWidth: 1, marginTop: 20 }}>
+                            <TextInput
+                                        editable
+                                        multiline
+                                        numberOfLines={8}
+                                        maxLength={100}
+                                        onChangeText={(text) => { this.props.finishSelectTagMemo(this.props.stat.tag,text); }}
+                                        value={this.props.stat.memo}
+                                        style={{ padding: 10, fontSize: 18 }}
+                            />
+                            </View>
+                        </View>
+                    </ScrollView>
+                </View>
 
-            //             <ScrollView style={{ height: 500, marginHorizontal: 30 }} nestedScrollEnabled={true}>
-            //                 <View style={[styles.containerColumn, { alignItems: 'center' }]}>
-            //                     <View style={styles.containerRow}>
-            //                         <Text style={styles.subtitle1}>運動項目:</Text>
-            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.sport}</Text>
-            //                     </View>
-            //                     <View style={styles.containerRow}>
-            //                         <Text style={styles.subtitle1}>運動地點:</Text>
-            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.place}</Text>
-            //                     </View>
-            //                     <View style={styles.containerRow}>
-            //                         <Text style={styles.subtitle1}>運動日期:</Text>
-            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.date}</Text>
-            //                     </View>
-            //                     <View style={styles.containerRow}>
-            //                         <Text style={styles.subtitle1}>運動時間:</Text>
-            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.from}~{this.props.stat.to}</Text>
-            //                     </View>
-            //                     <View style={styles.containerRow}>
-            //                         <Text style={styles.subtitle1}>運動人數:</Text>
-            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.people}</Text>
-            //                     </View>
-            //                     <View style={styles.containerRow}>
-            //                         <Text style={styles.subtitle1}>Tags:</Text>
-            //                         {tagList}
-            //                         <TouchableOpacity><Text style={[styles.subtitle1, { marginLeft: 20, color: 'grey' }]}>+</Text></TouchableOpacity>
-            //                     </View>
-            //                     <View style={[styles.containerRow, { marginHorizontal: 30 }]}>
-            //                         <Text style={styles.subtitle1}>備註:</Text>
-            //                         <Text style={[styles.subtitle1, { marginLeft: 30 }]}>{this.props.stat.memo}</Text>
-            //                     </View>
-            //                 </View>
-            //             </ScrollView>
-            //             <View style={{ marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
-            //                 <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
-            //                     <Text style={styles.subtitle2}>發起揪揪</Text>
-            //                 </TouchableOpacity>
-            //             </View>
-            //         </View>
-            //     </ScrollView>
-            // </SafeAreaView>
+                <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
+                    <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleLaunch.bind(this)}>
+                        <Text style={styles.subtitle2}>發起揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{flex:5}}></View>
+            </View>
+            
         );
     }
 
-    handleNextPage = async () => {
-        this.props.navigation.navigate('overview');
+    checkValidation = async() => {
+        this.props.updateValid(0);
+        if (this.props.stat.sport == "") this.props.updateValid(-1);
+        else if (this.props.stat.place == "") this.props.updateValid(-2);
+        else {
+            const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+
+            await axios.get(`${url}/places`,{
+                params:{
+                    sport:this.props.stat.sport
+                }
+            }).then(res => {
+                var i,k=0;
+                for (i=0;i<res.data.place.length;i++){
+                    if (res.data.place[i].name == this.props.stat.place) k = 1
+                }
+                if (k == 0) this.props.updateValid(-3);
+            })
+        }
+        const nowTime = new Date();
+        const endTime = new Date(this.props.stat.date.getFullYear(),this.props.stat.date.getMonth(),this.props.stat.date.getDate(),this.props.stat.to.getHours(),this.props.stat.to.getMinutes());
+        if (nowTime > endTime) this.props.updateValid(-4);
+    }
+
+    handlePressEdit = (num) => {
+        this.props.setTagpageBack(1);
+        this.props.navigation.navigate(`page${num}`)
+    }
+
+    handlePressAdd = async () => {
+        this.props.setTagpageBack(1);
+        this.props.navigation.navigate('tagpage');
+    }
+
+    handleLaunch = async () => {
+        this.props.setTagpageBack(0);
+        await this.checkValidation();
+
+        if (this.props.stat.valid == 0){
+            const from = this.props.stat.from;
+            const to = this.props.stat.to;
+            const date = this.props.stat.date;
+            const starttime = `${date.getFullYear()}!${date.getMonth()+1}!${date.getDate()}!${from.getHours()}!${from.getMinutes()}`;
+            const endtime = `${date.getFullYear()}!${date.getMonth()+1}!${date.getDate()}!${to.getHours()}!${to.getMinutes()}`;
+
+            const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com/posts/create?posterid=${this.props.stat.userid}&sport=${this.props.stat.sport}&place=${this.props.stat.place}&starttime=${starttime}&endtime=${endtime}&people=${this.props.stat.people}&tags=${this.props.stat.tag.join('!')}&memo=${this.props.stat.memo}`;
+
+            console.log(url);
+
+            await axios.post(url).then(res => {
+                
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+        this.props.forceUpdate(1);
+        this.props.navigation.navigate('launch');
     }
 
     deleteTag = (title) => {
-        const newList = this.props.stat.tag.map((item) => { if (item == title) return ""; else return (item); });
-        this.props.updateTag(newList);
+        const pos = this.props.stat.tag.indexOf(title);
+        if (this.props.stat.tag.length == 1) this.props.finishSelectTagMemo([], this.props.stat.memo);
+        else {
+            const newList = this.props.stat.tag;
+            newList.splice(pos,1);
+            this.props.finishSelectTagMemo(newList, this.props.stat.memo);
+        }
     }
 
 }
@@ -90,6 +169,12 @@ export default class Verify extends React.Component {
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 50,
+        flexDirection: 'column',
+        marginHorizontal:30
+      },
     containerColumn: {
         flexDirection: 'column',
         marginHorizontal: 0

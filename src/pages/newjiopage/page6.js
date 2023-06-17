@@ -9,7 +9,7 @@ export default class Page6 extends React.Component {
     }
 
     render() {
-        const tagList = this.props.stat.tag.map((item) => { return (<Tag title={item} f={this.deleteTag.bind(this)}></Tag>) })
+        const tagList = this.props.stat.tag.map((item) => { return (<Tag title={item} f={this.deleteTag.bind(this)} />) })
 
         return (
             <View style={styles.container}>
@@ -69,6 +69,7 @@ export default class Page6 extends React.Component {
     }
 
     handlePressAdd = async () => {
+        this.props.setTagpageBack(0);
         this.props.navigation.navigate('tagpage');
     }
 
