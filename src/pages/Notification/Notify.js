@@ -1,16 +1,33 @@
 import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
-import { NotificationList, NotificationItems } from '../utility/utility_Notification';
+import { NotificationItems } from '../utility/utility_Notification';
+import axios from 'axios';
 
 const NotifyScreen = () => {
+    const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+    const [NotifyList, setList] = useState([]);
+
+    axios.get(`${url}/applys`,{
+        params:{
+            applicant: 1,
+            process: 1
+        }
+    }).then(res => {
+        setList(
+          res.data.apply
+        )
+    }).catch(err => {
+        console.log(err);
+    })
+    //console.log(NotifyList);
     return (
         <View style={styles.root}>
             <SafeAreaView style={styles.container}>
             <View style={{ height: 450, backgroundColor: '#FFF2E2' }}>
                 <FlatList
                     nestedScrollEnabled={true}
-                    data={NotificationList}
-                    renderItem={({ item }) => { return <NotificationItems sport={item.sport} Approved={item.Approved} who={item.who} />; }}
+                    data={NotifyList}
+                    renderItem={({ item }) => { return <NotificationItems {...item} /> ;}}
                     />
             </View>
             </SafeAreaView>

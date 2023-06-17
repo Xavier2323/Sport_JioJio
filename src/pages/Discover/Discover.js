@@ -13,7 +13,6 @@ const DiscoverScreen = () => {
     const gotoPersonal = () => {
         navigation.navigate('Personal');
     }
-    console.log('This is Discover');
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>

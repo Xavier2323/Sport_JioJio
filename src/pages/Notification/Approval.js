@@ -1,24 +1,22 @@
 import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
-import { NotificationList, ApprovalItems} from '../utility/utility_Notification';
+import { ApprovalItems} from '../utility/utility_Notification';
 import axios from 'axios';
+
 const ApprovalScreen = () => {
     const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
-
-    axios.get(`${url}/posts`,{
+    const [ApprovalList, setList] = useState([]);
+    axios.get(`${url}/applys`,{
         params:{
-          participant: 1,
-          finish: 0,
-          order:'starttimeasc'
+          posterid: 1,
+          process: 0
         }
     }).then(res => {
-        this.setState({
-          ...this.state,
-          curJioList: res.data.post
-        })
+        setList(res.data.apply)
     }).catch(err => {
         console.log(err);
     })
+    console.log(ApprovalList);
 
     return (
         <View style={styles.root}>
@@ -26,8 +24,8 @@ const ApprovalScreen = () => {
             <View style={{ height: 450, backgroundColor: '#FFF2E2' }}>
                 <FlatList
                     nestedScrollEnabled={true}
-                    data={NotificationList}
-                    renderItem={({ item }) => { return <ApprovalItems sport={item.sport} who={item.who} />; }}
+                    data={ApprovalList}
+                    renderItem={({ item }) => { return <ApprovalItems {...item} />; }}
                     />
             </View>
             </SafeAreaView>

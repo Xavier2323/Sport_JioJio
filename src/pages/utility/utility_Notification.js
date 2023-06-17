@@ -13,36 +13,12 @@ const getPic = sport => {
     else return "";
 }
 
-export const NotificationList = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        sport: "羽球",
-        Approved: "同意",
-        time: "17:00",
-        who: "Brandon",
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        sport: "籃球",
-        Approved: "婉拒",
-        time: "19:30",
-        who: "Peter",
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        sport: "羽球",
-        Approved: "同意",
-        time: "9:30",
-        who: "Joyce",
-    }
-];
-
-export const NotificationItems = ({ sport, who, Approved }) => {
-    if (who == "Brandon") return (
+export const NotificationItems = ({ sport, posterid, process}) => {
+    return (
         <View style={styles.NotificationContainer}>
             <Image style={styles.sportIcon} source={require("../../images/badminton.png")} alignSelf='center'></Image>
             <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>{who}{Approved}你的加入</Text>
+                <Text style={styles.UpperPart}>{posterid}同意你的加入</Text>
                 <View style={styles.LowerPart}>
                     <Text style={{flex: 1}}>
                         {sport}
@@ -55,49 +31,14 @@ export const NotificationItems = ({ sport, who, Approved }) => {
             <Image style={styles.Avatar} source={require("../../images/Brandon.png")}></Image>
         </View>
     );
-    else if (who == "Peter") return (
-        <View style={styles.NotificationContainer}>
-            <Image style={styles.sportIcon} source={require("../../images/basketball.png")} alignSelf='center'></Image>
-            <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>{who}{Approved}你的加入</Text>
-                <View style={styles.LowerPart}>
-                    <Text style={{flex: 1}}>
-                        {sport}
-                    </Text>
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
-                            <Image source={require('../../images/DetailsButton.png')}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <Image style={styles.Avatar} source={require("../../images/Peter.png")}></Image>
-        </View>
-    );
-    else if (who == "Joyce") return (
-        <View style={styles.NotificationContainer}>
-            <Image style={styles.sportIcon} source={require("../../images/badminton.png")} alignSelf='center'></Image>
-            <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>{who}{Approved}你的加入</Text>
-                <View style={styles.LowerPart}>
-                    <Text style={{flex: 1}}>
-                        {sport}
-                    </Text>
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
-                            <Image source={require('../../images/DetailsButton.png')}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <Image style={styles.Avatar} source={require("../../images/Joyce.png")}></Image>
-        </View>
-    );
-    else return (<View></View>);
 }
 
-export const ApprovalItems = ({ sport, who}) => {
-    if (who == "Brandon") return (
+export const ApprovalItems = ({ sport, applicant}) => {
+    return (
         <View style={styles.NotificationContainer}>
             <Image style={styles.sportIcon} source={require("../../images/badminton.png")} alignSelf='center'></Image>
             <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>{who}想加入你的活動</Text>
+                <Text style={styles.UpperPart}>{applicant}想加入你的活動</Text>
                 <View style={styles.LowerPart}>
                     <Text style={{flex: 1}}>
                         {sport}
@@ -110,47 +51,13 @@ export const ApprovalItems = ({ sport, who}) => {
             <Image style={styles.Avatar} source={require("../../images/Brandon.png")}></Image>
         </View>
     );
-    else if (who == "Peter") return (
-        <View style={styles.NotificationContainer}>
-            <Image style={styles.sportIcon} source={require("../../images/basketball.png")} alignSelf='center'></Image>
-            <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>{who}想加入你的活動</Text>
-                <View style={styles.LowerPart}>
-                    <Text style={{flex: 1}}>
-                        {sport}
-                    </Text>
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
-                            <Image source={require('../../images/DetailsButton.png')}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <Image style={styles.Avatar} source={require("../../images/Peter.png")}></Image>
-        </View>
-    );
-    else if (who == "Joyce") return (
-        <View style={styles.NotificationContainer}>
-            <Image style={styles.sportIcon} source={require("../../images/badminton.png")} alignSelf='center'></Image>
-            <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>{who}想加入你的活動</Text>
-                <View style={styles.LowerPart}>
-                    <Text style={{flex: 1}}>
-                        {sport}
-                    </Text>
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
-                            <Image source={require('../../images/DetailsButton.png')}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <Image style={styles.Avatar} source={require("../../images/Joyce.png")}></Image>
-        </View>
-    );
-    else return (<View></View>);
 }
 
-export const ReminderItems = ({ sport, who, time }) => {
-    if (who == "Brandon") return (
+export const ReminderItems = ({ sport, start_time}) => {
+    const date = start_time.split(' ')[0], time = start_time.split(' ')[1];
+    return (
         <View style={styles.NotificationContainer}>
-            <Image style={styles.sportIcon} source={require("../../images/badminton.png")} alignSelf='center'></Image>
+            <Image style={styles.sportIcon} source={getPic(sport)} alignSelf='center'></Image>
             <View style={styles.informationContainer} alignSelf='center'>
                 <Text style={styles.UpperPart}>於今天{time}開始</Text>
                 <View style={styles.LowerPart}>
@@ -165,41 +72,6 @@ export const ReminderItems = ({ sport, who, time }) => {
             <Image style={styles.Avatar} source={require("../../images/Brandon.png")}></Image>
         </View>
     );
-    else if (who == "Peter") return (
-        <View style={styles.NotificationContainer}>
-            <Image style={styles.sportIcon} source={require("../../images/basketball.png")} alignSelf='center'></Image>
-            <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>於今天{time}開始</Text>
-                <View style={styles.LowerPart}>
-                    <Text style={{flex: 1}}>
-                        {sport}
-                    </Text>
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
-                            <Image source={require('../../images/DetailsButton.png')}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <Image style={styles.Avatar} source={require("../../images/Peter.png")}></Image>
-        </View>
-    );
-    else if (who == "Joyce") return (
-        <View style={styles.NotificationContainer}>
-            <Image style={styles.sportIcon} source={require("../../images/badminton.png")} alignSelf='center'></Image>
-            <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>於明天{time}開始</Text>
-                <View style={styles.LowerPart}>
-                    <Text style={{flex: 1}}>
-                        {sport}
-                    </Text>
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
-                            <Image source={require('../../images/DetailsButton.png')}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <Image style={styles.Avatar} source={require("../../images/Joyce.png")}></Image>
-        </View>
-    );
-    else return (<View></View>);
 }
 
 const styles = StyleSheet.create({
