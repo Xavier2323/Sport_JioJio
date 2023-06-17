@@ -81,10 +81,6 @@ const NotifyScreen = () => {
     console.log('This is Notify');
     return (
         <View style={styles.root}>
-            <Text>12345</Text>
-            <Text>
-                活動提醒
-            </Text>
             <SafeAreaView style={styles.container}>
             <View style={{ height: 450, backgroundColor: '#FFF2E2' }}>
                 <FlatList
@@ -104,7 +100,7 @@ const styles = StyleSheet.create({
         marginTop: 0
     },
     UpperPart: {
-        fontSize: 15,
+        fontSize: 14,
     },
     LowerPart: {
         flexDirection: 'row',

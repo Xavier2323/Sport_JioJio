@@ -29,9 +29,9 @@ const Navigation = () => {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Notification" component={NotificationScreen} />
         <Stack.Screen name="Personal" component={PersonalScreen} />
-        <Stack.Screen name="Notify" component={NotifyScreen} />
-        <Stack.Screen name="Approval" component={ApprovalScreen} />
-        <Stack.Screen name="Reminder" component={ReminderScreen} />
+        {/* <Stack.Screen name="Notify" component={NotifyScreen} /> */}
+        {/* <Stack.Screen name="Approval" component={ApprovalScreen} /> */}
+        {/* <Stack.Screen name="Reminder" component={ReminderScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
