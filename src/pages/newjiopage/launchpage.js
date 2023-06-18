@@ -13,7 +13,7 @@ export default class Launch extends React.Component {
         if (this.props.stat.valid == 0) {
             mid = (
                 <View style={{flex:400, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={[styles.subtitle1,{marginVertical:30}]}>你的揪揪已成功發起</Text>
+                    <Text style={[styles.subtitle1,{marginVertical:30}]}>你的揪揪已成功{this.props.stat.editing == 1 ? "編輯" : "發起"}</Text>
                     <Image style={{width:250,height:250}} source={require('../../images/launch_successfully.png')}/>
                 </View>
             )
@@ -28,7 +28,7 @@ export default class Launch extends React.Component {
         else {
             mid = (
                 <View style={{flex:400, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={[styles.subtitle1,{marginVertical:30}]}>發起失敗</Text>
+                    <Text style={[styles.subtitle1,{marginVertical:30}]}>{this.props.stat.editing == 1 ? "編輯" : "發起"}失敗</Text>
                     <Image style={{width:250,height:250}} source={require('../../images/fail.png')}/>
                 </View>
             )
@@ -77,10 +77,25 @@ export default class Launch extends React.Component {
                     </View>
                 )
             }
-            else{
+            else if (this.props.stat.valid == -4){
                 bot =(
                     <View style={{flex:150,justifyContent:'center',alignItems:'center'}}>
                         <Text style={{fontSize:15,color:'#F60000'}}>揪揪結束時間必須晚於現在</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleReturn.bind(this)}>
+                                <Text style={styles.subtitle2}>取消發起</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleReturnVerify.bind(this)}>
+                                <Text style={styles.subtitle2}>返回確認頁面</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )
+            }
+            else{
+                bot =(
+                    <View style={{flex:150,justifyContent:'center',alignItems:'center'}}>
+                        <Text style={{fontSize:15,color:'#F60000'}}>揪揪結束時間必須晚於開始時間</Text>
                         <View style={{flexDirection:'row'}}>
                             <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleReturn.bind(this)}>
                                 <Text style={styles.subtitle2}>取消發起</Text>
@@ -98,7 +113,7 @@ export default class Launch extends React.Component {
                 <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
                     <View style={{ height: 40, width: 40}}/>
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
-                        <Text style={styles.title}>新的揪揪</Text>
+                        <Text style={styles.title}>{this.props.stat.editing == 1 ? "你的揪揪" : "新的揪揪"}</Text>
                         <View style={styles.underOrangeLine}></View>
                     </View>
                     <View style={{height:40,width:40}}></View>
@@ -111,7 +126,8 @@ export default class Launch extends React.Component {
     }
 
     handleReturnVerify = () => {
-        this.props.navigation.navigate('verify');
+        if (this.props.editing == 1) this.props.navigation.navigate('postedit');
+        else this.props.navigation.navigate('verify');
     }
 
     handleReturn = async () => {

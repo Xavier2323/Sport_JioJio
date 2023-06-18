@@ -33,7 +33,7 @@ export default class Overview extends React.Component {
             <View style={{ flex:40 }}>
               <FlatList 
                 data={this.state.curJioList}
-                renderItem={({ item }) => { return <CurrentJioItem {...item} userid={this.props.stat.userid}/>; }}
+                renderItem={({ item }) => { return <CurrentJioItem props={item} userid={this.props.stat.userid} f={this.handleEdit.bind(this)}/>; }}
               />
             </View>
         </View>
@@ -43,7 +43,7 @@ export default class Overview extends React.Component {
             <View style={{ flex:40 }}>
               <FlatList 
                 data={this.state.pastJioList}
-                renderItem={({ item }) => { return <PastJioItem {...item} />; }}
+                renderItem={({ item }) => { return <PastJioItem {...item} f={this.handleRelaunch.bind(this)} />; }}
               />
             </View>
         </View>
@@ -90,7 +90,19 @@ export default class Overview extends React.Component {
         ...this.state,
         pastJioList: res.data.post
       })
-    })
+    }).catch(err => {console.log(err)})
+  }
+
+  handleEdit = async (props) => {
+    await this.props.setAll(props);
+    await this.props.setEditing(1);
+    this.props.navigation.navigate('postedit');
+  }
+
+  handleRelaunch = async (sport,place) => {
+    await this.props.finishSelectSport(sport);
+    await this.props.finishSelectPlace(place);
+    this.props.navigation.navigate("page3");
   }
 
   handleLaunchNewJio() {

@@ -23,10 +23,18 @@ export default class Page2 extends React.Component {
     }
 
     render() {
+        const progress = this.props.stat.editing == 0 ? (
+            <View style={{flex:50,justifyContent:'center'}}>
+                    <Progresss now={2}
+                               pressnumber={this.handlePressNumber.bind(this)}/>
+                </View>
+        ) : (
+            <View style={{flex:50,justifyContent:'center'}}></View>
+        );
         return (
             <View style={styles.container}>
                 <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
-                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
+                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { if (this.props.stat.editing == 1) this.props.navigation.navigate('postedit') ; else {this.props.reset(); this.props.navigation.navigate('overview')} }}>
                         <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
@@ -36,13 +44,10 @@ export default class Page2 extends React.Component {
                     <View style={{height:40,width:40}}></View>
                 </View>
 
-                <View style={{flex:50,justifyContent:'center'}}>
-                    <Progresss now={2} 
-                               pressnumber={this.handlePressNumber.bind(this)} />
-                </View>
-                
+                {progress}
+
                 <View style={{flex:50, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={styles.subtitle}>請選擇運動場地</Text>
+                <Text style={styles.subtitle}>請{this.props.stat.editing==1?"編輯":"選擇"}運動場地</Text>
                 </View>
 
                 <View style={{flex:400}}>
@@ -55,7 +60,7 @@ export default class Page2 extends React.Component {
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
                     <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
-                        <Text style={styles.subtitle2}>{this.props.stat.tagpageBack == 0 ? "下一步" : "確認"}</Text>
+                    <Text style={styles.subtitle2}>{(this.props.stat.tagpageBack == 0 && this.props.stat.editing == 0) ? "下一步" : "確認"}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -73,11 +78,9 @@ export default class Page2 extends React.Component {
         else this.props.finishSelectPlace(place);
     }
     handleNextPage = async () => {
-        if (this.props.stat.tagpageBack == 0) this.props.navigation.navigate('page3');
-        else {
-            this.props.setTagpageBack(0);
-            this.props.navigation.navigate('verify');
-        }
+        if (this.props.stat.tagpageBack == 0 && this.props.stat.editing == 0) this.props.navigation.navigate("page3");
+        else if (this.props.stat.editing == 1) this.props.navigation.navigate('postedit');
+        else {this.props.setTagpageBack(0); this.props.navigation.navigate('verify');}
     }
 
 }
