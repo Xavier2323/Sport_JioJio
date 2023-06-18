@@ -8,7 +8,7 @@ import ConfirmEmailScreen from '../screens/ConfirmEmailScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import NewPasswordScreen from '../screens/NewPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
-import InitialScreen from '../screens/InitialScreen/InitialScreen';
+import InitialScreen from '../screens/InitialScreen';
 
 import NicknameSettingScreen from '../screens/NicknameSettingScreen';
 import HeadshotSettingScreen from '../screens/HeadshotSettingScreen';
@@ -16,7 +16,6 @@ import IntroductionSettingScreen from '../screens/IntroductionSettingScreen';
 
 import NotificationScreen from '../pages/Notification/Notification';
 import PersonalScreen from '../pages/Personal/Personal';
-import InitialScreen from '../screens/InitialScreen/InitialScreen';
 import NotifyScreen from '../pages/Notification/Notify';
 import ApprovalScreen from '../pages/Notification/Approval';
 import ReminderScreen from '../pages/Notification/Reminder';
@@ -26,7 +25,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="通知">
-        <Stack.Screen name="InitialScreen" component={InitialScreen} />
+        <Stack.Screen name="Initial" component={InitialScreen} />
 
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
