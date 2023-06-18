@@ -26,7 +26,7 @@ export default class TagPage extends React.Component{
         return(
             <View style={styles.container}>
                 <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
-                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={async () => {if (this.props.stat.tagpageBack == 0) this.props.navigation.navigate('page6'); else {this.props.navigation.navigate('verify'); this.props.setTagpageBack(0);} }}>
+                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={async () => {if (this.props.stat.tagpageBack == 0) this.props.navigation.navigate('page5'); else if (this.props.stat.tagpageBack == 2) this.props.navigation.navigate('postedit'); else {this.props.navigation.navigate('verify'); this.props.setTagpageBack(0);} }}>
                         <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>

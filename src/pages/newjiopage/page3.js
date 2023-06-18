@@ -8,15 +8,24 @@ export default class Page3 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            visibility: false
+            visibilityF: false,
+            visibilityT: false
         }
     }
 
     render() {
+        const progress = this.props.stat.editing == 0 ? (
+            <View style={{flex:50,justifyContent:'center'}}>
+                    <Progresss now={3}
+                               pressnumber={this.handlePressNumber.bind(this)}/>
+                </View>
+        ) : (
+            <View style={{flex:50,justifyContent:'center'}}></View>
+        );
         return (
             <View style={styles.container}>
                 <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
-                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
+                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { if (this.props.editing == 1) this.props.navigation.navigate('postedit'); else {this.props.reset(); this.props.navigation.navigate('overview')} }}>
                         <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
@@ -26,30 +35,40 @@ export default class Page3 extends React.Component {
                     <View style={{height:40,width:40}}></View>
                 </View>
 
-                <View style={{flex:50,justifyContent:'center'}}>
-                    <Progresss now={3} 
-                               pressnumber={this.handlePressNumber.bind(this)} />
-                </View>
+                {progress}
 
                 <View style={{flex:50, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={styles.subtitle}>請選擇運動日期</Text>
+                    <Text style={styles.subtitle}>請{this.props.stat.editing==1?"編輯":"選擇"}運動時間</Text>
                 </View>
 
                 <View style={{flex:400,justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
-                    <TouchableOpacity onPress={() => {this.setState({...this.state,visibility:true})}}>
-                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.date ? this.props.stat.date.toLocaleDateString() : "No date selected"}</Text>
+                    <Text style={{fontSize:25,marginVertical:20}}>開始時間</Text>
+                    <TouchableOpacity style={{flexDirection:'column',alignItems:'center'}} onPress={() => {this.setState({...this.state,visibilityF:true})}}>
+                        <Text style={{fontSize:30,marginVertical:10,color:'#007EE5'}}>{this.props.stat.from ? this.props.stat.from.toLocaleDateString() : "No date selected"}</Text>
+                        <Text style={{fontSize:30,marginVertical:10,color:'#007EE5'}}>{this.props.stat.from ? this.props.stat.from.toLocaleTimeString() : "No date selected"}</Text>
                     </TouchableOpacity>
-                    <DateTimePickerModal isVisible={this.state.visibility}
-                                         mode='date'
-                                         date={this.props.stat.date}
-                                         onConfirm={async (date) => {this.setState({visibility:false}); await this.props.finishSelectDate(date);}}
-                                         onCancel={() => {this.setState({visibility:false})}}
+                    <DateTimePickerModal isVisible={this.state.visibilityF}
+                                         mode='datetime'
+                                         date={this.props.stat.from}
+                                         onConfirm={async (date) => {this.setState({visibilityF:false}); await this.props.finishSelectTime(date,this.props.stat.to);}}
+                                         onCancel={() => {this.setState({visibilityF:false})}}
+                                         minimumDate={new Date()} />
+                    <Text style={{fontSize:25,marginVertical:20}}>結束時間</Text>
+                    <TouchableOpacity style={{flexDirection:'column',alignItems:'center'}} onPress={() => {this.setState({...this.state,visibilityT:true})}}>
+                        <Text style={{fontSize:30,marginVertical:10,color:'#007EE5'}}>{this.props.stat.to ? this.props.stat.to.toLocaleDateString() : "No date selected"}</Text>
+                        <Text style={{fontSize:30,marginVertical:10,color:'#007EE5'}}>{this.props.stat.to ? this.props.stat.to.toLocaleTimeString() : "No date selected"}</Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal isVisible={this.state.visibilityT}
+                                         mode='datetime'
+                                         date={this.props.stat.to}
+                                         onConfirm={async (date) => {this.setState({visibilityT:false}); await this.props.finishSelectTime(this.props.stat.from,date);}}
+                                         onCancel={() => {this.setState({visibilityT:false})}}
                                          minimumDate={new Date()} />
                 </View>
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
                     <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
-                        <Text style={styles.subtitle2}>下一步</Text>
+                        <Text style={styles.subtitle2}>{(this.props.stat.tagpageBack == 0 && this.props.stat.editing == 0) ? "下一步" : "確認"}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -63,7 +82,9 @@ export default class Page3 extends React.Component {
         if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
     handleNextPage = async () => {
-        this.props.navigation.navigate('page4');
+        if (this.props.stat.tagpageBack == 0 && this.props.stat.editing == 0) this.props.navigation.navigate("page4");
+        else if (this.props.stat.editing == 1) this.props.navigation.navigate('postedit');
+        else {this.props.setTagpageBack(0); this.props.navigation.navigate('verify'); }
     }
 
 }
