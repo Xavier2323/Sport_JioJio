@@ -13,7 +13,7 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
-//import {Auth} from  'aws-amplify'
+import {Auth} from  'aws-amplify';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -25,23 +25,21 @@ const SignInScreen = () => {
     formState: {errors},
   } = useForm();
 
-  const onSignInPressed = async(data) => {
-    // if (loading) {
-    //   return;
-    // };
-    // setLoading(true);
-    // try {
-    //   const response = await Auth.signIn(data.username, data.password);
-    //   console.log(response);
-    // } catch(e) {
-    //   //Alert.alert('Oops', e.message);
-    //   //Alert.alert('Oops', data.username);
-    // }
+  const onSignInPressed = async data => {
+    if (loading) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await Auth.signIn(data.username, data.password);
+      console.log(response);
+    } catch (e) {
+      Alert.alert('Oops', e.message);
+    }
     setLoading(false);
-
-    navigation.navigate('Home');
-
-  }
+    navigation.navigate('HomeScreen');
+  };
 
   const onForgotPasswordPressed = () => {
     navigation.navigate('ForgotPassword');

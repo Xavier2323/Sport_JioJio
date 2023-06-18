@@ -4,49 +4,68 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/core';
 import {useForm} from 'react-hook-form';
+import {Auth} from 'aws-amplify';
+import {useRoute} from '@react-navigation/native';
 
 const ConfirmEmailScreen = () => {
-  const {control, handleSubmit} = useForm();
+  const route = useRoute();
+  const {control, handleSubmit, watch} = useForm({
+    defaultValues: {username: route?.params?.username},
+  });
+
+  const username = watch('username');
 
   const navigation = useNavigation();
 
-  const onConfirmPressed = data => {
-    console.warn(data);
-    navigation.navigate('Home');
+  const onConfirmPressed = async data => {
+    try {
+      await Auth.confirmSignUp(data.username, data.code);
+      navigation.navigate('NicknameSetting');
+    } catch (e) {
+      Alert.alert('Oops', e.message);
+    }
   };
 
   const onSignInPress = () => {
     navigation.navigate('SignIn');
   };
 
-  const onResendPress = () => {
-    console.warn('onResendPress');
+  const onResendPress = async () => {
+    try {
+      await Auth.resendSignUp(username);
+      Alert.alert('Success', 'Code was resent to your email');
+    } catch (e) {
+      Alert.alert('Oops', e.message);
+    }
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
-        <Text style={styles.title}>Confirm your email</Text>
+        <Text style={styles.title}>確認您的信箱</Text>
 
         <CustomInput
           name="code"
           control={control}
-          placeholder="Enter your confirmation code"
+          placeholder="請輸入驗證碼"
           rules={{
             required: 'Confirmation code is required',
           }}
         />
 
-        <CustomButton text="Confirm" onPress={handleSubmit(onConfirmPressed)} />
+        <CustomButton 
+          text="確認" 
+          onPress={handleSubmit(onConfirmPressed)}
+          type='THEME' />
 
         <CustomButton
-          text="Resend code"
+          text="重寄確認信"
           onPress={onResendPress}
-          type="SECONDARY"
+          type="TERTIARY"
         />
 
         <CustomButton
-          text="Back to Sign in"
+          text="回到登入"
           onPress={onSignInPress}
           type="TERTIARY"
         />
@@ -61,10 +80,14 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#051C60',
-    margin: 10,
+    fontSize: 30,
+    paddingTop: '13%',
+    color:'#EB7943',
+    fontWeight: 900,
+    borderColor: '#FFC700',
+    borderBottomWidth: 5.3,
+    paddingHorizontal:6,
+    marginBottom: '4.5%',
   },
   text: {
     color: 'gray',
