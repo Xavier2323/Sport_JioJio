@@ -91,7 +91,7 @@ export default class PersonalPage extends React.Component {
     this.props.navigation.navigate('editpersonal');
   }
   logout(){
-    this.props.navigation.navigate('InitialScreen');
+    this.props.navigation.navigate('Initial');
   }
 }
 
