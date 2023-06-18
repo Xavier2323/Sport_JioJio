@@ -1,52 +1,80 @@
 import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
+
+import { Progresss } from '../utility/utility_JioJio';
 
 export default class Page4 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            from: this.props.stat.from,
-            to: this.props.stat.from
+            visibilityFrom: false,
+            visibilityTo: false
         }
     }
 
     render() {
         return (
-            <SafeAreaView >
-                <ScrollView nestedScrollEnabled={true} style={styles.ScrollView}>
-                    <View style={{ flexDirection: 'column' }}>
-                        <View style={{ height: 35 }}></View>
-
-                        <View style={[styles.containerRow, { marginHorizontal: 30 }]}>
-                            <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
-                                <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} />
-                            </TouchableOpacity>
-                            <View style={[styles.containerColumn, { marginLeft: 66 }]}>
-                                <Text style={styles.title}>新的揪揪</Text>
-                                <View style={styles.underOrangeLine}></View>
-                            </View>
-                        </View>
-
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={styles.subtitle}>請選擇運動時間</Text>
-                        </View>
-
-                        <View style={{ height: 500, marginHorizontal: 30 }}>
-
-                        </View>
-                        <View style={{ marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
-                            <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
-                                <Text style={styles.subtitle2}>下一步</Text>
-                            </TouchableOpacity>
-                        </View>
+            <View style={styles.container}>
+                <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
+                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
+                        <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
+                        <Text style={styles.title}>新的揪揪</Text>
+                        <View style={styles.underOrangeLine}></View>
                     </View>
-                </ScrollView>
-            </SafeAreaView>
+                    <View style={{height:40,width:40}}></View>
+                </View>
+
+                <View style={{flex:50,justifyContent:'center'}}>
+                    <Progresss now={4} 
+                               pressnumber={this.handlePressNumber.bind(this)} />
+                </View>
+
+                <View style={{flex:50, justifyContent:'center', alignItems:'center'}}>
+                    <Text style={styles.subtitle}>請選擇運動時段</Text>
+                </View>
+
+                <View style={{flex:400, justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                    <Text style={{fontSize:30}}>開始時間</Text>
+                    <TouchableOpacity onPress={() => {this.setState({visibilityFrom:true})}}>
+                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.from ? this.props.stat.from.toLocaleTimeString() : "No time selected"}</Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal isVisible={this.state.visibilityFrom}
+                                                mode='time'
+                                                date={this.props.stat.from}
+                                                onConfirm={(from) => {this.setState({visibilityFrom:false}); this.props.finishSelectTime(from,this.props.stat.to)}}
+                                                onCancel={() => {this.setState({visibilityFrom:false})}}
+                                                />
+                    <Text style={{fontSize:30,marginTop:40}}>結束時間</Text>
+                    <TouchableOpacity onPress={() => {this.setState({visibilityTo:true})}}>
+                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.to ? this.props.stat.to.toLocaleTimeString() : "No time selected"}</Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal isVisible={this.state.visibilityTo}
+                                                mode='time'
+                                                date={this.props.stat.to}
+                                                onConfirm={(to) => {this.setState({visibilityTo:false}); this.props.finishSelectTime(this.props.stat.from,to)}}
+                                                onCancel={() => {this.setState({visibilityTo:false})}}
+                                                />
+                </View>
+
+                <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
+                    <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
+                        <Text style={styles.subtitle2}>下一步</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{flex:5}}></View>
+            </View>
         );
     }
 
+    handlePressNumber =  (now,page) => {
+        if (page <= now) this.props.navigation.navigate(`page${page}`);
+    }
     handleNextPage = async () => {
-        await this.props.finishSelectTime(this.state.from, this.state.to);
         this.props.navigation.navigate('page5');
     }
 
@@ -55,6 +83,12 @@ export default class Page4 extends React.Component {
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 50,
+        flexDirection: 'column',
+        marginHorizontal:30
+      },
     containerColumn: {
         flexDirection: 'column',
         marginHorizontal: 0

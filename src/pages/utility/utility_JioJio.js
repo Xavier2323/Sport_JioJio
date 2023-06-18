@@ -1,96 +1,81 @@
 import { StyleSheet, Text, View , ScrollView, Image, FlatList, Button, TouchableOpacity} from 'react-native';
 
+const getPic = sport => {
+  if (sport == "羽球") return require('../../images/badminton.png');
+  else if (sport == "籃球") return require("../../images/basketball.png");
+  else if (sport == "排球") return require("../../images/volleyball.png");
+  else if (sport == "足球") return require("../../images/soccer.png");
+  else if (sport == "棒球") return require("../../images/baseball.png");
+  else if (sport == "桌球") return require("../../images/pingpong.png");
+  else if (sport == "網球") return require("../../images/tennis.png");
+  else if (sport == "游泳") return require("../../images/swim.png");
+  else return "";
+}
 
-export const CurrentJioList = [
-    {
-      sport: "羽球",
-      time: "5/7 13:00~16:00",
-      people:"四人"
-    },
-    {
-      sport: "籃球",
-      time: "5/8 18:00~20:00",
-      people:"四人"
-    },
-    {
-      sport: "羽球",
-      time: "5/9 10:00~12:00",
-      people:"四人"
-    }
-  ];
-  
-export const PastJioList = [
-    {
-      title: "羽球",
-      sub: "4/28 13:00~16:00 4人",
-    },
-    {
-      title: "籃球",
-      sub: "4/26 18:00~20:00 4人",
-    },
-    {
-      title: "籃球",
-      sub: "4/26 18:00~20:00 4人",
-    },
-    {
-      title: "籃球",
-      sub: "4/26 18:00~20:00 4人",
-    },
-    {
-      title: "籃球",
-      sub: "4/26 18:00~20:00 4人",
-    },
-    {
-      title: "籃球",
-      sub: "4/26 18:00~20:00 4人",
-    }
-];
+const getProgressPic = (now,num) => {
+  if (num == 1 && now > num) return require('../../images/one_black.png');
+  else if (num == 1 && now == num) return require('../../images/one_orange.png');
+  else if (num == 2 && now > num) return require('../../images/two_black.png');
+  else if (num == 2 && now == num) return require('../../images/two_orange.png');
+  else if (num == 2 && now < num) return require('../../images/two_grey.png');
+  else if (num == 3 && now > num) return require('../../images/three_black.png');
+  else if (num == 3 && now == num) return require('../../images/three_orange.png');
+  else if (num == 3 && now < num) return require('../../images/three_grey.png');
+  else if (num == 4 && now > num) return require('../../images/four_black.png');
+  else if (num == 4 && now == num) return require('../../images/four_orange.png');
+  else if (num == 4 && now < num) return require('../../images/four_grey.png');
+  else if (num == 5 && now > num) return require('../../images/five_black.png');
+  else if (num == 5 && now == num) return require('../../images/five_orange.png');
+  else if (num == 5 && now < num) return require('../../images/five_grey.png');
+  else if (num == 6 && now == num) return require('../../images/six_orange.png');
+  else if (num == 6 && now < num) return require('../../images/six_grey.png');
+  else return "";
+}
 
-export const placeList = [
-  {
-    title:"清大羽球場",
-    sport:"羽球"
-  },
-  {
-    title:"交大羽球場",
-    sport:"羽球"
-  },
-  {
-    title:"清大運動場",
-    sport:"足球"
-  },
-  {
-    title:"清大棒球場",
-    sport:"棒球"
-  },
-  {
-    title:"清大籃球場",
-    sport:"籃球"
-  },
-  {
-    title:"新科羽球場",
-    sport:"羽球"
-  },
-  {
-    title:"交大運動場",
-    sport:"足球"
-  },
-  {
-    title:"光復籃球場",
-    sport:"籃球",
-  },
-  {
-    title:"交大籃球場",
-    sport:"籃球"
-  }
+const getEllipsis = (now,num) => {
+  if (now <= num) return require('../../images/ellipsis_grey.png');
+  else if (now > num) return require('../../images/ellipsis_black.png');
+  else return "";
+}
 
-];
+export const Card = ({sport}) => {
+  return (
+    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <Image style={{ height: 80, width: 80 }} source={getPic(sport)}></Image>
+      <Text>{sport}</Text>
+    </View>
+  );
+};
 
-export const peopleData = [
-  {title:"1"},{title:"2"},{title:"3"},{title:"4"},{title:"5"},{title:"6"},{title:"7"},{title:"8"},{title:"9"},{title:"10"},
-  {title:"11"},{title:"12"},{title:"13"},{title:"14"},{title:"15"},{title:"16"},{title:"17"},{title:"18"},{title:"19"},{title:"20"},
-  {title:"無上限"},
-];
+export const Progresss = (props) => {
+  return (
+    <View style={{ justifyContent: 'center', alignItems:'center',flexDirection:'row'}}>
+      <TouchableOpacity onPress={() => {props.pressnumber(props.now,1)}}>
+        <Image source={getProgressPic(props.now,1)} />
+      </TouchableOpacity>
+      <Image source={getEllipsis(props.now,1)} />
+      <TouchableOpacity onPress={() => {props.pressnumber(props.now,2)}}>
+        <Image source={getProgressPic(props.now,2)} />
+      </TouchableOpacity>
+      <Image source={getEllipsis(props.now,2)} />
+      <TouchableOpacity onPress={() => {props.pressnumber(props.now,3)}}>
+        <Image source={getProgressPic(props.now,3)} />
+      </TouchableOpacity>
+      <Image source={getEllipsis(props.now,3)} />
+      <TouchableOpacity onPress={() => {props.pressnumber(props.now,4)}}>
+        <Image source={getProgressPic(props.now,4)} />
+      </TouchableOpacity>
+      <Image source={getEllipsis(props.now,4)} />
+      <TouchableOpacity onPress={() => {props.pressnumber(props.now,5)}}>
+        <Image source={getProgressPic(props.now,5)} />
+      </TouchableOpacity>
+      <Image source={getEllipsis(props.now,5)} />
+      <TouchableOpacity onPress={() => {props.pressnumber(props.now,6)}}>
+        <Image source={getProgressPic(props.now,6)} />
+      </TouchableOpacity>
+    </View>
+  )
+}
 
 export const Tag = (props) => {
   if (props.title=="") return(<View></View>);
@@ -102,56 +87,48 @@ export const Tag = (props) => {
   );
 };
 
-export const PeopleItem = (props) => {
-  return (
-    <View style={[styles.currentJioContainer,{justifyContent:'center',height:60,alignItems:'center'}]}>
-    <Text style={styles.subtitle2}>{props.title}</Text>
-    </View>
+export const TagList = (props) => {
+  if (props.name != "" && props.times != -1) return (
+    <TouchableOpacity onPress={() => {props.f(props.name)}}>
+      <View style={[styles.currentJioContainer,{justifyContent:'space-between',alignItems:'center',paddingHorizontal:25}]}>
+        <Text style={styles.subtitle2}>{props.name}</Text>
+        <View style={{width:100}}></View>
+        <Text style={styles.subtitle3}>在貼文中找到{props.times}次</Text>
+      </View>
+    </TouchableOpacity>
   );
-};
+  else if (props.name != "" && props.times == -1) return (
+    <TouchableOpacity onPress={() => {props.f(props.name)}}>
+      <View style={[styles.currentJioContainer,{justifyContent:'space-between',alignItems:'center',paddingHorizontal:25}]}>
+        <View style={{width:30}}></View>
+        <Text style={styles.subtitle2}>創建一個"{props.name}"的Tag</Text>
+        <View style={{width:30}}></View>
+      </View>
+    </TouchableOpacity>
+  )
+  else return (<View></View>)
+}
 
 export const PlaceItem = (props) => {
-  if (props.sport=="棒球") return (
+  return (
     <View style={styles.currentJioContainer}>
-    <Image style={styles.sportIcon} source={require("../../images/baseball.png")}></Image>
+    <Image style={styles.sportIcon} source={getPic(props.sport)}></Image>
     <View style={[styles.currentJioContainer2,{justifyContent:'center'}]}>
-    <Text style={styles.subtitle2}>{props.title}</Text>
-    </View>
-    </View>);
-  else if (props.sport=="羽球") return (
-    <View style={styles.currentJioContainer}>
-    <Image style={styles.sportIcon} source={require("../../images/badminton.png")}></Image>
-    <View style={[styles.currentJioContainer2,{justifyContent:'center'}]}>
-    <Text style={styles.subtitle2}>{props.title}</Text>
+    <Text style={styles.subtitle2}>{props.name}</Text>
     </View>
     </View>
   );
-  else if (props.sport=="籃球") return (
-    <View style={styles.currentJioContainer}>
-    <Image style={styles.sportIcon} source={require("../../images/basketball.png")}></Image>
-    <View style={[styles.currentJioContainer2,{justifyContent:'center'}]}>
-    <Text style={styles.subtitle2}>{props.title}</Text>
-    </View>
-    </View>
-  );
-  else if (props.sport=="足球") return (
-    <View style={styles.currentJioContainer}>
-    <Image style={styles.sportIcon} source={require("../../images/soccer.png")}></Image>
-    <View style={[styles.currentJioContainer2,{justifyContent:'center'}]}>
-    <Text style={styles.subtitle2}>{props.title}</Text>
-    </View>
-    </View>
-  );
-  else return (<View></View>)
+
 };
 
-export const PastJioItem = ({title,sub}) => {
-  if (title=="羽球") return(
+export const PastJioItem = ({sport,start_time,end_time,people}) => {
+  const endhour = end_time.split(' ');
+  return(
     <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../../images/badminton.png")}></Image>
+      <Image style={styles.sportIcon} source={getPic(sport)}></Image>
       <View style={styles.currentJioContainer2}>
-        <Text style={styles.subtitle2}>{title}</Text>
-        <Text style={styles.subtitle3}>{sub}</Text>
+        <Text style={styles.subtitle2}>{sport}</Text>
+        <Text style={styles.subtitle3}>{start_time} ~ {endhour[1]} {people}人</Text>
       </View>
       <TouchableOpacity style={styles.launchAgain}
                         onPress={() => {}}>
@@ -159,86 +136,34 @@ export const PastJioItem = ({title,sub}) => {
       </TouchableOpacity>
     </View>
   );
-  else if  (title=="籃球") return(
-    <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../../images/basketball.png")}></Image>
-      <View style={styles.currentJioContainer2}>
-        <Text style={styles.subtitle2}>{title}</Text>
-        <Text style={styles.subtitle3}>{sub}</Text>
-      </View>
-      <TouchableOpacity style={styles.launchAgain}
-                        onPress={() => {}}>
-        <Text style={styles.ButtonWord}>再次發起</Text>
-        </TouchableOpacity>
-    </View>
-  );
-  else if (title=="足球") return(
-    <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../../images/soccer.png")}></Image>
-      <View style={styles.currentJioContainer2}>
-        <Text style={styles.subtitle2}>{title}</Text>
-        <Text style={styles.subtitle3}>{sub}</Text>
-      </View>
-      <TouchableOpacity style={styles.launchAgain}
-                        onPress={() => {}}>
-        <Text style={styles.ButtonWord}>再次發起</Text>
-        </TouchableOpacity>
-    </View>
-  );
-    else if (title=="棒球") return(
-      <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../../images/baseball.png")}></Image>
-      <View style={styles.currentJioContainer2}>
-        <Text style={styles.subtitle2}>{title}</Text>
-        <Text style={styles.subtitle3}>{sub}</Text>
-      </View>
-      <TouchableOpacity style={styles.launchAgain}
-                        onPress={() => {}}>
-        <Text style={styles.ButtonWord}>再次發起</Text>
-        </TouchableOpacity>
-    </View>
-    );
-    else return (<View></View>);
 }
   
-  export const CurrentJioItem = ({sport,time,people}) => {
-    if (sport=="羽球") return(
+export const CurrentJioItem = ({sport,start_time,end_time,people,posterid,userid}) => {
+  const endhour = end_time.split(' ');
+  if (userid == posterid) return(
     <View style={styles.currentJioContainer}>
-      <Image style={styles.sportIcon} source={require("../../images/badminton.png")}></Image>
+      <Image style={styles.sportIcon} source={getPic(sport)}></Image>
       <View style={styles.currentJioContainer2}>
         <Text style={styles.subtitle2}>{sport}</Text>
-        <Text style={styles.subtitle3}>{time} {people}</Text>
+        <Text style={styles.subtitle3}>{start_time} ~ {endhour[1]} {people}人</Text>
       </View>
-    </View>);
-    else if (sport=="籃球") return(
-      <View style={styles.currentJioContainer}>
-        <Image style={styles.sportIcon} source={require("../../images/basketball.png")}></Image>
-        <View style={styles.currentJioContainer2}>
-          <Text style={styles.subtitle2}>{sport}</Text>
-          <Text style={styles.subtitle3}>{time} {people}</Text>
-        </View>
+      <TouchableOpacity style={styles.launchAgain}
+                        onPress={() => {}}>
+        <Text style={styles.ButtonWord}>編輯</Text>
+      </TouchableOpacity>
+    </View>
+  );
+  else return (
+    <View style={styles.currentJioContainer}>
+      <Image style={styles.sportIcon} source={getPic(sport)}></Image>
+      <View style={styles.currentJioContainer2}>
+        <Text style={styles.subtitle2}>{sport}</Text>
+        <Text style={styles.subtitle3}>{start_time} ~ {endhour[1]} {people}人</Text>
       </View>
-    );
-    else if (sport=="棒球") return(
-      <View style={styles.currentJioContainer}>
-        <Image style={styles.sportIcon} source={require("../../images/baseball.png")}></Image>
-        <View style={styles.currentJioContainer2}>
-          <Text style={styles.subtitle2}>{sport}</Text>
-          <Text style={styles.subtitle3}>{time} {people}</Text>
-        </View>
-      </View>
-    );
-    else if (sport=="足球") return(
-      <View style={styles.currentJioContainer}>
-        <Image style={styles.sportIcon} source={require("../../images/soccer.png")}></Image>
-        <View style={styles.currentJioContainer2}>
-          <Text style={styles.subtitle2}>{sport}</Text>
-          <Text style={styles.subtitle3}>{time} {people}</Text>
-        </View>
-      </View>
-    );
-    else return (<View></View>);
-  }
+    </View>
+  );
+}
+
   
 
   const styles = StyleSheet.create({
@@ -268,7 +193,7 @@ export const PastJioItem = ({title,sub}) => {
     subtitle4:{
       fontSize:15,
       marginLeft:8,
-      paddingTop:4
+      paddingTop:3
     },
     underOrangeLine:{
       height:6,
@@ -291,7 +216,7 @@ export const PastJioItem = ({title,sub}) => {
     },
     currentJioContainer2:{
       flexDirection: 'column',
-      marginLeft:30
+      marginLeft:15
     },
     launchAgain:{
       justifyContent: 'center',
@@ -305,7 +230,8 @@ export const PastJioItem = ({title,sub}) => {
     tagContainer:{
       borderRadius:5,
       backgroundColor:'#AEAEAE',
-      marginHorizontal:5,
+      marginHorizontal:10,
+      marginBottom:12,
       flexDirection:'row',
     }, 
     xmarkcontainer:{

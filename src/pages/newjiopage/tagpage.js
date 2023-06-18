@@ -1,66 +1,65 @@
-import React, {useState, Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView, SectionList, TextInput } from 'react-native';
+import axios from 'axios';
 
-import { Tag, Progresss } from '../utility/utility_JioJio.js';
+import { Tag, TagList } from '../utility/utility_JioJio';
 
-export default class Page6 extends React.Component {
-    constructor(props) {
+export default class TagPage extends React.Component{
+    constructor(props){
         super(props);
+        this.state={
+            search:"",
+            list:[]
+        }
+
+        const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+        
+        axios.get(`${url}/tags`).then(res => {
+            this.setState({...this.state,list:[...res.data.tags]});
+        })
     }
 
-    render() {
+    render(){
         const tagList = this.props.stat.tag.map((item) => { return (<Tag title={item} f={this.deleteTag.bind(this)}></Tag>) })
+        const searchList = this.state.list.map((item) => { return (<TagList name={item.name} times={item.times} f={this.onSelectTag.bind(this)}/>)})
 
-        return (
+        return(
             <View style={styles.container}>
                 <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
-                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
+                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={async () => {this.props.navigation.navigate('page6') }}>
                         <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
-                        <Text style={styles.title}>新的揪揪</Text>
+                        <Text style={styles.title}>Tags</Text>
                         <View style={styles.underOrangeLine}></View>
                     </View>
                     <View style={{height:40,width:40}}></View>
                 </View>
 
-                <View style={{flex:50,justifyContent:'center'}}>
-                    <Progresss now={6} 
-                               pressnumber={this.handlePressNumber.bind(this)} />
-                </View>
-
-                <View style={{flex:50, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={styles.subtitle}>補充一下你的揪揪吧</Text>
-                </View>
-
-                <View style={{flex:400,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-                    <ScrollView>
-                        <View style={{flexDirection:'row'}}>
-                            <Text style={styles.subtitle1}>Tags:</Text>
-                            <View style={{flexDirection:'column',alignItems:'flex-start'}}>
-                                {tagList}
-                                <TouchableOpacity onPress={this.handlePressAdd.bind(this)}><Text style={[styles.subtitle1, { marginLeft: 20, color: 'grey' }]}>+</Text></TouchableOpacity>
-                            </View>
+                <View style={{flex:200,justifyContent:'center'}}>
+                    <ScrollView style={{marginTop:30}}>
+                    <View style={{flexDirection:'row'}}>
+                        <Text style={styles.subtitle1}>目前的Tags:</Text>
+                        <View style={{flexDirection:'column',alignItems:'flex-start'}}>
+                            {tagList}
                         </View>
-                        <Text style={[styles.subtitle1, { marginTop:10 }]}>備註:</Text>
-                        <View style={{ backgroundColor: '#FFF9E9', width: 300, borderRadius: 5, borderColor: '#000000', borderWidth: 1, marginTop: 20 }}>
-                            <TextInput
-                                        editable
-                                        multiline
-                                        numberOfLines={8}
-                                        maxLength={100}
-                                        onChangeText={(text) => { this.props.finishSelectTagMemo(this.props.stat.tag,text); }}
-                                        value={this.props.stat.memo}
-                                        style={{ padding: 10, fontSize: 18 }}
-                            />
-                            </View>
+                    </View>
+                    </ScrollView>
+                </View>
+
+                <View style={{flex:300,flexDirection:'column',alignItems:'center',justifyContent:'center',paddingTop:30}}>
+                    
+                    <TextInput onChangeText={(newText) => {this.handleSearchTextChange(newText)}}
+                                value={this.state.search}
+                                placeholder=" 搜尋"
+                                style={{borderColor:'black',fontSize:23,width:300,borderRadius:10,backgroundColor:'#CECECE'}}/>
+                    <ScrollView>
+                        {searchList}
                     </ScrollView>
                 </View>
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
-                    <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
-                        <Text style={styles.subtitle2}>下一步</Text>
-                    </TouchableOpacity>
+                    
                 </View>
 
                 <View style={{flex:5}}></View>
@@ -68,31 +67,38 @@ export default class Page6 extends React.Component {
         );
     }
 
-    handlePressAdd = async () => {
-        this.props.navigation.navigate('tagpage');
+    onSelectTag = (name) => {
+        var code = 1;
+        for (let i=0;i<this.props.stat.tag.length;i++){
+            if (this.props.stat.tag[i] == name) code = 0;
+        }
+        if (code) this.props.finishEditTag([...this.props.stat.tag,name]);
     }
 
-    handlePressNumber =  (now,page) => {
-        if (page <= now) this.props.navigation.navigate(`page${page}`);
+    handleSearchTextChange = (newText) => {
+        this.setState({...this.state,search:newText})
+        const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+        
+        axios.get(`${url}/tags`,{
+            params:{
+                name:newText
+            }
+        }).then(res => {
+            if (res.data.status == "ok") this.setState({...this.state,list:[...res.data.tags,{name:"",times:-1}]});
+            else this.setState({...this.state,list:[{name:newText,times:-1}]});
+        })
     }
 
     deleteTag = (title) => {
         const pos = this.props.stat.tag.indexOf(title);
-        if (this.props.stat.tag.length == 1) this.props.finishSelectTagMemo([], this.props.stat.memo);
+        if (this.props.stat.tag.length == 1) this.props.finishEditTag([]);
         else {
             const newList = this.props.stat.tag;
             newList.splice(pos,1);
-            this.props.finishSelectTagMemo(newList, this.props.stat.memo);
+            this.props.finishEditTag(newList);
         }
     }
-
-    handleNextPage = async () => {
-        this.props.navigation.navigate('verify');
-    }
-
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
