@@ -1,51 +1,48 @@
-import React, { Component } from 'react';
+import React, { useState} from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
+import {useNavigation} from '@react-navigation/core';
+import { PastJioItem, CurrentJioItem, CurrentJioList, PastJioList} from '../utility/utility_JioJio.js';
 
-import { PastJioItem, CurrentJioItem } from '../utility/utility_JioJio.js';
 
-
-export default class Overview extends React.Component {
-
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView nestedScrollEnabled={true} style={styles.ScrollView}>
-          <View style={{ flexDirection: 'column' }}>
-            <View style={{ height: 50 }}></View>
-            <View style={{ height: 86, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={styles.title}>揪揪</Text>
-              <View style={styles.underOrangeLine}></View>
+const Overview = () => {
+  const navigation = useNavigation();
+  const handleLaunchNewJio = () => {
+    navigation.navigate("page1");
+  }
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView nestedScrollEnabled={true} style={styles.ScrollView}>
+        <View style={{ flexDirection: 'column' }}>
+          <View style={{ height: 50 }}></View>
+          <View style={{ height: 86, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={styles.title}>揪揪</Text>
+            <View style={styles.underOrangeLine}></View>
+          </View>
+          <View style={styles.listStyle}>
+            <Text style={styles.subtitle}>正在進行的揪揪</Text>
+            <View style={{ height: 150 }}>
+              <FlatList nestedScrollEnabled={true}
+                data={CurrentJioList}
+                renderItem={({ item }) => { return <CurrentJioItem sport={item.sport} time={item.time} people={item.people} />; }}
+              />
             </View>
-            <View style={styles.listStyle}>
-              <Text style={styles.subtitle}>正在進行的揪揪</Text>
-              <View style={{ height: 150 }}>
-                <FlatList nestedScrollEnabled={true}
-                  data={this.props.stat.curJioList}
-                  renderItem={({ item }) => { return <CurrentJioItem sport={item.sport} time={item.time} people={item.people} />; }}
-                />
-              </View>
-              <Text style={styles.subtitle}>之前發起過的揪揪</Text>
-              <View style={{ height: 300 }}>
-                <FlatList nestedScrollEnabled={true}
-                  data={this.props.stat.pastJioList}
-                  renderItem={({ item }) => { return <PastJioItem title={item.title} sub={item.sub} />; }}
-                />
-              </View>
-            </View>
-            <View style={{ alignItems: 'center', marginTop: 35 }}>
-              <TouchableOpacity style={styles.launchNew} onPress={this.handleLaunchNewJio.bind(this)}>
-                <Text style={styles.launchNewText}>發起新的揪揪</Text>
-              </TouchableOpacity>
+            <Text style={styles.subtitle}>之前發起過的揪揪</Text>
+            <View style={{ height: 300 }}>
+              <FlatList nestedScrollEnabled={true}
+                data={PastJioList}
+                renderItem={({ item }) => { return <PastJioItem title={item.title} sub={item.sub} />; }}
+              />
             </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
-
-  handleLaunchNewJio() {
-    this.props.navigation.navigate("page1");
-  }
+          <View style={{ alignItems: 'center', marginTop: 35 }}>
+            <TouchableOpacity style={styles.launchNew} onPress={handleLaunchNewJio}>
+              <Text style={styles.launchNewText}>發起新的揪揪</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -118,3 +115,5 @@ const styles = StyleSheet.create({
 
   }
 });
+
+export default Overview;
