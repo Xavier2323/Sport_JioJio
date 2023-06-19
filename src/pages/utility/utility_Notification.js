@@ -1,5 +1,6 @@
 import React, {useState, Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const getPic = sport => {
     if (sport == "羽球") return require('../../images/badminton.png');
@@ -13,17 +14,22 @@ const getPic = sport => {
     else return "";
 }
 
-export const NotificationItems = ({ sport, posterid, process}) => {
+export const NotificationItems = ({posterprofile, post, navigation}) => {
+    //const navigation = useNavigation();
+
+    const gotoDetails = () => {
+        navigation.navigate('postdetail');
+    }
     return (
         <View style={styles.NotificationContainer}>
             <Image style={styles.sportIcon} source={require("../../images/badminton.png")} alignSelf='center'></Image>
             <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>{posterid}同意你的加入</Text>
+                <Text style={styles.UpperPart}>{posterprofile.name}同意你的加入</Text>
                 <View style={styles.LowerPart}>
                     <Text style={{flex: 1}}>
-                        {sport}
+                        {post.sport}
                     </Text>
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
+                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }} onPress={gotoDetails}>
                             <Image source={require('../../images/DetailsButton.png')}/>
                     </TouchableOpacity>
                 </View>
@@ -33,17 +39,22 @@ export const NotificationItems = ({ sport, posterid, process}) => {
     );
 }
 
-export const ApprovalItems = ({ sport, applicant}) => {
+export const ApprovalItems = ({applicantprofile, post, navigation}) => {
+    //const navigation = useNavigation();
+
+    const gotoDetails = () => {
+        navigation.navigate('postdetail');
+    }
     return (
         <View style={styles.NotificationContainer}>
             <Image style={styles.sportIcon} source={require("../../images/badminton.png")} alignSelf='center'></Image>
             <View style={styles.informationContainer} alignSelf='center'>
-                <Text style={styles.UpperPart}>{applicant}想加入你的活動</Text>
+                <Text style={styles.UpperPart}>{applicantprofile.name}想加入你的活動</Text>
                 <View style={styles.LowerPart}>
                     <Text style={{flex: 1}}>
-                        {sport}
+                        {post.sport}
                     </Text>
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
+                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }} onPress={gotoDetails}>
                             <Image source={require('../../images/DetailsButton.png')}/>
                     </TouchableOpacity>
                 </View>
@@ -53,7 +64,12 @@ export const ApprovalItems = ({ sport, applicant}) => {
     );
 }
 
-export const ReminderItems = ({ sport, start_time}) => {
+export const ReminderItems = ({ sport, start_time, navigation}) => {
+    //const navigation = useNavigation();
+
+    const gotoDetails = () => {
+        navigation.navigate('postdetail');
+    }
     const date = start_time.split(' ')[0], time = start_time.split(' ')[1];
     return (
         <View style={styles.NotificationContainer}>
@@ -64,7 +80,7 @@ export const ReminderItems = ({ sport, start_time}) => {
                     <Text style={{flex: 1}}>
                         {sport}
                     </Text>
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
+                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', borderRadius: 100 }} onPress={gotoDetails}>
                             <Image source={require('../../images/DetailsButton.png')}/>
                     </TouchableOpacity>
                 </View>
