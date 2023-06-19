@@ -4,7 +4,7 @@ import { NotificationItems } from '../utility/utility_Notification';
 import axios from 'axios';
 
 const NotifyScreen = () => {
-    const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+    const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
     const [NotifyList, setList] = useState([]);
 
     axios.get(`${url}/applys`,{

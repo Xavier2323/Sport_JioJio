@@ -45,9 +45,7 @@ export default class DiscoverScreen extends React.Component{
                 <Stack.Screen name='success'>
                     {(props) => <Success {...props} statee = {this.state}/>}
                 </Stack.Screen>
-                <Stack.Screen name="Notification">
-                    {(props) => <NotificationScreen {...props} statee = {this.state}/>}
-                </Stack.Screen>
+                <Stack.Screen name="Notification" component={NotificationScreen} />
                 <Stack.Screen name="Personal">
                     {(props) => <PersonalScreen {...props} statee = {this.state}/>}
                 </Stack.Screen>

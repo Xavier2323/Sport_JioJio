@@ -4,7 +4,7 @@ import {ReminderItems} from '../utility/utility_Notification';
 import axios from 'axios';
 
 const ReminderScreen = () => {
-    const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+    const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
     const [ReminderList, setList] = useState([]);
 
     axios.get(`${url}/posts`,{
