@@ -5,100 +5,109 @@ import Post from './Post';
 
 const dummyData = [
   {
-    avatar: '../assets/me.jpg',
-    sportName: '棒球',
+    avatar: '../../images/category_images/me.jpg',
+    sportName: '羽球',
     location: '清大校友體育館',
     time: '10:00-12:00',
     participants: '5/8',
     detailText: '詳情',
     joinText: '報名',
+    date: '5/18'
   },
   {
-      avatar: "../assets/icon_badminton.png",
-      sportIcon: "../assets/icon_badminton.png",
-      sportName: "棒球",
+      avatar: "../../images/category_images/icon_badminton.png",
+      sportIcon: "../../images/category_images/icon_badminton.png",
+      sportName: "羽球",
       location: "交大室外排球場",
       time: "14:00 - 16:00",
       participants: "7/10",
-      alarmIcon: "../assets/icon_badminton.png",
+      alarmIcon: "../../images/category_images/icon_badminton.png",
       detailText: "詳情",
       joinText: "報名",
+      date: '5/18'
   },
   {
-      avatar: "../assets/icon_badminton.png",
-      sportIcon: "../assets/icon_badminton.png",
-      sportName: "棒球",
+      avatar: "../../images/category_images/icon_badminton.png",
+      sportIcon: "../../images/category_images/icon_badminton.png",
+      sportName: "羽球",
       location: "清大校友體育館",
       time: "14:00 - 16:00",
       participants: "7/10",
-      alarmIcon: "../assets/icon_badminton.png",
+      alarmIcon: "../../images/category_images/icon_badminton.png",
       detailText: "詳情",
       joinText: "報名",
+      date: '5/18'
   },
   {
-      avatar: "../assets/icon_badminton.png",
-      sportIcon: "../assets/icon_badminton.png",
-      sportName: "棒球",
+      avatar: "../../images/category_images/icon_badminton.png",
+      sportIcon: "../../images/category_images/icon_badminton.png",
+      sportName: "羽球",
       location: "清大校友體育館",
       time: "14:00 - 16:00",
       participants: "7/10",
-      alarmIcon: "../assets/icon_badminton.png",
+      alarmIcon: "../../images/category_images/icon_badminton.png",
       detailText: "詳情",
       joinText: "報名",
+      date: '5/18'
   },
   {
-      avatar: "../assets/icon_badminton.png",
-      sportIcon: "../assets/icon_badminton.png",
-      sportName: "棒球",
+      avatar: "../../images/category_images/icon_badminton.png",
+      sportIcon: "../../images/category_images/icon_badminton.png",
+      sportName: "羽球",
       location: "清大校友體育館",
       time: "14:00 - 16:00",
       participants: "7/10",
-      alarmIcon: "../assets/icon_badminton.png",
+      alarmIcon: "../../images/category_images/icon_badminton.png",
       detailText: "詳情",
       joinText: "報名",
+      date: '5/18'
   },
   {
-      avatar: "../assets/icon_badminton.png",
-      sportIcon: "../assets/icon_badminton.png",
-      sportName: "棒球",
+      avatar: "../../images/category_images/icon_badminton.png",
+      sportIcon: "../../images/category_images/icon_badminton.png",
+      sportName: "羽球",
       location: "清大校友體育館",
       time: "14:00 - 16:00",
       participants: "7/10",
-      alarmIcon: "../assets/icon_badminton.png",
+      alarmIcon: "../../images/category_images/icon_badminton.png",
       detailText: "詳情",
       joinText: "報名",
+      date: '5/18'
   },
   {
-      avatar: "../assets/icon_badminton.png",
-      sportIcon: "../assets/icon_badminton.png",
-      sportName: "棒球",
+      avatar: "../../images/category_images/icon_badminton.png",
+      sportIcon: "../../images/category_images/icon_badminton.png",
+      sportName: "羽球",
       location: "清大校友體育館",
       time: "14:00 - 16:00",
       participants: "7/10",
-      alarmIcon: "../assets/icon_badminton.png",
+      alarmIcon: "../../images/category_images/icon_badminton.png",
       detailText: "詳情",
       joinText: "報名",
+      date: '5/18'
   },
   {
-      avatar: "../assets/icon_badminton.png",
-      sportIcon: "../assets/icon_badminton.png",
-      sportName: "棒球",
+      avatar: "../../images/category_images/icon_badminton.png",
+      sportIcon: "../../images/category_images/icon_badminton.png",
+      sportName: "羽球",
       location: "清大校友體育館",
       time: "14:00 - 16:00",
       participants: "7/10",
-      alarmIcon: "../assets/icon_badminton.png",
+      alarmIcon: "../../images/category_images/icon_badminton.png",
       detailText: "詳情",
       joinText: "報名",
+      date: '5/18'
   },
     
 ];
 
-export default function BaseballPage() {
+const BadmintonPage = ({ route }) => {
   const navigation = useNavigation();
+  const { data } = route.params;
 
   useEffect(() => {
     navigation.setOptions({
-      title: '棒球',
+      title: data,
       headerTitleStyle: {
         fontFamily: 'Arial', // Set your desired font family
         fontSize: 20, // Set your desired font size
@@ -130,3 +139,5 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+
+export default BadmintonPage;

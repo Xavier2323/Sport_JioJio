@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const PostDetail = ({ route }) => {
   const { data } = route.params;
+  const navigation = useNavigation();
+  const handleImagePress = (destination,data) => {
+    navigation.navigate(destination,{data});
+  };
+  useEffect(() => {
+    navigation.setOptions({
+      title: '詳情',
+      headerTitleStyle: {
+        fontFamily: 'Arial', // Set your desired font family
+        fontSize: 20, // Set your desired font size
+        fontWeight: 'bold', // Set your desired font weight
+      },
+    });
+  }, );
 
   return (
     <View style={styles.container}>
-      <Image style={styles.avatar} source={require('../assets/me2.png')} />
+      <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
       <Text>{data.posterName}</Text>
       <Text>運動種類: {data.sportName}</Text>
       <Text>日期: {data.date}</Text>
@@ -21,14 +36,14 @@ const PostDetail = ({ route }) => {
       <Text>已報名:</Text>
       <View style={styles.avatarRow}>
       
-        <Image style={styles.avatar} source={require('../assets/me2.png')} />
-        <Image style={styles.avatar} source={require('../assets/me2.png')} />
-        <Image style={styles.avatar} source={require('../assets/me2.png')} />
-        <Image style={styles.avatar} source={require('../assets/me2.png')} />
-        <Image style={styles.avatar} source={require('../assets/me2.png')} />
+        <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
+        <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
+        <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
+        <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
+        <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="報名" onPress={() => console.log('報名')} />
+        <Button title="報名" onPress={() => handleImagePress('JoinSuccess',data)} />
       </View>
     </View>
   );

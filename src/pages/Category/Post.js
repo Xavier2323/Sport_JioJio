@@ -1,8 +1,15 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import StackNavigator from './Category';
+import { useNavigation } from '@react-navigation/native';
 
-const Post = ({ data, navigation }) => {
+const Post = ({ data }) => {
+  const navigation = useNavigation();
+  const handleImagePress = (destination,data) => {
+    navigation.navigate(destination,{data});
+  };
+  const handleJoinPress = () => {
+    setIsJoined(true);
+  };
   
   console.log(data.avatar);
   return(
@@ -10,7 +17,7 @@ const Post = ({ data, navigation }) => {
     <View style={styles.avatarContainer}>
       <Image
         style={styles.avatar}
-        source={require('../../../assets/me2.png')}
+        source={require('../../images/category_images/me2.png')}
         //source={require(data.avatar)}
       />
 
@@ -35,13 +42,13 @@ const Post = ({ data, navigation }) => {
     </View>
 
     <View>
-      <TouchableOpacity style={styles.button1} onPress={() => navigateToPageDetail(data)}>
+      <TouchableOpacity style={styles.button1} onPress={() => handleImagePress('PostDetail',data)}>
         <Text>{data.detailText}</Text>
       </TouchableOpacity>
 
-      <View style={styles.button2}>
+      <TouchableOpacity style={styles.button2} onPress={() => handleImagePress('JoinSuccess',data)}>
         <Text>{data.joinText}</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   </View>
 );}
