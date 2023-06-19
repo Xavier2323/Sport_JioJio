@@ -1,24 +1,26 @@
 import React, {useState, Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, TextInput } from 'react-native';
 
-
-import { Progresss } from '../utility/utility_JioJio';
+import { peopleData, PeopleItem, Progresss } from '../utility/utility_JioJio.js';
 
 export default class Page4 extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            visibilityFrom: false,
-            visibilityTo: false
-        }
     }
 
     render() {
+        const progress = this.props.stat.editing == 0 ? (
+            <View style={{flex:50,justifyContent:'center'}}>
+                    <Progresss now={4}
+                               pressnumber={this.handlePressNumber.bind(this)}/>
+                </View>
+        ) : (
+            <View style={{flex:50,justifyContent:'center'}}></View>
+        );
         return (
             <View style={styles.container}>
                 <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
-                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { this.props.reset(); this.props.navigation.navigate('overview') }}>
+                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={() => { if (this.props.stat.editing == 1) this.props.navigation.navigate('postedit'); else {this.props.reset(); this.props.navigation.navigate('overview');} }}>
                         <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
@@ -28,41 +30,37 @@ export default class Page4 extends React.Component {
                     <View style={{height:40,width:40}}></View>
                 </View>
 
-                <View style={{flex:50,justifyContent:'center'}}>
-                    <Progresss now={4} 
-                               pressnumber={this.handlePressNumber.bind(this)} />
-                </View>
+                {progress}
 
                 <View style={{flex:50, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={styles.subtitle}>請選擇運動時段</Text>
+                    <Text style={styles.subtitle}>請{this.props.stat.editing==1?"編輯":"選擇"}運動人數</Text>
                 </View>
 
-                <View style={{flex:400, justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
-                    <Text style={{fontSize:30}}>開始時間</Text>
-                    <TouchableOpacity onPress={() => {this.setState({visibilityFrom:true})}}>
-                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.from ? this.props.stat.from.toLocaleTimeString() : "No time selected"}</Text>
-                    </TouchableOpacity>
-                    <DateTimePickerModal isVisible={this.state.visibilityFrom}
-                                                mode='time'
-                                                date={this.props.stat.from}
-                                                onConfirm={(from) => {this.setState({visibilityFrom:false}); this.props.finishSelectTime(from,this.props.stat.to)}}
-                                                onCancel={() => {this.setState({visibilityFrom:false})}}
-                                                />
-                    <Text style={{fontSize:30,marginTop:40}}>結束時間</Text>
-                    <TouchableOpacity onPress={() => {this.setState({visibilityTo:true})}}>
-                        <Text style={{fontSize:30,marginVertical:20,color:'#007EE5'}}>{this.props.stat.to ? this.props.stat.to.toLocaleTimeString() : "No time selected"}</Text>
-                    </TouchableOpacity>
-                    <DateTimePickerModal isVisible={this.state.visibilityTo}
-                                                mode='time'
-                                                date={this.props.stat.to}
-                                                onConfirm={(to) => {this.setState({visibilityTo:false}); this.props.finishSelectTime(this.props.stat.from,to)}}
-                                                onCancel={() => {this.setState({visibilityTo:false})}}
-                                                />
+                <View style={{flex:400, justifyContent:'center', alignItems:'center'}}>
+                    <View style={styles.containerColumn}>
+                        <TextInput onChangeText={(newText) => {this.props.finishSelectPeople(newText)}}
+                                   value={this.props.stat.people}
+                                   keyboardType="numeric" 
+                                   textAlign='center'
+                                   style={{borderColor:'black',borderWidth:1,width:150,fontSize:30}}/>
+                        <View style={[styles.containerRow,{justifyContent:'center', alignItems:'center'}]}>
+                            <TouchableOpacity onPress={() => {const newNum = parseInt(this.props.stat.people) <= 1 ? 1 : parseInt(this.props.stat.people)-1; this.props.finishSelectPeople(newNum.toString());}}>
+                                <View style={{width:50,height:50,margin:10,justifyContent:'center',alignItems:'center'}}>
+                                    <Image style={{height:50,width:50}} source={require('../../images/minus.png')}/>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => {const newNum = parseInt(this.props.stat.people) + 1; this.props.finishSelectPeople(newNum.toString());}}>
+                                <View style={{width:50,height:50,margin:10,justifyContent:'center',alignItems:'center'}}>
+                                    <Image style={{height:50,width:50}} source={require('../../images/plus.png')}/>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
                     <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleNextPage.bind(this)}>
-                        <Text style={styles.subtitle2}>下一步</Text>
+                        <Text style={styles.subtitle2}>{(this.props.stat.tagpageBack == 0 && this.props.stat.editing == 0) ? "下一步" : "確認"}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -72,10 +70,14 @@ export default class Page4 extends React.Component {
     }
 
     handlePressNumber =  (now,page) => {
+        if (parseInt(this.props.stat.people) <= 0) this.props.finishSelectPeople("1");
         if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
+
     handleNextPage = async () => {
-        this.props.navigation.navigate('page5');
+        if (this.props.stat.tagpageBack == 0 && this.props.stat.editing == 0) this.props.navigation.navigate("page5");
+        else if (this.props.stat.editing == 1) this.props.navigation.navigate('postedit');
+        else {this.props.setTagpageBack(0); this.props.navigation.navigate('verify');}
     }
 
 }
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
       },
     containerColumn: {
         flexDirection: 'column',
-        marginHorizontal: 0
+        justifyContent:'center'
     },
     containerRow: {
         flexDirection: 'row',

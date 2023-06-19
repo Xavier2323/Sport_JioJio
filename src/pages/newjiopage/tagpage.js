@@ -12,7 +12,7 @@ export default class TagPage extends React.Component{
             list:[]
         }
 
-        const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+        const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
         
         axios.get(`${url}/tags`).then(res => {
             this.setState({...this.state,list:[...res.data.tags]});
@@ -26,7 +26,7 @@ export default class TagPage extends React.Component{
         return(
             <View style={styles.container}>
                 <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
-                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={async () => {this.props.navigation.navigate('page6') }}>
+                    <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={async () => {if (this.props.stat.tagpageBack == 0) this.props.navigation.navigate('page5'); else if (this.props.stat.tagpageBack == 2) this.props.navigation.navigate('postedit'); else {this.props.navigation.navigate('verify'); this.props.setTagpageBack(0);} }}>
                         <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
@@ -77,7 +77,7 @@ export default class TagPage extends React.Component{
 
     handleSearchTextChange = (newText) => {
         this.setState({...this.state,search:newText})
-        const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+        const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
         
         axios.get(`${url}/tags`,{
             params:{
