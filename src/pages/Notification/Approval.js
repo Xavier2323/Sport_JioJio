@@ -3,12 +3,12 @@ import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableO
 import { ApprovalItems} from '../utility/utility_Notification';
 import axios from 'axios';
 
-const ApprovalScreen = () => {
+const ApprovalScreen = ({navigation,statee}) => {
     const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
     const [ApprovalList, setList] = useState([]);
     axios.get(`${url}/applys/profileandpost`,{
         params:{
-          posterid: 2,
+          posterid: statee.userid,
           process: 0
         }
     }).then(res => {
@@ -25,7 +25,7 @@ const ApprovalScreen = () => {
                 <FlatList
                     nestedScrollEnabled={true}
                     data={ApprovalList}
-                    renderItem={({ item }) => { return <ApprovalItems {...item} />; }}
+                    renderItem={({ item }) => { return <ApprovalItems navigation={navigation} {...item} /> ;}}
                     />
             </View>
             </SafeAreaView>

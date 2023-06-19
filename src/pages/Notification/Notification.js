@@ -10,8 +10,8 @@ import ReminderScreen from './Reminder';
 
 const Tab = createMaterialTopTabNavigator();
 
-const NotificationScreen = () => {
-    const navigation = useNavigation();
+const NotificationScreen = ({navigation,statee}) => {
+    //const navigation = useNavigation();
 
     const goBacktoDiscover = () => {
         navigation.navigate('main');
@@ -30,9 +30,15 @@ const NotificationScreen = () => {
                 tabBarStyle: {width: '90%', height: '8%', borderRadius: 10, alignSelf: 'center', position: 'relative'}
 
             }}>
-                <Tab.Screen name="通知" component={NotifyScreen}/>
-                <Tab.Screen name="待審核" component={ApprovalScreen}/>
-                <Tab.Screen name="活動提醒" component={ReminderScreen}/>
+                <Tab.Screen name="通知">
+                    {(props) => <NotifyScreen {...props} navigation={navigation} statee={statee}/>}
+                </Tab.Screen>
+                <Tab.Screen name="待審核">
+                    {(props) => <ApprovalScreen {...props} navigation={navigation} statee={statee}/>}
+                </Tab.Screen>
+                <Tab.Screen name="活動提醒">
+                    {(props) => <ReminderScreen {...props} navigation={navigation} statee={statee}/>}
+                </Tab.Screen>
             </Tab.Navigator>
         </NavigationContainer>
     )

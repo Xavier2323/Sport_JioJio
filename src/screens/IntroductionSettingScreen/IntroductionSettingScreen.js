@@ -7,7 +7,7 @@ import {useForm} from 'react-hook-form';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from 'axios';
 
-const IntroductionSettingScreen = () => {
+const IntroductionSettingScreen = ({setUserid}) => {
   const {control, handleSubmit} = useForm();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
@@ -37,9 +37,10 @@ const IntroductionSettingScreen = () => {
 
       //建立userid
       const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/users/create?account=${username}&name=${nickname}&schoolgrade=${school}&intro=${data.Introduction}`;
-      await axios.post(url).then(res => {
+      await axios.post(url).then(async(res) => {
         console.log(res.data)
         AsyncStorage.setItem('Data_id', JSON.stringify(res.data.profile.userid));
+        await setUserid(res.data.profile.userid);
       }).catch(err => {console.log(err)})
 
       navigation.navigate('Home');

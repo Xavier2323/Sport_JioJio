@@ -10,8 +10,11 @@ const Post = ({ data }) => {
   const handleJoinPress = () => {
     setIsJoined(true);
   };
-  
-  console.log(data.avatar);
+  const taglist = data.tags == null ? <View></View> : data.tags.map((item,index) => {if (index>=2 || item == "") return <View></View>; else return(
+    <View style={styles.tag}>
+        <Text style={styles.tagText}>{item}</Text>
+    </View>)});
+  //console.log(data.avatar);
   return(
   <View style={styles.post}>
     <View style={styles.avatarContainer}>
@@ -25,29 +28,24 @@ const Post = ({ data }) => {
         <View style={styles.tag_main}>
           <Text style={styles.tagMain}>tag:</Text>
         </View>
-        <View style={styles.tag}>
-          <Text style={styles.tagText}>新手</Text>
-        </View>
-        <View style={styles.tag}>
-          <Text style={styles.tagText}>友善</Text>
-        </View>
+        {taglist}
       </View>
     </View>
       
     <View style={styles.info}>
-      <Text>{data.sportName }</Text>
-      <Text>{data.location}</Text>
-      <Text>{data.time}</Text>
-      <Text>{data.participants}</Text>
+      <Text>{data.sport}</Text>
+      <Text>{data.place}</Text>
+      <Text>{data.start_time}</Text>
+      <Text>/{data.people}</Text>
     </View>
 
     <View>
       <TouchableOpacity style={styles.button1} onPress={() => handleImagePress('PostDetail',data)}>
-        <Text>{data.detailText}</Text>
+        <Text>詳情</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button2} onPress={() => handleImagePress('JoinSuccess',data)}>
-        <Text>{data.joinText}</Text>
+        <Text>報名</Text>
       </TouchableOpacity>
     </View>
   </View>

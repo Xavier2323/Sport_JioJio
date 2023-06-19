@@ -14,8 +14,8 @@ const getPic = sport => {
     else return "";
 }
 
-export const NotificationItems = ({posterprofile, post}) => {
-    const navigation = useNavigation();
+export const NotificationItems = ({posterprofile, post, navigation}) => {
+    //const navigation = useNavigation();
 
     const gotoDetails = () => {
         navigation.navigate('postdetail');
@@ -39,8 +39,8 @@ export const NotificationItems = ({posterprofile, post}) => {
     );
 }
 
-export const ApprovalItems = ({applicantprofile, post}) => {
-    const navigation = useNavigation();
+export const ApprovalItems = ({applicantprofile, post, navigation}) => {
+    //const navigation = useNavigation();
 
     const gotoDetails = () => {
         navigation.navigate('postdetail');
@@ -64,8 +64,8 @@ export const ApprovalItems = ({applicantprofile, post}) => {
     );
 }
 
-export const ReminderItems = ({ sport, start_time}) => {
-    const navigation = useNavigation();
+export const ReminderItems = ({ sport, start_time, navigation}) => {
+    //const navigation = useNavigation();
 
     const gotoDetails = () => {
         navigation.navigate('postdetail');

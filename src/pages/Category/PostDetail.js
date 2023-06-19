@@ -12,25 +12,24 @@ const PostDetail = ({ route }) => {
     navigation.setOptions({
       title: '詳情',
       headerTitleStyle: {
-        fontFamily: 'Arial', // Set your desired font family
         fontSize: 20, // Set your desired font size
         fontWeight: 'bold', // Set your desired font weight
       },
     });
   }, );
-
+  console.log(data);
   return (
     <View style={styles.container}>
       <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
       <Text>{data.posterName}</Text>
-      <Text>運動種類: {data.sportName}</Text>
-      <Text>日期: {data.date}</Text>
-      <Text>時間: {data.time}</Text>
-      <Text>地點: {data.location}</Text>
+      <Text>運動種類: {data.sport}</Text>
+      <Text>日期: {data.start_time}</Text>
+      <Text>時間: {data.start_time}</Text>
+      <Text>地點: {data.place}</Text>
       <Text>需求:</Text>
       <View style={styles.tagContainer}>
         <View style={styles.box}>
-          <Text>我是剛打羽球的新手，希望大家把得輕鬆一點，內建兩個程度跟我差不多的人，歡迎大家來玩</Text>
+          <Text>{data.memo}</Text>
         </View>
       </View>
       <Text>已報名:</Text>

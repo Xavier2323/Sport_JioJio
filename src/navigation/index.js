@@ -18,12 +18,19 @@ import IntroductionSettingScreen from '../screens/IntroductionSettingScreen';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
+  const [userid, setUserid] = useState(0);
+  
   return (
+    
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Initial">
-        <Stack.Screen name="Initial" component={InitialScreen} />
-
-        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="Initial">
+          {(props) => <InitialScreen {...props} setUserid={setUserid}/>}
+        </Stack.Screen>  
+     
+        <Stack.Screen name="SignIn">
+          {(props) => <SignInScreen {...props} setUserid={setUserid}/>}
+        </Stack.Screen> 
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} />
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
@@ -32,9 +39,12 @@ const Navigation = () => {
         <Stack.Screen name="NicknameSetting" component={NicknameSettingScreen} />
         <Stack.Screen name="SchoolSetting" component={SchoolSettingScreen} />
         <Stack.Screen name="HeadshotSetting" component={HeadshotSettingScreen} />
-        <Stack.Screen name="IntroductionSetting" component={IntroductionSettingScreen} />
-
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="IntroductionSetting">
+          {(props) => <IntroductionSettingScreen {...props} setUserid={setUserid} />}
+        </Stack.Screen> 
+        <Stack.Screen name="Home">
+          {(props) => <HomeScreen {...props} userid={userid} />}
+        </Stack.Screen> 
       </Stack.Navigator>
     </NavigationContainer>
   );

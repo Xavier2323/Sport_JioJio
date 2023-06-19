@@ -13,13 +13,11 @@ export default class Overview extends React.Component {
     }
     this.updateList();
   }
-
   render() {
     if (this.props.stat.update == 1) {
       this.updateList();
       this.props.setUpdate(0);
     }
-
     return (
 
       <View style={styles.container}>
@@ -72,7 +70,7 @@ export default class Overview extends React.Component {
     }).then(res => {
       this.setState({
         ...this.state,
-        curJioList: res.data.post
+        curJioList: res.data.post,
       })
     })
     .catch(err => {
@@ -91,6 +89,7 @@ export default class Overview extends React.Component {
         pastJioList: res.data.post
       })
     }).catch(err => {console.log(err)})
+
   }
 
   handleEdit = async (props) => {

@@ -3,13 +3,13 @@ import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableO
 import { NotificationItems } from '../utility/utility_Notification';
 import axios from 'axios';
 
-const NotifyScreen = () => {
+const NotifyScreen = ({navigation,statee}) => {
     const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
     const [NotifyList, setList] = useState([]);
 
     axios.get(`${url}/applys/profileandpost`,{
         params:{
-            applicant: 1,
+            applicant: statee.userid,
             process: 1
         }
     }).then(res => {
@@ -19,7 +19,7 @@ const NotifyScreen = () => {
     }).catch(err => {
         console.log(err);
     })
-    console.log(NotifyList);
+    // console.log(NotifyList);
     return (
         <View style={styles.root}>
             <SafeAreaView style={styles.container}>
@@ -27,7 +27,7 @@ const NotifyScreen = () => {
                 <FlatList
                     nestedScrollEnabled={true}
                     data={NotifyList}
-                    renderItem={({ item }) => { return <NotificationItems {...item} /> ;}}
+                    renderItem={({ item }) => { return <NotificationItems navigation={navigation} {...item} /> ;}}
                     />
             </View>
             </SafeAreaView>

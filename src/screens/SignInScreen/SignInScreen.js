@@ -17,7 +17,7 @@ import {Auth} from  'aws-amplify';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from 'axios';
 
-const SignInScreen = () => {
+const SignInScreen = ({setUserid}) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +33,7 @@ const SignInScreen = () => {
     setLoading(true);
     try {
       const response = await Auth.signIn(data.username, data.password);
-      console.log(response);
+      // console.log(response);
       //上傳帳密到AsyncStorage以利自動登入
       try {
         AsyncStorage.setItem('Data_username', data.username);
@@ -43,15 +43,21 @@ const SignInScreen = () => {
       }
       //取得使用者id
       const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/users/fromaccount`;
+      // console.log(data.username);  
       await axios.get(url,{
         params:{
           account: data.username
         }
-      }).then(res => {
+      }).then(async(res) => {
         console.log(res.data)
+        await setUserid(res.data.userid);
         AsyncStorage.setItem('Data_id', JSON.stringify(res.data.userid));
       }).catch(err => {console.log(err)})
 
+      const userid_item = await AsyncStorage.getItem('Data_id');
+      const userid_stringfyItem = JSON.stringify(userid_item);
+      const userid = JSON.parse(userid_stringfyItem);
+      console.log(`before nav..:${userid}`);
       navigation.navigate('Home');
     } catch (e) {
       Alert.alert('Oops', e.message);

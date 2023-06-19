@@ -18,7 +18,7 @@ export default class PersonalScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            id: 1,
+            id: this.props.statee.userid,
             image: null,
             name: 'William',
             school: '清大電資班大二',

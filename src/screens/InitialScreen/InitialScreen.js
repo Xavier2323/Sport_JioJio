@@ -18,7 +18,7 @@ import {Auth} from  'aws-amplify';
 
 import axios from 'axios';
 
-const InitialScreen = () => {
+const InitialScreen = ({setUserid}) => {
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ const InitialScreen = () => {
       const username_item = await AsyncStorage.getItem('Data_username');
       const username_stringfyItem = JSON.stringify(username_item);
       const username = JSON.parse(username_stringfyItem);
-      console.log(username);
+      console.log(`trying to get username:${username}`);
       const password_item = await AsyncStorage.getItem('Data_password');
       const password_stringfyItem = JSON.stringify(password_item);
       const password = JSON.parse(password_stringfyItem);
@@ -50,12 +50,16 @@ const InitialScreen = () => {
         params:{
           account: username
         }
-      }).then(res => {
-        console.log(`database res:${res.data}`)
+      }).then(async(res) => {
+        console.log(res.data)
         AsyncStorage.setItem('Data_id', JSON.stringify(res.data.userid));
+        await setUserid(res.data.userid);
       }).catch(err => {console.log(err)})
       //跳過SignIn
-      navigation.navigate('Home')
+      const userid_item = await AsyncStorage.getItem('Data_id');
+      const userid_stringfyItem = JSON.stringify(userid_item);
+      const userid = JSON.parse(userid_stringfyItem);
+      navigation.navigate('Home', {userid})
     } catch (e) {
       console.log('無法自動登入');
       console.log(e);

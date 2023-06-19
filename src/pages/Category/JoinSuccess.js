@@ -14,9 +14,9 @@ export default function JoinSuccess() {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={[styles.scrollViewContainer, { marginTop: screenWidth * 0.4 }]}>
-        <Image style={[styles.image, { width: imageWidth, height: imageHeight }]} source={require('../../images/category_images/join_success.PNG')} />
+        <Image style={[styles.image, { width: imageWidth, height: imageHeight }]} source={require('../../images/category_images/join_success.png')} />
         <TouchableOpacity onPress={() => handleImagePress('Home')}>
-        <Image style={[styles.image, { width: screenWidth*0.84, height: screenWidth*0.12, marginTop: screenWidth*0.5 }]} source={require('../../images/category_images/go_back.PNG')}/>
+        <Image style={[styles.image, { width: screenWidth*0.84, height: screenWidth*0.12, marginTop: screenWidth*0.5 }]} source={require('../../images/category_images/go_back.png')}/>
         </TouchableOpacity>
       </ScrollView>
     </View>

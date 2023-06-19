@@ -11,6 +11,7 @@ import TagPage from './tagpage.js';
 import Launch from './launchpage.js';
 import PostEdit from './posteditpage.js';
 
+
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
@@ -21,15 +22,15 @@ export default class JioJioScreen extends React.Component {
         
         this.state = this.initialState();
     }
-
-    initialState = () => {
+    initialState = async () => {
         const nowTime = new Date();
         nowTime.setSeconds(0);
         const threeHoursTime = new Date();
         threeHoursTime.setHours(threeHoursTime.getHours() + 3);
         threeHoursTime.setSeconds(0);
+
         return {
-            userid: 1,
+            userid: this.props.userid,
             postid: 0,
             sport: "",
             place: "",
@@ -47,6 +48,8 @@ export default class JioJioScreen extends React.Component {
 
 
     render() {
+        console.log("dsjoi")
+        console.log(this.props.userid)
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='overview'>
                 <Stack.Screen name="overview">
