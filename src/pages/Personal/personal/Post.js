@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView } from 'react-native';
 
 import Tag from './Tag';
-import DetailTab from './DetailTab'
+import DetailTab from './DetailTab';
+import {get_img} from '../../utility/utility_img';
 
 export const getPic = sport => {
     if (sport == "羽球") return require('../../../images/badminton.png');
@@ -29,7 +30,7 @@ export default class Post extends React.Component {
             <View style={styles.container}>
                 <View style={{flex: 5, alignSelf: 'center'}}>
                     <View style={{flexDirection:'row', alignItems: 'center'}}>
-                        <Image style={{borderRadius: 100, height: 60, width: 60}} source={require('./images/default_pfp.png')}/>
+                        <Image style={{borderRadius: 100, height: 60, width: 60}} source={this.pfp()}/>
                         <View style={{paddingLeft: 10}}>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <Image style={styles.sportIcon} source={getPic(this.props.sport)}></Image>
@@ -50,6 +51,10 @@ export default class Post extends React.Component {
                 </View>
             </View> 
         );
+    }
+    pfp(){
+        uri=get_img(this.props.posteravatar);
+        return { uri: uri };
     }
 }
 

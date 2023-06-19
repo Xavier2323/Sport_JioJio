@@ -5,12 +5,11 @@ import axios from 'axios';
 import ColorBar from './ColorBar';
 import Post from './Post';
 
-
 export default class MyJoJo extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      userid: 1,
+      userid: 16,
       curJioList: [],
       pastJioList: []
     }
