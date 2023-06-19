@@ -4,6 +4,7 @@ import { ApprovalItems} from '../utility/utility_Notification';
 import axios from 'axios';
 
 const ApprovalScreen = ({navigation,statee}) => {
+
     const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
     const [ApprovalList, setList] = useState([]);
     axios.get(`${url}/applys/profileandpost`,{

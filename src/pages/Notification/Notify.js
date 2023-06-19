@@ -19,7 +19,6 @@ const NotifyScreen = ({navigation,statee}) => {
     }).catch(err => {
         console.log(err);
     })
-    // console.log(NotifyList);
     return (
         <View style={styles.root}>
             <SafeAreaView style={styles.container}>

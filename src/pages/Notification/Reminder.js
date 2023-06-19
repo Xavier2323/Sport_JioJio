@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableO
 import {ReminderItems} from '../utility/utility_Notification';
 import axios from 'axios';
 
+
 const ReminderScreen = ({navigation,statee}) => {
     const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
     const [ReminderList, setList] = useState([]);

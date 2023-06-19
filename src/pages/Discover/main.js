@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView, StatusBar, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import Map  from './map.js';
@@ -20,28 +20,65 @@ export default class MainScreen extends React.Component{
     render(){
         const post = this.state.postList.map((item) => {return (<Post props={item} f={this.setPostState.bind(this)} navigate={() => {this.props.navigation.navigate('postdetail')}}/>)})
         return(
+
+
+
+  
+            <View style={styles.root2}>
+                
+
+                    {/* <ImageBackground 
+                        source={require('../../images/Top_app_bar.png')} 
+                        style={styles.ContainerTop}
+                        resizeMode="cover"
+                    >
+                        <View style={styles.topBar}>
+                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Notification')}}>
+                                <Image source={require('../../images/bell.png')}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Personal')}}>
+                                <Image source={require('../../images/Person.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground> */}
+
+            
+     
+    
+
+            
+            
+
             <ScrollView >
             <View style={styles.root}>
                 <StatusBar barStyle="light-content" />
-                <View style={styles.ContainerTop}>
-                    <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Notification')}}>
-                        <Image source={require('../../images/bell.png')}/>
-                    </TouchableOpacity>
-                    <Text style={styles.banner}>運動揪揪</Text>
-                    <TouchableOpacity style={styles.Notification} onPress={() => {this.props.navigation.navigate('Personal')}}>
-                        <Image source={require('../../images/Person.png')}/>
-                    </TouchableOpacity>
-                </View>
+
+                    {/* <ImageBackground 
+                        source={require('../../images/Top_app_bar.png')} 
+                        style={styles.ContainerTop}
+                        resizeMode="cover"
+                    >
+                        <View style={styles.topBar}>
+                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Notification')}}>
+                                <Image source={require('../../images/bell.png')}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Personal')}}>
+                                <Image source={require('../../images/Person.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground> */}
 
                 <ScrollView style={styles.scrollview}>
 
-                    <Map navigate={() => {this.props.navigation.navigate('mappost')}}/>
+                    <Map navigate={() => {this.props.navigation.navigate('mappost')}} 
+                    navigate_No={() => {this.props.navigation.navigate('Notification')}} 
+                    navigate_Per={() => {this.props.navigation.navigate('Notification')} }/>
 
                     <View style={styles.shortLine} /> 
 
                     <View style={styles.iconRow}>
-
-                    <Text style={styles.iconText}>即時揪揪:</Text>
+                        <Image source={require('../../images/Vector.png')} style={styles.bellIcon} />
+                        <Text style={styles.iconText}>即時揪揪:</Text>
                     </View>
                 
                     <Text style={styles.scrolltext}>周圍正在揪揪的夥伴</Text>
@@ -52,6 +89,9 @@ export default class MainScreen extends React.Component{
                 </ScrollView>
             </View>
         </ScrollView>
+
+
+        </View>
         )
     }
 
@@ -64,7 +104,7 @@ export default class MainScreen extends React.Component{
                 order:'starttimeasc'
             }
         }).then(res => {
-            //console.log(res.data);
+            console.log(res.data);
             this.setState({postList:res.data.post});
         }).catch(err => {console.log(err)});
 
@@ -94,19 +134,24 @@ export default class MainScreen extends React.Component{
 
 const styles = StyleSheet.create({
     root: {
-        alignItem: 'center',
-        padding:20,
+        //alignItem: 'center',
+        padding:0,
+        //height:'100%',
     },
     ContainerTop: {
-        flexDirection: 'row',
-        flex: 3,
-        height: '5%',
-        width: '95%',
-        justifyContent: 'space-around',
-        alignSelf: 'center',
-        borderRadius: 10,
-        borderWidth: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width:'100%',
+      marginTop: '5%',
     },
+    topBar: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 10, 
+  },
     banner: {
         fontSize: RFPercentage(3),
     },
@@ -129,23 +174,26 @@ const styles = StyleSheet.create({
       },
       scrolltext: {
         color: 'black',
-        
+        marginTop: 10,
+        marginLeft: '5%',
+        fontSize: 22,
       },
       line: {
         borderBottomColor: 'gold',
         borderBottomWidth: 2,
-        width: '0%', 
-        alignSelf: 'center',
+        width: '40%', 
+        alignSelf: 'fixed-start',
         marginVertical: 10,
-        
+        marginLeft: '5%',
       },
       iconRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft: 15,
+        marginTop: '3%',
+        marginLeft: '5%',
       },
       iconText: {
-        //marginLeft: 5,
+        //marginTop: 15,
         fontSize: 17,
       },
       shortLine: {
@@ -153,10 +201,15 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         width: '30%', 
         alignSelf: 'center',
-        marginBottom: 10,
-    
-        position: 'absolute',
-        top: 310,
+        marginTop: '3%',
+        
+        // position: 'absolute',
+        // top: 310,
         
       },
+      bellIcon: {
+        height: 20, 
+        width: 20, 
+        //marginRight: 5, 
+    },
 });
