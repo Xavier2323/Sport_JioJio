@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 
-export default class MapPost_tennis extends React.Component{
+export default class MapPost_baseball extends React.Component{
     constructor(props){
         super(props)
         this.state={
@@ -19,7 +19,7 @@ export default class MapPost_tennis extends React.Component{
 
     render(){
         const post = this.state.postList
-        .filter(item => item.place === '清大網球場')
+        .filter(item => item.place === '清大棒球場')
         .map((item) => {return (<Post props={item} f={this.setPostState.bind(this)} navigate={() => {this.props.navigation.navigate('postdetail')}}/>)})
 
         return(
@@ -29,7 +29,7 @@ export default class MapPost_tennis extends React.Component{
                     <TouchableOpacity style={{ height: 40, width: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100}} onPress={()=>{this.props.navigation.navigate('main')}}>
                         <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 } } /> 
                     </TouchableOpacity>
-                    <Text style={styles.Placetext}>清大網球場</Text>
+                    <Text style={styles.Placetext}>清大棒球場</Text>
                     
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
                     </View>
