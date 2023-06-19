@@ -1,6 +1,7 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons} from 'react-native-vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
 import JioJioScreen from '../../pages/newjiopage/jiojio.js';
 import DiscoverScreen from '../../pages/Discover/Discover.js';
 //import NotificationScreen from '../../pages/Notification.js';

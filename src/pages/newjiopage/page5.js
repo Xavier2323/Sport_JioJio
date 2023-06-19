@@ -1,7 +1,7 @@
 import React, {useState, Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 
-import { peopleData, PeopleItem, Progresss } from '../utility/utility_JioJio.js';
+import { Tag, Progresss } from '../utility/utility_JioJio.js';
 
 export default class Page5 extends React.Component {
     constructor(props) {
@@ -9,6 +9,8 @@ export default class Page5 extends React.Component {
     }
 
     render() {
+        const tagList = this.props.stat.tag.map((item) => { return (<Tag title={item} f={this.deleteTag.bind(this)} />) })
+
         return (
             <View style={styles.container}>
                 <View style={{flex:40, flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
@@ -28,29 +30,31 @@ export default class Page5 extends React.Component {
                 </View>
 
                 <View style={{flex:50, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={styles.subtitle}>請選擇運動人數</Text>
+                    <Text style={styles.subtitle}>補充一下你的揪揪吧</Text>
                 </View>
 
-                <View style={{flex:400, justifyContent:'center', alignItems:'center'}}>
-                    <View style={styles.containerColumn}>
-                        <TextInput onChangeText={(newText) => {this.props.finishSelectPeople(newText)}}
-                                   value={this.props.stat.people}
-                                   keyboardType="numeric" 
-                                   textAlign='center'
-                                   style={{borderColor:'black',borderWidth:1,width:150,fontSize:30}}/>
-                        <View style={[styles.containerRow,{justifyContent:'center', alignItems:'center'}]}>
-                            <TouchableOpacity onPress={() => {const newNum = parseInt(this.props.stat.people) <= 1 ? 1 : parseInt(this.props.stat.people)-1; this.props.finishSelectPeople(newNum.toString());}}>
-                                <View style={{width:50,height:50,margin:10,justifyContent:'center',alignItems:'center'}}>
-                                    <Image style={{height:50,width:50}} source={require('../../images/minus.png')}/>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {const newNum = parseInt(this.props.stat.people) + 1; this.props.finishSelectPeople(newNum.toString());}}>
-                                <View style={{width:50,height:50,margin:10,justifyContent:'center',alignItems:'center'}}>
-                                    <Image style={{height:50,width:50}} source={require('../../images/plus.png')}/>
-                                </View>
-                            </TouchableOpacity>
+                <View style={{flex:400,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+                    <ScrollView>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={styles.subtitle1}>Tags:</Text>
+                            <View style={{flexDirection:'column',alignItems:'flex-start'}}>
+                                {tagList}
+                                <TouchableOpacity onPress={this.handlePressAdd.bind(this)}><Text style={[styles.subtitle1, { marginLeft: 20, color: 'grey' }]}>+</Text></TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
+                        <Text style={[styles.subtitle1, { marginTop:10 }]}>備註:</Text>
+                        <View style={{ backgroundColor: '#FFF9E9', width: 300, borderRadius: 5, borderColor: '#000000', borderWidth: 1, marginTop: 20 }}>
+                            <TextInput
+                                        editable
+                                        multiline
+                                        numberOfLines={8}
+                                        maxLength={100}
+                                        onChangeText={(text) => { this.props.finishSelectTagMemo(this.props.stat.tag,text); }}
+                                        value={this.props.stat.memo}
+                                        style={{ padding: 10, fontSize: 18 }}
+                            />
+                            </View>
+                    </ScrollView>
                 </View>
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
@@ -64,12 +68,27 @@ export default class Page5 extends React.Component {
         );
     }
 
+    handlePressAdd = async () => {
+        this.props.setTagpageBack(0);
+        this.props.navigation.navigate('tagpage');
+    }
+
     handlePressNumber =  (now,page) => {
         if (page <= now) this.props.navigation.navigate(`page${page}`);
     }
 
+    deleteTag = (title) => {
+        const pos = this.props.stat.tag.indexOf(title);
+        if (this.props.stat.tag.length == 1) this.props.finishSelectTagMemo([], this.props.stat.memo);
+        else {
+            const newList = this.props.stat.tag;
+            newList.splice(pos,1);
+            this.props.finishSelectTagMemo(newList, this.props.stat.memo);
+        }
+    }
+
     handleNextPage = async () => {
-        this.props.navigation.navigate('page6');
+        this.props.navigation.navigate('verify');
     }
 
 }
@@ -93,6 +112,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 30
     },
+    tagContainer: {
+        borderRadius: 5,
+        backgroundColor: '#AEAEAE',
+        width: 60,
+        marginHorizontal: 20,
+        flexDirection: 'row',
+    },
     selected: {
         borderWidth: 1,
         borderColor: 'grey',
@@ -103,6 +129,11 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         marginHorizontal: 2,
         marginVertical: 1
+    },
+    xmarkcontainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 5
     },
     nextButtonStyle: {
         height: 40,
@@ -121,7 +152,9 @@ const styles = StyleSheet.create({
     subtitle: {
         fontSize: 22,
         fontWeight: 500,
-        marginVertical: 15
+    },
+    subtitle1: {
+        fontSize: 20
     },
     subtitle2: {
         fontSize: 20,
@@ -130,7 +163,8 @@ const styles = StyleSheet.create({
     },
     subtitle3: {
         fontSize: 15,
-        color: 'grey'
+        marginLeft: 8,
+        paddingTop: 4
     },
     underOrangeLine: {
         height: 6,
@@ -148,7 +182,7 @@ const styles = StyleSheet.create({
     },
     scrollStyle: {
         height: 500,
-        marginHorizontal: 15
+        marginHorizontal: 30
     }
 
 });

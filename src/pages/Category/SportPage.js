@@ -101,7 +101,7 @@ const dummyData = [
     
 ];
 
-const BadmintonPage = ({ route }) => {
+const SportPage = ({ route }) => {
   const navigation = useNavigation();
   const { data } = route.params;
 
@@ -109,12 +109,13 @@ const BadmintonPage = ({ route }) => {
     navigation.setOptions({
       title: data,
       headerTitleStyle: {
-        fontFamily: 'Arial', // Set your desired font family
-        fontSize: 20, // Set your desired font size
-        fontWeight: 'bold', // Set your desired font weight
+        fontFamily: 'Arial',
+        fontSize: 20,
+        fontWeight: 'bold',
       },
     });
-  }, );
+  }, [data, navigation]);
+  
 
   return (
     <View style={styles.container}>
@@ -140,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BadmintonPage;
+export default SportPage;
