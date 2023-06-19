@@ -36,7 +36,7 @@ const Post = ({ data }) => {
       <Text>{data.sport}</Text>
       <Text>{data.place}</Text>
       <Text>{data.start_time}</Text>
-      <Text>/{data.people}</Text>
+      <Text>{data.participant.length}/{data.people}</Text>
     </View>
 
     <View>
