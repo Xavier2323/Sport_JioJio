@@ -6,47 +6,322 @@ import { ScrollView } from 'react-native-gesture-handler';
 export default class Map extends React.Component{
     constructor(props){
         super(props);
+        this.state={
+          selected:""
+        }
+        this.handlestate_tennis.bind(this);
     }
 
     render(){
+
+        const tennis = this.state.selected == "清大網球場" ? 
+        (<View>
+          <TouchableOpacity 
+            style={styles.button_tennis} 
+            
+          >
+            <View style={styles.place}>
+                <Image 
+                    style={styles.imageColumn} 
+                    source={require('../../images/PlaceTennis.png')} 
+                />
+                <View style={styles.textColumn}>
+                    <Text style={styles.placetext}>網球場</Text>
+                    <Text style={styles.placetext}>尚無揪揪</Text>
+                    <TouchableOpacity style={styles.placebutton} onPress={() => {this.props.navigate_tennis()}}>
+                        <Text>查看揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableOpacity>
+        </View>) : (<View></View>);
+        const baseball = this.state.selected == "清大棒球場" ? 
+        (<View>
+          <TouchableOpacity 
+            style={styles.button_baseball} 
+            onPress={() => {this.props.navigate_tennis()}}
+          >
+            <View style={styles.place}>
+                <Image 
+                    style={styles.imageColumn} 
+                    source={require('../../images/PlaceTennis.png')} 
+                />
+                <View style={styles.textColumn}>
+                    <Text style={styles.placetext}>棒球場</Text>
+                    <Text style={styles.placetext}>尚無揪揪</Text>
+                    <TouchableOpacity style={styles.placebutton} onPress={() => {this.props.navigate_baseball()}}>
+                        <Text>發起揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableOpacity>
+        </View>) : (<View></View>);
+
+        const basketball = this.state.selected == "清大籃球場" ? 
+        (<View>
+          <TouchableOpacity 
+            style={styles.button_basketball} 
+            onPress={() => {this.props.navigate()}}
+          >
+            <View style={styles.place}>
+                <Image 
+                    style={styles.imageColumn} 
+                    source={require('../../images/PlaceTennis.png')} 
+                />
+                <View style={styles.textColumn}>
+                    <Text style={styles.placetext}>籃球場</Text>
+                    <Text style={styles.placetext}>尚無揪揪</Text>
+                    <TouchableOpacity style={styles.placebutton}>
+                        <Text>發起揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableOpacity>
+        </View>) : (<View></View>);
+        const badminton = this.state.selected == "校友體育館" ? 
+        (<View>
+          <TouchableOpacity 
+            style={styles.button_badminton} 
+            onPress={() => {this.props.navigate()}}
+          >
+            <View style={styles.place}>
+                <Image 
+                    style={styles.imageColumn} 
+                    source={require('../../images/PlaceTennis.png')} 
+                />
+                <View style={styles.textColumn}>
+                    <Text style={styles.placetext}>校友體育館</Text>
+                    <Text style={styles.placetext}>尚無揪揪</Text>
+                    <TouchableOpacity style={styles.placebutton}>
+                        <Text>發起揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableOpacity>
+        </View>) : (<View></View>);
+        const volleyball = this.state.selected == "清大排球場" ? 
+        (<View>
+          <TouchableOpacity 
+            style={styles.button_volleyball} 
+            onPress={() => {this.props.navigate()}}
+          >
+            <View style={styles.place}>
+                <Image 
+                    style={styles.imageColumn} 
+                    source={require('../../images/PlaceTennis.png')} 
+                />
+                <View style={styles.textColumn}>
+                    <Text style={styles.placetext}>排球場</Text>
+                    <Text style={styles.placetext}>尚無揪揪</Text>
+                    <TouchableOpacity style={styles.placebutton}>
+                        <Text>發起揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableOpacity>
+        </View>) : (<View></View>);
+        const soccer = this.state.selected == "清大田徑場" ? 
+        (<View>
+          <TouchableOpacity 
+            style={styles.button_soccer} 
+            onPress={() => {this.props.navigate()}}
+          >
+            <View style={styles.place}>
+                <Image 
+                    style={styles.imageColumn} 
+                    source={require('../../images/PlaceTennis.png')} 
+                />
+                <View style={styles.textColumn}>
+                    <Text style={styles.placetext}>田徑場</Text>
+                    <Text style={styles.placetext}>尚無揪揪</Text>
+                    <TouchableOpacity style={styles.placebutton}>
+                        <Text>發起揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableOpacity>
+        </View>) : (<View></View>);
+        
+        const swim = this.state.selected == "清大游泳館" ? 
+        (<View>
+          <TouchableOpacity 
+            style={styles.button_swim} 
+            onPress={() => {this.props.navigate()}}
+          >
+            <View style={styles.place}>
+                <Image 
+                    style={styles.imageColumn} 
+                    source={require('../../images/PlaceTennis.png')} 
+                />
+                <View style={styles.textColumn}>
+                    <Text style={styles.placetext}>游泳館</Text>
+                    <Text style={styles.placetext}>尚無揪揪</Text>
+                    <TouchableOpacity style={styles.placebutton}>
+                        <Text>發起揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableOpacity>
+        </View>) : (<View></View>);
+        const pingpong = this.state.selected == "清大桌球館" ? 
+        (<View>
+          <TouchableOpacity 
+            style={styles.button_B_V} 
+            onPress={() => {this.props.navigate()}}
+          >
+            <View style={styles.place}>
+                <Image 
+                    style={styles.imageColumn} 
+                    source={require('../../images/PlaceTennis.png')} 
+                />
+                <View style={styles.textColumn}>
+                    <Text style={styles.placetext}>桌球館</Text>
+                    <Text style={styles.placetext}>尚無揪揪</Text>
+                    <TouchableOpacity style={styles.placebutton}>
+                        <Text>發起揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableOpacity>
+        </View>) : (<View></View>);
+        const B_V = this.state.selected == "清大體育館" ? 
+        (<View>
+          <TouchableOpacity 
+            style={styles.button_B_V} 
+            onPress={() => {this.props.navigate()}}
+          >
+            <View style={styles.place}>
+                <Image 
+                    style={styles.imageColumn} 
+                    source={require('../../images/PlaceTennis.png')} 
+                />
+                <View style={styles.textColumn}>
+                    <Text style={styles.placetext}>體育館</Text>
+                    <Text style={styles.placetext}>尚無揪揪</Text>
+                    <TouchableOpacity style={styles.placebutton}>
+                        <Text>發起揪揪</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableOpacity>
+        </View>) : (<View></View>);
         return(
+          <View style={{flexDirection:'column'}}>
 
-
-          <ScrollView>
-
-              <View style={styles.map}>
-                        
-                        <ImageBackground 
-                        source={require('../../images/map.png')} 
-                        resizeMode="cover" 
-                        style={styles.image}
-                        >
-                        
-                        
-                        <Image  
-                            style={styles.top}
-                            // source={require('../assets/Top_app_bar.png')}  
-                        />
-                                <View style={styles.fixed}>
-                                    <ImageBackground 
-                                        source={require('../../images/Top_app_bar.png')} 
-                                        style={styles.ContainerTop}
-                                        resizeMode="cover"
-                                    >
-                                        <View style={styles.topBar}>
-                                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigate_No()}}>
-                                                <Image source={require('../../images/bell.png')}/>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigate_Per()}}>
-                                                <Image source={require('../../images/Person.png')}/>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </ImageBackground>
-                                </View>
                                 
 
+          
+                  <View style={{backgroundColor:'rgba(200,200,200,0.3)',zIndex:2,borderRadius:30,flexDirection:'row',justifyContent:'space-between'}}>
+                                        <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigate_No()}}>
+                                          <Image source={require('../../images/bell.png')}/>
+                                        </TouchableOpacity>
+                                        <Text style={{fontSize:25,color:'orange'}}>運動揪揪</Text>
+                                        <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigate_Per()}}>
+                                          <Image source={require('../../images/Person.png')}/>
+                                        </TouchableOpacity>
+                  </View>
+                
+                <View style={{height:'86%'}}>
+                <ScrollView>
+                  <ScrollView horizontal={true}>
+                  {/* <TouchableOpacity  onPress={this.handlestate_zero.bind(this)}> */}
+                    <ImageBackground style={{width:600,height:900}} source={require('../../images/map.png')}>
+                          
+                          <TouchableOpacity style={{marginLeft:40,marginTop:5}} onPress={this.handlestate_tennis.bind(this)}>
+                                      <Image 
+                                          style={{position:'absolute',top:58,left:10,right:250}}
+                                          source={require('../../images/place_n.png')} 
+                                      />
+                            </TouchableOpacity> 
+                            
+                            <TouchableOpacity style={{marginLeft:40,marginTop:5}} onPress={this.handlestate_baseball.bind(this)}>
+                                      <Image 
+                                          style={{position:'absolute',top:150,left:235,right:250}}
+                                          source={require('../../images/place_n.png')} 
+                                      />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{marginLeft:40,marginTop:5}} onPress={this.handlestate_basketball.bind(this)}>
+                                      <Image 
+                                          style={{position:'absolute',top:172,left:375,right:250}}
+                                          source={require('../../images/place_n.png')} 
+                                      />
+                            </TouchableOpacity> 
+                            <TouchableOpacity style={{marginLeft:40,marginTop:5}} onPress={this.handlestate_swim.bind(this)}>
+                                      <Image 
+                                          style={{position:'absolute',top:435,left:372,right:250}}
+                                          source={require('../../images/place_n.png')} 
+                                      />
+                            </TouchableOpacity> 
+                            <TouchableOpacity style={{marginLeft:40,marginTop:5}} onPress={this.handlestate_volleyball.bind(this)}>
+                                      <Image 
+                                          style={{position:'absolute',top:718,left:274,right:250}}
+                                          source={require('../../images/place_n.png')} 
+                                      />
+                            </TouchableOpacity> 
+                            <TouchableOpacity style={{marginLeft:40,marginTop:5}} onPress={this.handlestate_badminton.bind(this)}>
+                                      <Image 
+                                          style={{position:'absolute',top:356,left:-20,right:250}}
+                                          source={require('../../images/place_n.png')} 
+                                      />
+                            </TouchableOpacity> 
+                            <TouchableOpacity style={{marginLeft:40,marginTop:5}} onPress={this.handlestate_soccer.bind(this)}>
+                                      <Image 
+                                          style={{position:'absolute',top:660,left:40,right:250}}
+                                          source={require('../../images/place_n.png')} 
+                                      />
+                            </TouchableOpacity> 
+                            <TouchableOpacity style={{marginLeft:40,marginTop:5}} onPress={this.handlestate_B_V.bind(this)}>
+                                      <Image 
+                                          style={{position:'absolute',top:718,left:452,right:250}}
+                                          source={require('../../images/place_n.png')} 
+                                      />
+                            </TouchableOpacity> 
+                            <TouchableOpacity style={{marginLeft:40,marginTop:5}} onPress={this.handlestate_tabletennis.bind(this)}>
+                                      <Image 
+                                          style={{position:'absolute',top:570,left:435,right:250}}
+                                          source={require('../../images/place_n.png')} 
+                                      />
+                            </TouchableOpacity> 
+                            {tennis}
+                            {baseball}
+                            {basketball}
+                            {badminton}
+                            {volleyball}
+                            {soccer}
+                            {swim}
+                            {tennis}
+                            {pingpong}
+                            {B_V}
+
+                                {/* <TouchableOpacity 
+                                  style={styles.button1} 
+                                  onPress={() => {this.props.navigate()}}
+                                >
+                                    <View style={styles.place}>
+                                        <Image 
+                                            style={styles.imageColumn} 
+                                            source={require('../../images/PlaceTennis.png')} 
+                                        />
+                                        <View style={styles.textColumn}>
+                                            <Text style={styles.placetext}>網球場</Text>
+                                            <Text style={styles.placetext}>尚無揪揪</Text>
+                                            <TouchableOpacity style={styles.placebutton}>
+                                                <Text>發起揪揪</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity> */}
+                            
+                      </ImageBackground>
+                      {/* </TouchableOpacity>  */}
+                  </ScrollView>
+                </ScrollView>
+                </View>
+          </View>
+
+        );
                         
-                        <TouchableOpacity 
+                        {/* <TouchableOpacity 
                             style={styles.button} 
                             onPress={() => {this.props.navigate()}}
                         >
@@ -64,24 +339,145 @@ export default class Map extends React.Component{
                                 </View>
                             </View>
                             
-                        </TouchableOpacity>
-                        <Image 
-                                    style={styles.placeNum} 
-                                    source={require('../../images/place_n.png')} 
-                                />
+                        </TouchableOpacity> */}
+                      }
+                
 
+                      handlestate_tennis = async () => {
+                        if(this.state.selected!="清大網球場")
+                        (this.setState({
+                          selected:"清大網球場"
+                        }))
+                        else
+                        (
+                          (this.setState({
+                            selected:""
+                          }))
+                        )
+                        ;
+                      }
 
-                        </ImageBackground>
-
-                    </View>
-
-
-          </ScrollView>
-
-       
-        );
-    }
+                    handlestate_baseball = async () => {
+                      if(this.state.selected!="清大棒球場")
+                      (this.setState({
+                        selected:"清大棒球場"
+                      }))
+                      else
+                      (
+                        (this.setState({
+                          selected:""
+                        }))
+                      )
+                      ;
+                    }
+                  
+                    handlestate_basketball = async () => {
+                      if(this.state.selected!="清大籃球場")
+                      (this.setState({
+                        selected:"清大籃球場"
+                      }))
+                      else
+                      (
+                        (this.setState({
+                          selected:""
+                        }))
+                      )
+                      ;
+                  }
+                    handlestate_badminton = async () => {
+                      if(this.state.selected!="校友體育館")
+                      (this.setState({
+                        selected:"校友體育館"
+                      }))
+                      else
+                      (
+                        (this.setState({
+                          selected:""
+                        }))
+                      )
+                      ;
+                  }
+                  // handlestate_tennis = async () => {
+                  //   if(this.state.selected!="校友體育館")
+                  //   (this.setState({
+                  //     selected:"校友體育館"
+                  //   }))
+                  //   else
+                  //   (
+                  //     (this.setState({
+                  //       selected:""
+                  //     }))
+                  //   )
+                  //   ;
+                  // }
+                  handlestate_swim = async () => {
+                    if(this.state.selected!="清大游泳館")
+                    (this.setState({
+                      selected:"清大游泳館"
+                    }))
+                    else
+                    (
+                      (this.setState({
+                        selected:""
+                      }))
+                    )
+                    ;
+                }
+                handlestate_volleyball = async () => {
+                  if(this.state.selected!="清大排球場")
+                  (this.setState({
+                    selected:"清大排球場"
+                  }))
+                  else
+                  (
+                    (this.setState({
+                      selected:""
+                    }))
+                  )
+                  ;
+              }
+              handlestate_soccer = async () => {
+                if(this.state.selected!="清大田徑場")
+                (this.setState({
+                  selected:"清大田徑場"
+                }))
+                else
+                (
+                  (this.setState({
+                    selected:""
+                  }))
+                )
+                ;
+            }
+            handlestate_B_V = async () => {
+              if(this.state.selected!="清大體育館")
+              (this.setState({
+                selected:"清大體育館"
+              }))
+              else
+              (
+                (this.setState({
+                  selected:""
+                }))
+              )
+              ;
+          }
+          handlestate_tabletennis = async () => {
+            if(this.state.selected!="清大桌球館")
+            (this.setState({
+              selected:"清大桌球館"
+            }))
+            else
+            (
+              (this.setState({
+                selected:""
+              }))
+            )
+            ;
+        }
 }
+
+
 
 const styles = StyleSheet.create({
   fixed:{
@@ -91,13 +487,14 @@ const styles = StyleSheet.create({
     //left:50,
   },
   map: {
-    height: 300,
+    width:500,
+    height: 500,
   },
   image: {
     flex: 1,
     width: null,
-    height: null,
-    resizeMode: 'cover',
+    height: '100%',
+    //resizeMode: 'cover',
     //alignItems:'center',
     
   },
@@ -143,13 +540,125 @@ const styles = StyleSheet.create({
   //   width: 390,
   //   height: 10,
   // },
-  button: {
+  button_tennis: {
     position: 'absolute',
-    top: '50%', 
-    left: '20%', 
+    top: '20%', 
+    left: '5%', 
     transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
     width:'70%',
-
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:70,
+    marginLeft:0,
+  },
+  button_baseball: {
+    position: 'absolute',
+    top: '20%', 
+    left: '5%', 
+    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    width:'70%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:160,
+    marginLeft:50,
+  },
+  button_basketball: {
+    position: 'absolute',
+    top: '20%', 
+    left: '5%', 
+    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    width:'70%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:190,
+    marginLeft:250,
+  },
+  button_badminton: {
+    position: 'absolute',
+    top: '20%', 
+    left: '5%', 
+    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    width:'70%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:160,
+    marginLeft:50,
+  },
+  button_swim: {
+    position: 'absolute',
+    top: '20%', 
+    left: '5%', 
+    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    width:'70%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:460,
+    marginLeft:250,
+  },
+  button_volleyball: {
+    position: 'absolute',
+    top: '20%', 
+    left: '5%', 
+    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    width:'70%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:600,
+    marginLeft:150,
+  },
+  button_badminton: {
+    position: 'absolute',
+    top: '20%', 
+    left: '5%', 
+    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    width:'70%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:400,
+    marginLeft:-10,
+  },
+  button_soccer: {
+    position: 'absolute',
+    top: '20%', 
+    left: '5%', 
+    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    width:'70%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:710,
+    marginLeft:-10,
+  },
+  button_B_V: {
+    position: 'absolute',
+    top: '20%', 
+    left: '5%', 
+    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    width:'70%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:627,
+    marginLeft:233,
+  },
+  button_tabletennis: {
+    position: 'absolute',
+    top: '20%', 
+    left: '5%', 
+    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    width:'70%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderRadius: 15,
+    marginTop:415,
+    marginLeft:233,
   },
   place: {
     flexDirection: 'row',
@@ -193,4 +702,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10, 
 },
+placeNum:{
+    //marginTop:'20%',
+    //transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    //width:'70%',
+}
 });

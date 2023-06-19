@@ -18,80 +18,87 @@ export default class MainScreen extends React.Component{
     }
 
     render(){
-        const post = this.state.postList.map((item) => {return (<Post props={item} f={this.setPostState.bind(this)} navigate={() => {this.props.navigation.navigate('postdetail')}}/>)})
+        const post = this.state.postList.map((item) => { return (<Post props={item} f={this.setPostState.bind(this)} navigate={() => {this.props.navigation.navigate('postdetail')}}/>)})
         return(
 
 
 
   
-            <View style={styles.root2}>
                 
 
-                    {/* <ImageBackground 
-                        source={require('../../images/Top_app_bar.png')} 
-                        style={styles.ContainerTop}
-                        resizeMode="cover"
-                    >
-                        <View style={styles.topBar}>
-                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Notification')}}>
-                                <Image source={require('../../images/bell.png')}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Personal')}}>
-                                <Image source={require('../../images/Person.png')}/>
-                            </TouchableOpacity>
-                        </View>
-                    </ImageBackground> */}
+                    // {/* <ImageBackground 
+                    //     source={require('../../images/Top_app_bar.png')} 
+                    //     style={styles.ContainerTop}
+                    //     resizeMode="cover"
+                    // >
+                    //     <View style={styles.topBar}>
+                    //         <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Notification')}}>
+                    //             <Image source={require('../../images/bell.png')}/>
+                    //         </TouchableOpacity>
+                    //         <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Personal')}}>
+                    //             <Image source={require('../../images/Person.png')}/>
+                    //         </TouchableOpacity>
+                    //     </View>
+                    // </ImageBackground> */}
+
 
             
-     
-    
 
-            
-            
+                    // {/* <ImageBackground 
+                    //     source={require('../../images/Top_app_bar.png')} 
+                    //     style={styles.ContainerTop}
+                    //     resizeMode="cover"
+                    // >
+                    //     <View style={styles.topBar}>
+                    //         <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Notification')}}>
+                    //             <Image source={require('../../images/bell.png')}/>
+                    //         </TouchableOpacity>
+                    //         <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Personal')}}>
+                    //             <Image source={require('../../images/Person.png')}/>
+                    //         </TouchableOpacity>
+                    //     </View>
+                    // </ImageBackground> */}
 
-            <ScrollView >
-            <View style={styles.root}>
-                <StatusBar barStyle="light-content" />
+                    <View style={[styles.root,{flexDirection:'column',flex:1}]}>
+                    {/* <StatusBar barStyle="light-content" /> */}
+                      <View style={{flex:0.5}}></View>
 
-                    {/* <ImageBackground 
-                        source={require('../../images/Top_app_bar.png')} 
-                        style={styles.ContainerTop}
-                        resizeMode="cover"
-                    >
-                        <View style={styles.topBar}>
-                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Notification')}}>
-                                <Image source={require('../../images/bell.png')}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Personal')}}>
-                                <Image source={require('../../images/Person.png')}/>
-                            </TouchableOpacity>
-                        </View>
-                    </ImageBackground> */}
+                            <View style={{flex:4}}>
+                               
+                                    <Map navigate_soccer={() => {this.props.navigation.navigate('mappost_soccer')}} 
+                                    navigate_swim={() => {this.props.navigation.navigate('mappost_swim')}} 
+                                    navigate_badminton={() => {this.props.navigation.navigate('mappost_badminton')}}
+                                    navigate_basketball={() => {this.props.navigation.navigate('mappost_basketball')}}
+                                    navigate_baseball={() => {this.props.navigation.navigate('mappost_baseball')}}
+                                    navigate_volleyball={() => {this.props.navigation.navigate('mappost_volleyball')}}
+                                    navigate_tennis={() => {this.props.navigation.navigate('mappost_tennis')}}
+                                    navigate_tabletennis={() => {this.props.navigation.navigate('mappost_tabletennis')}}
+                                    />
+                            </View >
 
-                <ScrollView style={styles.scrollview}>
 
-                    <Map navigate={() => {this.props.navigation.navigate('mappost')}} 
-                    navigate_No={() => {this.props.navigation.navigate('Notification')}} 
-                    navigate_Per={() => {this.props.navigation.navigate('Notification')} }/>
+                            <View style={{flex:3}}>
+                              <ScrollView>
+                                      <View style={styles.shortLine} /> 
 
+                                      <View style={styles.iconRow}>
+                                          <Image source={require('../../images/Vector.png')} style={styles.bellIcon} />
+                                          <Text style={styles.iconText}>即時揪揪:</Text>
+                                      </View>
+
+                                      <Text style={styles.scrolltext}>周圍正在揪揪的夥伴</Text>
+                                      <View style={styles.line} />
+
+                                      {post}
+                              </ScrollView>
+                            </View>
+                    
                     <View style={styles.shortLine} /> 
-
-                    <View style={styles.iconRow}>
-                        <Image source={require('../../images/Vector.png')} style={styles.bellIcon} />
-                        <Text style={styles.iconText}>即時揪揪:</Text>
-                    </View>
                 
-                    <Text style={styles.scrolltext}>周圍正在揪揪的夥伴</Text>
-                    <View style={styles.line} />
-                    
-                    {post}
-                    
-                </ScrollView>
             </View>
-        </ScrollView>
 
 
-        </View>
+
         )
     }
 
@@ -116,20 +123,6 @@ export default class MainScreen extends React.Component{
         console.log(this.props.statee);
     }
 
-    dummyData = [
-        {
-          avatar: '../assets/me.jpg',
-          sport: '羽球',
-          place: '清大校友體育館',
-          starttime: "2023-6-10 15:00",
-          endtime: "2023-6-10 18:00",
-          participant: [1,2,3],
-          people: 5,
-          tag: ["新手"],
-          memo: "都可以來喔"
-        }
-          
-      ];
 }
 
 const styles = StyleSheet.create({
@@ -201,7 +194,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         width: '30%', 
         alignSelf: 'center',
-        marginTop: '3%',
         
         // position: 'absolute',
         // top: 310,

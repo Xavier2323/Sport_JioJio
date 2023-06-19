@@ -3,7 +3,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import MainScreen from './main'
-import MapPost from './mappost'
+import MapPost_tennis from './mappost'
 import PostDetail from './Postdetail'
 import Success from'./success'
 import NotificationScreen from '../Notification/Notification';
@@ -36,8 +36,8 @@ export default class DiscoverScreen extends React.Component{
                 <Stack.Screen name='main'>
                     {(props) => <MainScreen {...props} statee = {this.state} setPostState={this.setPostState.bind(this)}/>}
                 </Stack.Screen>
-                <Stack.Screen name='mappost'>
-                    {(props) => <MapPost {...props} statee = {this.state}/>}
+                <Stack.Screen name='mappost_tennis'>
+                    {(props) => <MapPost_tennis {...props} statee = {this.state}/>}
                 </Stack.Screen>
                 <Stack.Screen name='postdetail'>
                     {(props) => <PostDetail {...props} statee = {this.state}/>}
@@ -49,9 +49,34 @@ export default class DiscoverScreen extends React.Component{
                 <Stack.Screen name="Personal">
                     {(props) => <PersonalScreen {...props} statee = {this.state}/>}
                 </Stack.Screen>
+                
+                <Stack.Screen name="mappost_badminton">
+                    {(props) => <MapPost_badminton {...props} statee = {this.state}/>}
+                </Stack.Screen>
+                <Stack.Screen name="mappost_tabletennis">
+                    {(props) => <MapPost_tabletennis {...props} statee = {this.state}/>}
+                </Stack.Screen>
+                <Stack.Screen name="mappost_baseball">
+                    {(props) => <MapPost_baseball {...props} statee = {this.state}/>}
+                </Stack.Screen>
+                <Stack.Screen name="mappost_basketball">
+                    {(props) => <MapPost_basketball {...props} statee = {this.state}/>}
+                </Stack.Screen>
+                <Stack.Screen name="mappost_volleyball">
+                    {(props) => <MapPost_volleyball {...props} statee = {this.state}/>}
+                </Stack.Screen>
+                <Stack.Screen name="mappost_soccer">
+                    {(props) => <MapPost_soccer {...props} statee = {this.state}/>}
+                </Stack.Screen>
+                <Stack.Screen name="mappost_swim">
+                    {(props) => <MapPost_swim {...props} statee = {this.state}/>}
+                </Stack.Screen>
+                
             </Stack.Navigator>
         )
     }
+
+   
 
     setPostState = async (props) => {
         this.setState({
