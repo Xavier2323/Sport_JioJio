@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
       },
     containerColumn: {
         flexDirection: 'column',
-        marginHorizontal: 0
+        justifyContent:'center'
     },
     containerRow: {
         flexDirection: 'row',

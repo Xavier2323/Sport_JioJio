@@ -145,4 +145,3 @@ export default class JioJioScreen extends React.Component {
         this.setState({ ...this.state, tagpageBack: num});
     }
 }
-

@@ -11,6 +11,7 @@ export default class Page3 extends React.Component {
             visibilityF: false,
             visibilityT: false
         }
+        this.props.finishSelectDate(this.props.stat.from);
     }
 
     render() {
