@@ -15,11 +15,9 @@ const Post = ({ data }) => {
   return(
   <View style={styles.post}>
     <View style={styles.avatarContainer}>
-      <Image
-        style={styles.avatar}
-        source={require('../../images/category_images/me2.png')}
-        //source={require(data.avatar)}
-      />
+      <TouchableOpacity  onPress={() => handleImagePress('OtherPerson',data)}>
+        <Image style={styles.avatar} source={require('../../images/category_images/me2.png')}/>
+      </TouchableOpacity>
 
       <View style={styles.tagContainer}>
         <View style={styles.tag_main}>

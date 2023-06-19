@@ -7,6 +7,7 @@ import SportPage from './SportPage';
 import PostDetail from './PostDetail';
 import JoinSuccess from './JoinSuccess';
 import Home from './Home';
+import OtherPerson from './OtherPerson';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ const CategoryScreen = () => {
         <Stack.Screen name="SportPage" component={SportPage} />
         <Stack.Screen name="PostDetail" component={PostDetail} />
         <Stack.Screen name="JoinSuccess" component={JoinSuccess} options={{ headerShown: false }} />
+        <Stack.Screen name="OtherPerson" component={OtherPerson}  />
       </Stack.Navigator>
     </NavigationContainer>
   );
