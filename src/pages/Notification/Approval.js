@@ -4,19 +4,19 @@ import { ApprovalItems} from '../utility/utility_Notification';
 import axios from 'axios';
 
 const ApprovalScreen = () => {
-    const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+    const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
     const [ApprovalList, setList] = useState([]);
-    axios.get(`${url}/applys`,{
+    axios.get(`${url}/applys/profileandpost`,{
         params:{
-          posterid: 1,
+          posterid: 2,
           process: 0
         }
     }).then(res => {
-        setList(res.data.apply)
+        setList(res.data.result)
     }).catch(err => {
         console.log(err);
     })
-    console.log(ApprovalList);
+    //console.log(ApprovalList);
 
     return (
         <View style={styles.root}>
