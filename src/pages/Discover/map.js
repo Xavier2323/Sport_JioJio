@@ -39,7 +39,7 @@ export default class Map extends React.Component{
         (<View>
           <TouchableOpacity 
             style={styles.button_baseball} 
-            onPress={() => {this.props.navigate_tennis()}}
+            
           >
             <View style={styles.place}>
                 <Image 
@@ -61,7 +61,7 @@ export default class Map extends React.Component{
         (<View>
           <TouchableOpacity 
             style={styles.button_basketball} 
-            onPress={() => {this.props.navigate()}}
+            
           >
             <View style={styles.place}>
                 <Image 
@@ -71,7 +71,7 @@ export default class Map extends React.Component{
                 <View style={styles.textColumn}>
                     <Text style={styles.placetext}>籃球場</Text>
                     <Text style={styles.placetext}>尚無揪揪</Text>
-                    <TouchableOpacity style={styles.placebutton}>
+                    <TouchableOpacity style={styles.placebutton} onPress={() => {this.props.navigate_basketball()}}>
                         <Text>發起揪揪</Text>
                     </TouchableOpacity>
                 </View>
@@ -92,7 +92,7 @@ export default class Map extends React.Component{
                 <View style={styles.textColumn}>
                     <Text style={styles.placetext}>校友體育館</Text>
                     <Text style={styles.placetext}>尚無揪揪</Text>
-                    <TouchableOpacity style={styles.placebutton}>
+                    <TouchableOpacity style={styles.placebutton} onPress={() => {this.props.navigate_badminton()}}>
                         <Text>發起揪揪</Text>
                     </TouchableOpacity>
                 </View>
@@ -103,7 +103,7 @@ export default class Map extends React.Component{
         (<View>
           <TouchableOpacity 
             style={styles.button_volleyball} 
-            onPress={() => {this.props.navigate()}}
+            
           >
             <View style={styles.place}>
                 <Image 
@@ -113,7 +113,7 @@ export default class Map extends React.Component{
                 <View style={styles.textColumn}>
                     <Text style={styles.placetext}>排球場</Text>
                     <Text style={styles.placetext}>尚無揪揪</Text>
-                    <TouchableOpacity style={styles.placebutton}>
+                    <TouchableOpacity style={styles.placebutton} onPress={() => {this.props.navigate_volleyball()}}>
                         <Text>發起揪揪</Text>
                     </TouchableOpacity>
                 </View>
@@ -124,7 +124,7 @@ export default class Map extends React.Component{
         (<View>
           <TouchableOpacity 
             style={styles.button_soccer} 
-            onPress={() => {this.props.navigate()}}
+            
           >
             <View style={styles.place}>
                 <Image 
@@ -134,7 +134,7 @@ export default class Map extends React.Component{
                 <View style={styles.textColumn}>
                     <Text style={styles.placetext}>田徑場</Text>
                     <Text style={styles.placetext}>尚無揪揪</Text>
-                    <TouchableOpacity style={styles.placebutton}>
+                    <TouchableOpacity style={styles.placebutton} onPress={() => {this.props.navigate_soccer()}}>
                         <Text>發起揪揪</Text>
                     </TouchableOpacity>
                 </View>
@@ -146,7 +146,7 @@ export default class Map extends React.Component{
         (<View>
           <TouchableOpacity 
             style={styles.button_swim} 
-            onPress={() => {this.props.navigate()}}
+           
           >
             <View style={styles.place}>
                 <Image 
@@ -156,7 +156,7 @@ export default class Map extends React.Component{
                 <View style={styles.textColumn}>
                     <Text style={styles.placetext}>游泳館</Text>
                     <Text style={styles.placetext}>尚無揪揪</Text>
-                    <TouchableOpacity style={styles.placebutton}>
+                    <TouchableOpacity style={styles.placebutton} onPress={() => {this.props.navigate_swim()}}>
                         <Text>發起揪揪</Text>
                     </TouchableOpacity>
                 </View>
@@ -167,7 +167,7 @@ export default class Map extends React.Component{
         (<View>
           <TouchableOpacity 
             style={styles.button_B_V} 
-            onPress={() => {this.props.navigate()}}
+            
           >
             <View style={styles.place}>
                 <Image 
@@ -177,7 +177,7 @@ export default class Map extends React.Component{
                 <View style={styles.textColumn}>
                     <Text style={styles.placetext}>桌球館</Text>
                     <Text style={styles.placetext}>尚無揪揪</Text>
-                    <TouchableOpacity style={styles.placebutton}>
+                    <TouchableOpacity style={styles.placebutton} onPress={() => {this.props.navigate_tabletennis()}}>
                         <Text>發起揪揪</Text>
                     </TouchableOpacity>
                 </View>
@@ -188,7 +188,7 @@ export default class Map extends React.Component{
         (<View>
           <TouchableOpacity 
             style={styles.button_B_V} 
-            onPress={() => {this.props.navigate()}}
+            
           >
             <View style={styles.place}>
                 <Image 
@@ -198,7 +198,7 @@ export default class Map extends React.Component{
                 <View style={styles.textColumn}>
                     <Text style={styles.placetext}>體育館</Text>
                     <Text style={styles.placetext}>尚無揪揪</Text>
-                    <TouchableOpacity style={styles.placebutton}>
+                    <TouchableOpacity style={styles.placebutton} onPress={() => {this.props.navigate_B_V()}}>
                         <Text>發起揪揪</Text>
                     </TouchableOpacity>
                 </View>
@@ -211,14 +211,29 @@ export default class Map extends React.Component{
                                 
 
           
-                  <View style={{backgroundColor:'rgba(200,200,200,0.3)',zIndex:2,borderRadius:30,flexDirection:'row',justifyContent:'space-between'}}>
+                  <View style={{backgroundColor:'white',zIndex:2,borderRadius:30,flexDirection:'row',justifyContent:'space-between'}}>
                                         <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigate_No()}}>
                                           <Image source={require('../../images/bell.png')}/>
                                         </TouchableOpacity>
-                                        <Text style={{fontSize:25,color:'orange'}}>運動揪揪</Text>
+                                        <Text style={{fontSize:25,color:'orange',alignContent:'center',justifyContent:'center',marginTop:'2%'}}>運動揪揪</Text>
                                         <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigate_Per()}}>
                                           <Image source={require('../../images/Person.png')}/>
                                         </TouchableOpacity>
+
+                                        {/* <ImageBackground 
+                                            source={require('../../images/Top_app_bar.png')} 
+                                            style={styles.ContainerTop}
+                                            resizeMode="cover"
+                                        >
+                                            <View style={styles.topBar}>
+                                                <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigate_No()}}>
+                                                    <Image source={require('../../images/bell.png')}/>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigate_Per()}}>
+                                                    <Image source={require('../../images/Person.png')}/>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </ImageBackground> */}
                   </View>
                 
                 <View style={{height:'86%'}}>

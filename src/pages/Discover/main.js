@@ -65,7 +65,9 @@ export default class MainScreen extends React.Component{
 
                             <View style={{flex:4}}>
                                
-                                    <Map navigate_soccer={() => {this.props.navigation.navigate('mappost_soccer')}} 
+                                    <Map navigate_No={() => {this.props.navigation.navigate('Notification')}}
+                                    navigate_Per={() => {this.props.navigation.navigate('Personal')}} 
+                                    navigate_soccer={() => {this.props.navigation.navigate('mappost_soccer')}} 
                                     navigate_swim={() => {this.props.navigation.navigate('mappost_swim')}} 
                                     navigate_badminton={() => {this.props.navigation.navigate('mappost_badminton')}}
                                     navigate_basketball={() => {this.props.navigation.navigate('mappost_basketball')}}

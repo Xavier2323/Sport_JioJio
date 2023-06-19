@@ -8,6 +8,14 @@ import PostDetail from './Postdetail'
 import Success from'./success'
 import NotificationScreen from '../Notification/Notification';
 import PersonalScreen from '../Personal/Personal';
+
+import MapPost_baseball from './mappost_baseball';
+import MapPost_basketball from './mappost_basketball';
+import MapPost_soccer from './mappost_soccer';
+import MapPost_swim from './mappost_swim';
+import MapPost_volleyball from './mappost_volleyball';
+import MapPost_tabletennis from './mappost_tabletennis';
+import MapPost_badminton from './mappost_badminton';
 const Stack = createStackNavigator();
 
 export default class DiscoverScreen extends React.Component{
