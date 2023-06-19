@@ -6,7 +6,8 @@ import MainScreen from './main'
 import MapPost from './mappost'
 import PostDetail from './Postdetail'
 import Success from'./success'
-
+import NotificationScreen from '../Notification/Notification';
+import PersonalScreen from '../Personal/Personal';
 const Stack = createStackNavigator();
 
 export default class DiscoverScreen extends React.Component{
@@ -44,7 +45,12 @@ export default class DiscoverScreen extends React.Component{
                 <Stack.Screen name='success'>
                     {(props) => <Success {...props} statee = {this.state}/>}
                 </Stack.Screen>
-
+                <Stack.Screen name="Notification">
+                    {(props) => <NotificationScreen {...props} statee = {this.state}/>}
+                </Stack.Screen>
+                <Stack.Screen name="Personal">
+                    {(props) => <PersonalScreen {...props} statee = {this.state}/>}
+                </Stack.Screen>
             </Stack.Navigator>
         )
     }

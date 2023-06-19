@@ -24,11 +24,11 @@ export default class MainScreen extends React.Component{
             <View style={styles.root}>
                 <StatusBar barStyle="light-content" />
                 <View style={styles.ContainerTop}>
-                    <TouchableOpacity style={styles.Notification} onPress={()=>{}}>
+                    <TouchableOpacity style={styles.Notification} onPress={()=>{this.props.navigation.navigate('Notification')}}>
                         <Image source={require('../../images/bell.png')}/>
                     </TouchableOpacity>
                     <Text style={styles.banner}>運動揪揪</Text>
-                    <TouchableOpacity style={styles.Notification} onPress={()=>{}}>
+                    <TouchableOpacity style={styles.Notification} onPress={() => {this.props.navigation.navigate('Personal')}}>
                         <Image source={require('../../images/Person.png')}/>
                     </TouchableOpacity>
                 </View>
@@ -64,7 +64,7 @@ export default class MainScreen extends React.Component{
                 order:'starttimeasc'
             }
         }).then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             this.setState({postList:res.data.post});
         }).catch(err => {console.log(err)});
 

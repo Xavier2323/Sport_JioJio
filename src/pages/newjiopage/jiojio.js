@@ -121,10 +121,6 @@ export default class JioJioScreen extends React.Component {
         this.setState({ ...this.state, place: place });
     }
 
-    finishSelectDate = (date) => {
-        this.setState({ ...this.state, date: date});
-    }
-
     finishSelectTime = (from, to) => {
         this.setState({ ...this.state, from: from, to: to });
     }
