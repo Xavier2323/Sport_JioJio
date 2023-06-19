@@ -9,12 +9,12 @@ export default function Home() {
   const imageWidth = (screenWidth - 28) / 2; // Adjust the margin/padding as needed
   const imageHeight = imageWidth;
   const navigation = useNavigation();
-  const handleImagePress = (destination,data) => {
-    navigation.navigate(destination,{data});
+  const handleImagePress = (destination, data) => {
+    navigation.navigate(destination, { data });
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>分類</Text>
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={() => handleImagePress('SportPage', '羽球')}>
@@ -40,13 +40,13 @@ export default function Home() {
           <Image style={[styles.image, { width: imageWidth, height: imageHeight }]} source={require('../../images/category_images/volleyball.png')} />
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
     backgroundColor: '#FFFFFF',
