@@ -38,3 +38,10 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
+
+/* 取得userid
+import AsyncStorage from "@react-native-async-storage/async-storage";
+const userid_item = await AsyncStorage.getItem('Data_userid');
+const userid_stringfyItem = JSON.stringify(userid_item);
+const userid = JSON.parse(userid_stringfyItem);
+即可取得 userid */

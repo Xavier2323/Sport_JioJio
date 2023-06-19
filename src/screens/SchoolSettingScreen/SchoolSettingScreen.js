@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/core';
 import {useForm} from 'react-hook-form';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const NicknameSettingScreen = () => {
+const SchoolSettingScreen = () => {
   const {control, handleSubmit} = useForm();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
@@ -16,26 +16,26 @@ const NicknameSettingScreen = () => {
     setLoading(true);
 
     try {
-      AsyncStorage.setItem('Data_nickname', data.nickname);
-      navigation.navigate('SchoolSetting');
+      AsyncStorage.setItem('Data_school', data.school);
+      navigation.navigate('HeadshotSetting');
     } catch (e) {
       console.log("error", e);
-    }
-    
+    } 
+
     setLoading(false);
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
-        <Text style={styles.title}>設定暱稱</Text>
-        <Text style={styles.subtitle}>請輸入您的名字或暱稱</Text>
+        <Text style={styles.title}>設定系級</Text>
+        <Text style={styles.subtitle}>請輸入您的學校以及年級</Text>
         <CustomInput
-          name="nickname"
+          name="school"
           control={control}
-          placeholder="請輸入"
+          placeholder="清大資工系大二"
           rules={{
-            required: '請輸入您的暱稱',
+            required: '請輸入您的系級',
           }}
           type='nickname'
         />
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NicknameSettingScreen;
+export default SchoolSettingScreen;

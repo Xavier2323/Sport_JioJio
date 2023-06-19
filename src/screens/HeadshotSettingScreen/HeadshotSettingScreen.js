@@ -4,17 +4,27 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/core';
 import {useForm} from 'react-hook-form';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ForgotPasswordScreen = () => {
   const {control, handleSubmit} = useForm();
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
-  const onSendPressed = data => {
-    console.warn(data);
+  const onSendPressed = async data => {
+    if (loading) return;
+    setLoading(true);
+
+    //上傳大頭照到Async storage
+    //...
+    //
+
     navigation.navigate('IntroductionSetting');
+
+    setLoading(false);
   };
 
-  const onSignInPress = () => {
+  const onPassPress = () => {
     navigation.navigate('IntroductionSetting');
   };
 
@@ -26,11 +36,11 @@ const ForgotPasswordScreen = () => {
         <Text></Text>
         <CustomButton
           text="暫時略過"
-          onPress={onSignInPress}
-          type="TERTIARY"
-        />
+          onPress={onPassPress}
+          type="TERTIARY"/>
+        
         {/* <CustomButton 
-          text="送出" 
+          text={loading ? "送出"  : "載入中.."}
           type="SETTING"
           onPress={handleSubmit(onSendPressed)} /> */}
 

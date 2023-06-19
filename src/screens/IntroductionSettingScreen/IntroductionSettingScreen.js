@@ -4,14 +4,50 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/core';
 import {useForm} from 'react-hook-form';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from 'axios';
 
 const IntroductionSettingScreen = () => {
   const {control, handleSubmit} = useForm();
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
-  const onSendPressed = data => {
-    //console.warn(data);
-    navigation.navigate('Home');
+
+  const onSendPressed = async data => {
+    if (loading) return;
+    setLoading(true);
+  
+    try {
+      //從AsyncStorage取得剛輸入的使用者資料、處理
+      const username_item = await AsyncStorage.getItem('Data_username');
+      const username_stringfyItem = JSON.stringify(username_item);
+      const username = JSON.parse(username_stringfyItem);
+      const nickname_item = await AsyncStorage.getItem('Data_nickname');
+      const nickname_stringfyItem = JSON.stringify(nickname_item);
+      const nickname = JSON.parse(nickname_stringfyItem);
+      const school_item = await AsyncStorage.getItem('Data_school');
+      const school_stringfyItem = JSON.stringify(school_item);
+      const school = JSON.parse(school_stringfyItem);
+      
+      console.log('---最終資料---')
+      console.log(`暱稱:${nickname}`);
+      console.log(`系級:${school}`);
+      console.log(`自我介紹:${data.Introduction}`);
+      console.log('--------------');
+
+      //建立userid
+      const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/users/create?account=${username}&name=${nickname}&schoolgrade=${school}&intro=${data.Introduction}`;
+      await axios.post(url).then(res => {
+        console.log(res.data)
+        AsyncStorage.setItem('Data_id', JSON.stringify(res.data.profile.userid));
+      }).catch(err => {console.log(err)})
+
+      navigation.navigate('Home');
+    } catch (e) {
+      console.log("error", e);
+    }
+    
+    setLoading(false);
   };
 
   return (
@@ -23,15 +59,16 @@ const IntroductionSettingScreen = () => {
           name="Introduction"
           control={control}
           placeholder="大家好! 我是個喜歡..."
-          // rules={{
-          //   required: 'Username is required',
-          // }}
+          rules={{
+            required: '介紹一下自己啦!',
+          }}
           type='introduction'
         />
+
         <Text></Text>
 
         <CustomButton 
-          text="送出" 
+          text={loading ? "載入中.." : "送出"} 
           type="SETTING"
           onPress={handleSubmit(onSendPressed)} />
       </View>

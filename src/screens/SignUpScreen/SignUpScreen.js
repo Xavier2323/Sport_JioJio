@@ -8,19 +8,21 @@ import {useForm} from 'react-hook-form';
 import {Auth} from 'aws-amplify';
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignUpScreen = () => {
   const {control, handleSubmit, watch} = useForm();
   const [checkboxState, setCheckboxState] = useState(false); //CheckBox
   const pwd = watch('password');
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
   const onRegisterPressed = async data => {
+    if (loading) return;
+    setLoading(true);
+    
     const {username, password, email} = data;
     console.log(data);
-    console.log(username);
-    console.log(password);
-    console.log(email);
     try {
       await Auth.signUp({
         username,
@@ -28,22 +30,22 @@ const SignUpScreen = () => {
         attributes: {email, preferred_username: username},
       });
 
-      navigation.navigate('ConfirmEmail', {username});
+      try {
+        AsyncStorage.setItem('Data_username', username);
+        AsyncStorage.setItem('Data_password', data.password);
+        navigation.navigate('ConfirmEmail', {username});
+      } catch (e) {
+        console.log("error", e);
+      }
+      
     } catch (e) {
       Alert.alert('Oops', e.message);
     }
+    setLoading(false);
   };
 
   const onSignInPress = () => {
     navigation.navigate('SignIn');
-  };
-
-  const onTermsOfUsePressed = () => {
-    console.warn('onTermsOfUsePressed');
-  };
-
-  const onPrivacyPressed = () => {
-    console.warn('onPrivacyPressed');
   };
 
   return (
@@ -67,8 +69,8 @@ const SignUpScreen = () => {
               value: 24,
               message: '帳號長度應小於24',
             },
-          }}
-        />
+          }}/>
+
         <CustomInput
           name="email"
           control={control}
@@ -76,8 +78,8 @@ const SignUpScreen = () => {
           rules={{
             required: '請輸入電子信箱',
             pattern: {value: EMAIL_REGEX, message: '電子信箱無效'},
-          }}
-        />
+          }}/>
+
         <CustomInput
           name="password"
           control={control}
@@ -89,8 +91,8 @@ const SignUpScreen = () => {
               value: 8,
               message: '密碼長度應大於8',
             },
-          }}
-        />
+          }}/>
+
         <CustomInput
           name="password-repeat"
           control={control}
@@ -98,8 +100,8 @@ const SignUpScreen = () => {
           secureTextEntry
           rules={{
             validate: value => value === pwd || '請輸入相同的密碼',
-          }}
-        />
+          }}/>
+
         <View style={styles.section}>
           <BouncyCheckbox
             innerIconStyle={{borderRadius:7, marginRight:0, borderWidth: 1, borderColor: '#e8e8e8', backgroundColor:'f6f6f6'}}
@@ -108,14 +110,14 @@ const SignUpScreen = () => {
             textStyle={{textDecorationLine: "none", color:'gray', fontSize:14.5}}
             style={{ marginTop: 15, marginLeft: '0%', marginRight: '15.5%'}}
             isChecked = {checkboxState}
-            onPress={() => setCheckboxState(!checkboxState)}
-          />
+            onPress={() => setCheckboxState(!checkboxState)}/>
         </View>
+
         <CustomButton
-          text="註冊"
+          text={loading ? "載入中.." : "註  冊"}
           onPress={handleSubmit(onRegisterPressed)}
-          type="SIGNUP"
-        />
+          type="SIGNUP"/>
+
         <Text>{' '}</Text>
         <Text style={styles.text2}>
           已擁有帳號? {' '}

@@ -50,8 +50,7 @@ const ConfirmEmailScreen = () => {
           placeholder="請輸入驗證碼"
           rules={{
             required: 'Confirmation code is required',
-          }}
-        />
+          }}/>
 
         <CustomButton 
           text="確認" 
@@ -61,14 +60,13 @@ const ConfirmEmailScreen = () => {
         <CustomButton
           text="重寄確認信"
           onPress={onResendPress}
-          type="TERTIARY"
-        />
+          type="TERTIARY"/>
 
         <CustomButton
           text="回到登入"
           onPress={onSignInPress}
-          type="TERTIARY"
-        />
+          type="TERTIARY"/>
+          
       </View>
     </ScrollView>
   );

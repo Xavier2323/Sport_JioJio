@@ -11,6 +11,7 @@ import HomeScreen from '../screens/HomeScreen';
 import InitialScreen from '../screens/InitialScreen';
 
 import NicknameSettingScreen from '../screens/NicknameSettingScreen';
+import SchoolSettingScreen from '../screens/SchoolSettingScreen';
 import HeadshotSettingScreen from '../screens/HeadshotSettingScreen';
 import IntroductionSettingScreen from '../screens/IntroductionSettingScreen';
 
@@ -22,7 +23,7 @@ const Stack = createNativeStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="通知">
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Initial">
         <Stack.Screen name="Initial" component={InitialScreen} />
 
         <Stack.Screen name="SignIn" component={SignInScreen} />
@@ -32,6 +33,7 @@ const Navigation = () => {
         <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
 
         <Stack.Screen name="NicknameSetting" component={NicknameSettingScreen} />
+        <Stack.Screen name="SchoolSetting" component={SchoolSettingScreen} />
         <Stack.Screen name="HeadshotSetting" component={HeadshotSettingScreen} />
         <Stack.Screen name="IntroductionSetting" component={IntroductionSettingScreen} />
 

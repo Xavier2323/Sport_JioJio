@@ -14,6 +14,8 @@ import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 import {Auth} from  'aws-amplify';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from 'axios';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -26,19 +28,36 @@ const SignInScreen = () => {
   } = useForm();
 
   const onSignInPressed = async data => {
-    if (loading) {
-      return;
-    }
+    if (loading) return;
 
     setLoading(true);
     try {
       const response = await Auth.signIn(data.username, data.password);
       console.log(response);
+      //上傳帳密到AsyncStorage以利自動登入
+      try {
+        AsyncStorage.setItem('Data_username', data.username);
+        AsyncStorage.setItem('Data_password', data.password);
+      } catch (e) {
+        console.log("AsyncStorage error", e);
+      }
+      //取得使用者id
+      const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/users/fromaccount`;
+      await axios.get(url,{
+        params:{
+          account: data.username
+        }
+      }).then(res => {
+        console.log(res.data)
+        AsyncStorage.setItem('Data_id', JSON.stringify(res.data.userid));
+      }).catch(err => {console.log(err)})
+
+      navigation.navigate('Home');
     } catch (e) {
       Alert.alert('Oops', e.message);
     }
     setLoading(false);
-    navigation.navigate('Home');
+
   };
 
   const onForgotPasswordPressed = () => {
@@ -53,16 +72,13 @@ const SignInScreen = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
 
-        <Text style={styles.title}>
-          登入
-        </Text>
+        <Text style={styles.title}>登入</Text>
 
         <CustomInput
           name="username"
           placeholder="帳號"
           control={control}
-          rules={{required: '請輸入帳號'}}
-        />
+          rules={{required: '請輸入帳號'}}/>
 
         <CustomInput
           name="password"
@@ -72,23 +88,20 @@ const SignInScreen = () => {
           rules={{
             required: '請輸入密碼',
             minLength: {
-              value: 3,
+              value: 8,
               message: '密碼長度應大於 8',
             },
-          }}
-        />
+          }}/>
 
         <CustomButton 
           text={loading ? "載入中.." : "登  入" }
           onPress={handleSubmit(onSignInPressed)}
-          type="SIGNIN" 
-        />
+          type="SIGNIN" />
 
         <CustomButton
           text="忘記密碼?"
           onPress={onForgotPasswordPressed}
-          type="TERTIARY"
-        />
+          type="TERTIARY"/>
 
         <Text style={styles.text}>
           新用戶 ? {' '}
