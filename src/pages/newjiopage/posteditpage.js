@@ -1,13 +1,13 @@
-import React, {useState, Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, TextInput, SafeAreaView} from 'react-native';
+import React, {useState, Component} from 'react';
+import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView, TextInput } from 'react-native';
 import axios from 'axios';
 
 import { Tag } from '../utility/utility_JioJio.js';
 
-export default class Verify extends React.Component {
+export default class PostEdit extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props.stat);
+
     }
 
     render() {
@@ -21,42 +21,45 @@ export default class Verify extends React.Component {
                         <Image source={require('../../images/back.png')} style={{ height: 80, width: 80 }} /> 
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginHorizontal:10}}>
-                        <Text style={styles.title}>新的揪揪</Text>
+                        <Text style={styles.title}>你的揪揪</Text>
                         <View style={styles.underOrangeLine}></View>
                     </View>
-                    <View style={{height:40,width:40}}></View>
+                    <TouchableOpacity style={{height:40,width:40,justifyContent: 'center', alignItems: 'center'}} onPress={() => {this.handleDeletePost();}}>
+                        <Image source={require('../../images/trash_can.png')} style={{height:50,width:50}} />
+                    </TouchableOpacity>
                 </View>
 
-                <View style={{flex:100, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={styles.subtitle}>請確認以下資訊是否正確</Text>
-                </View>
+                <View style={{flex:50,justifyContent:'center'}}>
 
-                <View style={{flex:400,flexDirection:'column',justifyContent:'space-between',alignItems:'center'}}>
-                    <ScrollView>
+                </View>
+                
+
+                <View style={{flex:400,alignItems:'center'}}>
+                <ScrollView>
                         <View style={{flexDirection:'row',marginVertical:20}}>
                             <Text style={styles.subtitle1}>運動項目：</Text>
                             <Text style={styles.subtitle1}>{this.props.stat.sport}</Text>
-                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(1)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.props.navigation.navigate('page1')}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
                         </View>
                         <View style={{flexDirection:'row',marginVertical:20}}>
                             <Text style={styles.subtitle1}>運動場地：</Text>
                             <Text style={styles.subtitle1}>{this.props.stat.place}</Text>
-                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(2)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.props.navigation.navigate('page2')}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
                         </View>
                         <View style={{flexDirection:'row',marginVertical:20}}>
                             <Text style={styles.subtitle1}>開始時間：</Text>
                             <Text style={styles.subtitle1}>{starttime}</Text>
-                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(3)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.props.navigation.navigate('page3')}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
                         </View>
                         <View style={{flexDirection:'row',marginVertical:20}}>
                             <Text style={styles.subtitle1}>結束時間：</Text>
                             <Text style={styles.subtitle1}>{endtime}</Text>
-                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(3)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.props.navigation.navigate('page3')}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
                         </View>
                         <View style={{flexDirection:'row',marginVertical:20}}>
                             <Text style={styles.subtitle1}>運動人數：</Text>
                             <Text style={styles.subtitle1}>{this.props.stat.people}</Text>
-                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.handlePressEdit(4)}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
+                            <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {this.props.navigation.navigate('page4')}}><Image style={{height:40,width:40}} source={require('../../images/edit.png')}/></TouchableOpacity>
                         </View>
                         <View style={{flexDirection:'row',marginVertical:20}}>
                             <Text style={styles.subtitle1}>Tags:</Text>
@@ -67,7 +70,7 @@ export default class Verify extends React.Component {
                         </View>
                         <View style={{flexDirection:'column',marginVertical:20}}>
                             <Text style={styles.subtitle1}>備註:</Text>
-                            <View style={{ backgroundColor: '#FFF9E9', width: 300, borderRadius: 5, borderColor: '#000000', borderWidth: 1, marginTop: 20 }}>
+                            <View style={{ backgroundColor: '#FFF9E9', width: 300, borderRadius: 5, borderColor: '#000000', borderWidth: 1, marginTop: 20}}>
                             <TextInput
                                         editable
                                         multiline
@@ -83,15 +86,26 @@ export default class Verify extends React.Component {
                 </View>
 
                 <View style={{flex:50,justifyContent:'center',alignItems:'center'}}>
-                    <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleLaunch.bind(this)}>
-                        <Text style={styles.subtitle2}>發起揪揪</Text>
+                    <TouchableOpacity style={styles.nextButtonStyle} onPress={this.handleConfirm.bind(this)}>
+                        <Text style={styles.subtitle2}>完成編輯</Text>
                     </TouchableOpacity>
                 </View>
 
                 <View style={{flex:5}}></View>
             </View>
-            
+
         );
+    }
+
+    handleDeletePost = async () => {
+        const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/posts/deletepost?postid=${this.props.stat.postid}`;
+
+        await axios.post(url).then(res => {
+
+        }).catch(err => {console.log(err)})
+
+        this.props.forceUpdate(1);
+        this.props.navigation.navigate('overview');
     }
 
     checkValidation = async() => {
@@ -119,18 +133,12 @@ export default class Verify extends React.Component {
         if (this.props.stat.from > this.props.stat.to) this.props.updateValid(-5);
     }
 
-    handlePressEdit = (num) => {
-        this.props.setTagpageBack(1);
-        this.props.navigation.navigate(`page${num}`)
-    }
-
     handlePressAdd = async () => {
-        this.props.setTagpageBack(1);
+        await this.props.setTagpageBack(2);
         this.props.navigation.navigate('tagpage');
     }
 
-    handleLaunch = async () => {
-        this.props.setTagpageBack(0);
+    handleConfirm = async () => {
         await this.checkValidation();
 
         if (this.props.stat.valid == 0){
@@ -140,19 +148,16 @@ export default class Verify extends React.Component {
             const starttime = `${from.getFullYear()}!${from.getMonth()+1}!${from.getDate()}!${from.getHours()}!${from.getMinutes()}`;
             const endtime = `${to.getFullYear()}!${to.getMonth()+1}!${to.getDate()}!${to.getHours()}!${to.getMinutes()}`;
 
-            const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/posts/create?posterid=${this.props.stat.userid}&sport=${this.props.stat.sport}&place=${this.props.stat.place}&starttime=${starttime}&endtime=${endtime}&people=${this.props.stat.people}&tags=${this.props.stat.tag.join('!')}&memo=${this.props.stat.memo}`;
+            const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/posts/update?postid=${this.props.stat.postid}&sport=${this.props.stat.sport}&place=${this.props.stat.place}&starttime=${starttime}&endtime=${endtime}&people=${this.props.stat.people}&tags=${this.props.stat.tag.join('!')}&memo=${this.props.stat.memo}`;
 
             await axios.post(url).then(res => {
-                
+                console.log(res.data)
             })
             .catch(err => {
                 console.log(err);
             })
-
-            await axios.post(`http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/tags/update?name=${this.props.stat.tag.join('!')}`)
-            .then(res => {})
-            .catch(err => {console.log(err)})
         }
+
         this.props.forceUpdate(1);
         this.props.navigation.navigate('launch');
     }
@@ -168,7 +173,6 @@ export default class Verify extends React.Component {
     }
 
 }
-
 
 
 const styles = StyleSheet.create({

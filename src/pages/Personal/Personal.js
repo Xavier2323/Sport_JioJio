@@ -30,7 +30,7 @@ export default class PersonalScreen extends React.Component {
             aimg5: null,
             aimg6: null,
         }
-        const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com`;
+        const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
     
         axios.get(`${url}/users`,{
           params:{
@@ -83,10 +83,10 @@ export default class PersonalScreen extends React.Component {
         }, ()=>{
             console.log(this.state);
             this.props.navigation.navigate('personal'); 
-            const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com/users/update?userid=${this.state.id}&name=${this.state.name}&schoolgrade=${this.state.school}&intro=${this.state.intro}`;
+            const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/users/update?userid=${this.state.id}&name=${this.state.name}&schoolgrade=${this.state.school}&intro=${this.state.intro}`;
     
             axios.post(url).then(res => {
-                console.log(res.data);
+                //console.log(res.data);
             })
             .catch(err => {
               console.log(err);

@@ -15,9 +15,6 @@ import SchoolSettingScreen from '../screens/SchoolSettingScreen';
 import HeadshotSettingScreen from '../screens/HeadshotSettingScreen';
 import IntroductionSettingScreen from '../screens/IntroductionSettingScreen';
 
-import NotificationScreen from '../pages/Notification/Notification';
-import PersonalScreen from '../pages/Personal/Personal';
-
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -38,8 +35,6 @@ const Navigation = () => {
         <Stack.Screen name="IntroductionSetting" component={IntroductionSettingScreen} />
 
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Notification" component={NotificationScreen} />
-        <Stack.Screen name="Personal" component={PersonalScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
