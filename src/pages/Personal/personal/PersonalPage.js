@@ -78,9 +78,11 @@ export default class PersonalPage extends React.Component {
   }
 
   pfp(){
-    if(this.props.image==null) return  require('./images/default_pfp.png');
-    else return { uri: this.props.image };
+    console.log(this.props.img);
+    if(this.props.img==null) return  require('./images/default_pfp.png');
+    else return { uri: this.props.img };
   }
+
   atp(num){
     imgname='aimg'+String(num);
     if(this.props[imgname]) return {uri: this.props[imgname]};

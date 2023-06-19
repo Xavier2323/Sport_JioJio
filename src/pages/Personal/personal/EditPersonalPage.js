@@ -96,7 +96,6 @@ export default class EditPersonalPage extends React.Component {
   }
 
   store(){
-    // console.log(this.state.editname, this.state.editimg, this.state.editschool, this.state.editintro);
     this.props.OnStore(
       this.state.editname,
       this.state.editimg,
@@ -109,7 +108,6 @@ export default class EditPersonalPage extends React.Component {
       this.state.editaimg5,
       this.state.editaimg6
     );
-    // this.props.navigation.navigate('personal');
   }
 }
 
