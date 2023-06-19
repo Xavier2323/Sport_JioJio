@@ -78,7 +78,6 @@ export default class PersonalPage extends React.Component {
   }
 
   pfp(){
-    console.log(this.props.img);
     if(this.props.img==null) return  require('./images/default_pfp.png');
     else return { uri: this.props.img };
   }
@@ -89,7 +88,7 @@ export default class PersonalPage extends React.Component {
     else return require('./images/default-image.jpg');
   }
   gotoedit(){
-    console.log(this.props.image);
+    // console.log(this.props.image);
     this.props.navigation.navigate('editpersonal');
   }
   logout(){

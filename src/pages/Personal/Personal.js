@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, FlatList, Button, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { NavigationContainer} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {decode as atob, encode as btoa} from 'base-64'
 import axios from 'axios';
 
+import {get_img, upload_img} from '../utility/utility_img';
 
 import PersonalPage from './personal/PersonalPage';
 import EditPersonalPage from './personal/EditPersonalPage';
@@ -19,8 +19,8 @@ export default class PersonalScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            id: 1,
-            image: null,
+            id: 16,
+            img: null,
             name: 'William',
             school: '清大電資班大二',
             intro: '大家好，大家好，大家好，大家好，大家好，大家好，大家好，大家好，大家好，大家好，大家好，大家好，大家好，大家好，大家好，大家好。',
@@ -32,13 +32,10 @@ export default class PersonalScreen extends React.Component {
             aimg6: null,
         }
 
-        this.loaddata()
-
-        
+        this.loaddata();
     }
     
     render() {
-        // return (<Text>uuu</Text>);
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='personal'>
                 <Stack.Screen name="personal">
@@ -56,58 +53,66 @@ export default class PersonalScreen extends React.Component {
 
     loaddata = async () => {
         const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
+        console.log('get_profile');
 
+        var pfparr=[];
+        var img1arr=[];
+        var img2arr=[];
+        var img3arr=[];
+        var img4arr=[];
+        var img5arr=[];
+        var img6arr=[];
         await axios.get(`${url}/users`,{
           params:{
             userid: this.state.id
           }
         }).then(res => {
+          pfparr=res.data.profile.avatar;
+          img1arr=res.data.profile.photo1;
+        //   console.log(img1arr=res.data.profile.photo2);
+          img2arr=res.data.profile.photo2;
+          img3arr=res.data.profile.photo3;
+          img4arr=res.data.profile.photo4;
+          img5arr=res.data.profile.photo5;
+          img6arr=res.data.profile.photo6;
           this.setState({
             ...this.state,
             name: res.data.profile.name,
             school: res.data.profile.schoolgrade,
-            intro: res.data.profile.intro
+            intro: res.data.profile.intro,
           })
         })
         .catch(err => {
           console.log(err);
         })
 
-        var pfparr=[];
-
-        var config_get = {
-          method: 'get',
-          url: 'http://test.eba-rrzupcxn.us-west-2.elasticbeanstalk.com/image?id=1',
-        };
+        pfp_uri=pfparr!=0?get_img(pfparr):null;
+        img1_uri=img1arr!=0?get_img(img1arr):null;
+        img2_uri=img2arr!=0?get_img(img2arr):null;
+        img3_uri=img3arr!=0?get_img(img3arr):null;
+        img4_uri=img4arr!=0?get_img(img4arr):null;
+        img5_uri=img5arr!=0?get_img(img5arr):null;
+        img6_uri=img6arr!=0?get_img(img6arr):null;
         
-        await axios(config_get)
-        .then((res) => {
-            console.log('get');
-            console.log(res.data.image);
-            for(i of res.data.image){
-                pfparr.push(i);
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-
-        get_uri=this.strlength(pfparr);
-
         this.setState({
           ...this.state,
-          img: get_uri
+          img: pfp_uri,
+          aimg1: img1_uri,
+          aimg2: img2_uri,
+          aimg3: img3_uri,
+          aimg4: img4_uri,
+          aimg5: img5_uri,
+          aimg6: img6_uri,
         })
     }
 
     OnStore=(name,image,school,intro,aimg1,aimg2,aimg3,aimg4,aimg5,aimg6)=>{
-        console.log( 'image: ', image);
         this.setState({
             ...this.state,
             name: name,
             school: school,
             intro: intro,
-            image: image,
+            img: image,
             aimg1: aimg1,
             aimg2: aimg2,
             aimg3: aimg3,
@@ -115,53 +120,23 @@ export default class PersonalScreen extends React.Component {
             aimg5: aimg5,
             aimg6: aimg6,
         }, ()=>{
-            console.log(this.state);
             this.props.navigation.navigate('personal'); 
-            const url = `http://sample2.eba-mw3jxgyz.us-west-2.elasticbeanstalk.com/users/update?userid=${this.state.id}&name=${this.state.name}&schoolgrade=${this.state.school}&intro=${this.state.intro}`;
+            const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/image/update?userid=${this.state.id}&name=${this.state.name}&schoolgrade=${this.state.school}&intro=${this.state.intro}`;
     
             axios.post(url).then(res => {
-                console.log(res.data);
+                // console.log(res.data);
             })
             .catch(err => {
               console.log(err);
-            })
+            });
+
+            upload_img(this.state.id, 0, this.state.img);
+            upload_img(this.state.id, 1, this.state.aimg1);
+            upload_img(this.state.id, 2, this.state.aimg2);
+            upload_img(this.state.id, 3, this.state.aimg3);
+            upload_img(this.state.id, 4, this.state.aimg4);
+            upload_img(this.state.id, 5, this.state.aimg5);
+            upload_img(this.state.id, 6, this.state.aimg6);
         });
-    }
-
-    strlength = (str) => {
-        var joinStr = '';
-        for (var i = 0; i < str.length; i++) {
-            joinStr = joinStr + str[i];
-        }
-        console.log(joinStr.length);
-        var split = this.splitstrlength(joinStr);
-        var joinbuffer = this.bufferjoin(split);
-        return 'data:image/png;base64,' + joinbuffer;
-    }
-
-    splitstrlength = (str) => {
-        var pos = 0;
-        var len = str.length;
-        // if (len % 2 != 0) {
-        //     return null;
-        // }
-        len /= 2;
-        var by_Array = new Array();
-        for (var i = 0; i < len; i++) {
-            var splitstr = str.substr(pos, 2);
-            var by_16 = parseInt(splitstr, 16);
-            by_Array.push(by_16);
-            pos += 2;
-        }
-        return by_Array;
-    }
-    bufferjoin = (buffer) => {
-        var binary = '';
-        var bytes = new Uint8Array(buffer);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return btoa(binary);//bota一定要加
     }
 }
