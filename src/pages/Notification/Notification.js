@@ -14,7 +14,7 @@ const NotificationScreen = () => {
     const navigation = useNavigation();
 
     const goBacktoDiscover = () => {
-        navigation.navigate('發現');
+        navigation.navigate('main');
     }
     return (
         
