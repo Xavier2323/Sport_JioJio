@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const PostDetail = ({ route }) => {
   const { data } = route.params;
   const navigation = useNavigation();
-  const handleImagePress = (destination,data) => {
-    navigation.navigate(destination,{data});
+  const handleImagePress = (destination, data) => {
+    navigation.navigate(destination, { data });
   };
   useEffect(() => {
     navigation.setOptions({
@@ -17,10 +17,10 @@ const PostDetail = ({ route }) => {
         fontWeight: 'bold', // Set your desired font weight
       },
     });
-  }, );
+  }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
       <Text>{data.posterName}</Text>
       <Text>運動種類: {data.sportName}</Text>
@@ -35,7 +35,6 @@ const PostDetail = ({ route }) => {
       </View>
       <Text>已報名:</Text>
       <View style={styles.avatarRow}>
-      
         <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
         <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
         <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
@@ -43,15 +42,15 @@ const PostDetail = ({ route }) => {
         <Image style={styles.avatar} source={require('../../images/category_images/me2.png')} />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="報名" onPress={() => handleImagePress('JoinSuccess',data)} />
+        <Button title="報名" onPress={() => handleImagePress('JoinSuccess', data)} />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
   },
   avatar: {
