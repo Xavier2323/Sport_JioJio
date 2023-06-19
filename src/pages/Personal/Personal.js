@@ -86,7 +86,7 @@ export default class PersonalScreen extends React.Component {
             const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com/users/update?userid=${this.state.id}&name=${this.state.name}&schoolgrade=${this.state.school}&intro=${this.state.intro}`;
     
             axios.post(url).then(res => {
-                console.log(res.data);
+                //console.log(res.data);
             })
             .catch(err => {
               console.log(err);

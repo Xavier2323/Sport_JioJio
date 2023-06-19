@@ -7,19 +7,19 @@ const NotifyScreen = () => {
     const url = `http://sample.eba-2nparckw.us-west-2.elasticbeanstalk.com`;
     const [NotifyList, setList] = useState([]);
 
-    axios.get(`${url}/applys`,{
+    axios.get(`${url}/applys/profileandpost`,{
         params:{
             applicant: 1,
             process: 1
         }
     }).then(res => {
         setList(
-          res.data.apply
+          res.data.result
         )
     }).catch(err => {
         console.log(err);
     })
-    //console.log(NotifyList);
+    console.log(NotifyList);
     return (
         <View style={styles.root}>
             <SafeAreaView style={styles.container}>
